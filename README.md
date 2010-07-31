@@ -3,5 +3,5 @@
 Testing some Python frameworks on Google App Engine.
 
  1. Django application, see the code at the django branch.
-    - See it live here: http://1.latest.gaeseries.appspot.com.
-    - See the blog post: [TODO]
+    - See it live here: [http://1.latest.gaeseries.appspot.com].
+    - See the blog post: [soon]

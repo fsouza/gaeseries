@@ -27,4 +27,7 @@ ADMIN_MEDIA_PREFIX = '/media/admin/'
 MEDIA_ROOT = os.path.join(os.path.dirname(__file__), 'media')
 TEMPLATE_DIRS = (os.path.join(os.path.dirname(__file__), 'templates'),)
 
+LOGIN_URL = '/login/'
+LOGOUT_URL = '/logout/'
+
 ROOT_URLCONF = 'urls'

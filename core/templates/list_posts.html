@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+
+{% block content %}
+<dl>
+    {% for post in posts %}
+    <dt>{{ post.title }} (written by {{ post.user.username }})</dt>
+    <dd>{{ post.content }}</dd>
+    {% endfor %}
+</dl>
+{% endblock %}

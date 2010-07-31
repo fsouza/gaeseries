@@ -5,6 +5,7 @@ from django.template import RequestContext
 from django.http import HttpResponseRedirect
 from django.core.urlresolvers import reverse
 from forms import PostForm
+from models import Post
 
 @login_required
 def new_post(request):
@@ -19,4 +20,7 @@ def new_post(request):
     )
 
 def list_posts(request):
-    return HttpResponseRedirect('/')
+    posts = Post.objects.all()
+    return render_to_response('list_posts.html',
+            locals(), context_instance=RequestContext(request)
+    )

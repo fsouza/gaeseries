@@ -22,6 +22,16 @@ PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
             <h1 id="">Very simple blog :)</h1>
         </div>
 
+        <div class="menu">
+            <a href="{% url core.views.list_posts %}">All posts</a>
+            <a href="{% url core.views.new_post %}">New post</a>
+            {% if user.is_authenticated %}
+            <a href="{% url django.contrib.auth.views.logout %}">Logout</a>
+            {% else %}
+            <a href="{% url django.contrib.auth.views.login %}">Login</a>
+            {% endif %}
+        </div>
+
         <div class="columns">
             <div id="content" class="column">
                 {% block content-header %}

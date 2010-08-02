@@ -1,0 +1,26 @@
+(dp1
+S'origin'
+p2
+S'CHAR(512)'
+p3
+sS'client_ip'
+p4
+S'CHAR(512)'
+p5
+sS'user_id'
+p6
+S'INTEGER REFERENCES auth_user(id) ON DELETE CASCADE'
+p7
+sS'description'
+p8
+S'TEXT'
+p9
+sS'time_stamp'
+p10
+S'TIMESTAMP'
+p11
+sS'id'
+p12
+S'INTEGER PRIMARY KEY AUTOINCREMENT'
+p13
+s.

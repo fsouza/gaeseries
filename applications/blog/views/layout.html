@@ -1,0 +1,52 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="{{=T.accepted_language or 'en'}}">
+  <head>
+    <title>{{=response.title or request.application}}</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    {{#------  require CSS and JS files for this page (read info in base.css) ------}}
+    {{response.files.append(URL(request.application,'static','base.css'))}}
+    {{response.files.append(URL(request.application,'static','superfish.js'))}}
+    {{#------ include web2py specific js code (jquery, calendar, form stuff) ------}}
+    {{include 'web2py_ajax.html'}}
+  </head>
+  <body>
+    <div class="flash">{{=response.flash or ''}}</div>
+    <div class="ez-mr wrapper" id="layout">
+      {{#------ Layout 3 from http://www.ez-css.org/layouts ------}}
+      <div class="ez-wr">
+	<div class="ez-box" id="header">
+	  {{=auth.navbar(action=URL(request.application,'default','user'))}}
+          <h1>
+            <a href="">{{=response.title or 'response.title'}}</a>
+          </h1>            
+          <h2>
+	    {{=response.subtitle or 'response.subtitle'}}
+	  </h2>
+	</div>
+	<div class="ez-box" id="statusbar">
+	  {{#------ superfish menu ------}}
+	  {{=MENU(response.menu,_class='sf-menu')}}
+          <script>
+	    jQuery(document).ready(function(){
+              jQuery('ul.sf-menu').superfish({delay:400});});
+	  </script>
+	</div>
+	<div class="ez-wr">
+	  <div class="ez-fl ez-negmx">
+            <div class="ez-box" id="left_sidebar">{{#------ unused space}}</div>
+	  </div>
+	  <div class="ez-fl ez-negmr">
+            <div class="ez-box" id="content">{{include}}</div>
+	  </div>
+	  <div class="ez-last ez-oh">
+            <div class="ez-box" id="right_sidebar">{{#------ unused space}}</div>
+	  </div>
+	</div>
+	<div class="ez-box" id="footer">
+          {{=T('Copyright')}} &#169; 2010 -
+          {{=T('Powered by')}} <a href="http://www.web2py.com">web2py</a>
+	</div>
+      </div>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,14 @@
+(dp1
+S'role'
+p2
+S'CHAR(512)'
+p3
+sS'id'
+p4
+S'INTEGER PRIMARY KEY AUTOINCREMENT'
+p5
+sS'description'
+p6
+S'TEXT'
+p7
+s.

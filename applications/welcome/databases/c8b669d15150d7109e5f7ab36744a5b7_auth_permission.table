@@ -1,0 +1,22 @@
+(dp1
+S'record_id'
+p2
+S'INTEGER'
+p3
+sS'group_id'
+p4
+S'INTEGER REFERENCES auth_group(id) ON DELETE CASCADE'
+p5
+sS'table_name'
+p6
+S'CHAR(512)'
+p7
+sS'id'
+p8
+S'INTEGER PRIMARY KEY AUTOINCREMENT'
+p9
+sS'name'
+p10
+S'CHAR(512)'
+p11
+s.

@@ -1,0 +1,1325 @@
+<?xml version="1.0" encoding="ascii"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+          "DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>web2py.gluon.sanitizer</title>
+  <link rel="stylesheet" href="epydoc.css" type="text/css" />
+  <script type="text/javascript" src="epydoc.js"></script>
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="#204080"
+      alink="#204080">
+<!-- ==================== NAVIGATION BAR ==================== -->
+<table class="navbar" border="0" width="100%" cellpadding="0"
+       bgcolor="#a0c0ff" cellspacing="0">
+  <tr valign="middle">
+  <!-- Home link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="web2py.gluon-module.html">Home</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Tree link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="module-tree.html">Trees</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Index link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="identifier-index.html">Indices</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Help link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Project homepage -->
+      <th class="navbar" align="right" width="100%">
+        <table border="0" cellpadding="0" cellspacing="0">
+          <tr><th class="navbar" align="center"
+            ><a class="navbar" target="_top" href="http://www.web2py.com">web2py Web Framework</a></th>
+          </tr></table></th>
+  </tr>
+</table>
+<table width="100%" cellpadding="0" cellspacing="0">
+  <tr valign="top">
+    <td width="100%">
+      <span class="breadcrumbs">
+        Package&nbsp;web2py ::
+        <a href="web2py.gluon-module.html">Package&nbsp;gluon</a> ::
+        Module&nbsp;sanitizer
+      </span>
+    </td>
+    <td>
+      <table cellpadding="0" cellspacing="0">
+        <!-- hide/show private -->
+        <tr><td align="right"><span class="options">[<a href="javascript:void(0);" class="privatelink"
+    onclick="toggle_private();">hide&nbsp;private</a>]</span></td></tr>
+        <tr><td align="right"><span class="options"
+            >[<a href="frames.html" target="_top">frames</a
+            >]&nbsp;|&nbsp;<a href="web2py.gluon.sanitizer-pysrc.html"
+            target="_top">no&nbsp;frames</a>]</span></td></tr>
+      </table>
+    </td>
+  </tr>
+</table>
+<h1 class="epydoc">Source Code for <a href="web2py.gluon.sanitizer-module.html">Module web2py.gluon.sanitizer</a></h1>
+<pre class="py-src">
+<a name="L1"></a><tt class="py-lineno">  1</tt>  <tt class="py-line"><tt class="py-comment">#!/usr/bin/env python</tt> </tt>
+<a name="L2"></a><tt class="py-lineno">  2</tt>  <tt class="py-line"><tt class="py-comment"></tt><tt class="py-comment"># -*- coding: utf-8 -*-</tt> </tt>
+<a name="L3"></a><tt class="py-lineno">  3</tt>  <tt class="py-line"><tt class="py-comment"></tt> </tt>
+<a name="L4"></a><tt class="py-lineno">  4</tt>  <tt class="py-line"><tt class="py-docstring">"""</tt> </tt>
+<a name="L5"></a><tt class="py-lineno">  5</tt>  <tt class="py-line"><tt class="py-docstring">::</tt> </tt>
+<a name="L6"></a><tt class="py-lineno">  6</tt>  <tt class="py-line"><tt class="py-docstring"></tt> </tt>
+<a name="L7"></a><tt class="py-lineno">  7</tt>  <tt class="py-line"><tt class="py-docstring">    # from http://aspn.activestate.com/ASPN/Cookbook/Python/Recipe/496942</tt> </tt>
+<a name="L8"></a><tt class="py-lineno">  8</tt>  <tt class="py-line"><tt class="py-docstring">    # Title: Cross-site scripting (XSS) defense</tt> </tt>
+<a name="L9"></a><tt class="py-lineno">  9</tt>  <tt class="py-line"><tt class="py-docstring">    # Submitter: Josh Goldfoot (other recipes)</tt> </tt>
+<a name="L10"></a><tt class="py-lineno"> 10</tt>  <tt class="py-line"><tt class="py-docstring">    # Last Updated: 2006/08/05</tt> </tt>
+<a name="L11"></a><tt class="py-lineno"> 11</tt>  <tt class="py-line"><tt class="py-docstring">    # Version no: 1.0</tt> </tt>
+<a name="L12"></a><tt class="py-lineno"> 12</tt>  <tt class="py-line"><tt class="py-docstring"></tt> </tt>
+<a name="L13"></a><tt class="py-lineno"> 13</tt>  <tt class="py-line"><tt class="py-docstring">"""</tt> </tt>
+<a name="L14"></a><tt class="py-lineno"> 14</tt>  <tt class="py-line"> </tt>
+<a name="L15"></a><tt class="py-lineno"> 15</tt>  <tt class="py-line"> </tt>
+<a name="L16"></a><tt class="py-lineno"> 16</tt>  <tt class="py-line"><tt class="py-keyword">from</tt> <tt class="py-name">htmllib</tt> <tt class="py-keyword">import</tt> <tt class="py-name">HTMLParser</tt> </tt>
+<a name="L17"></a><tt class="py-lineno"> 17</tt>  <tt class="py-line"><tt class="py-keyword">from</tt> <tt class="py-name">cgi</tt> <tt class="py-keyword">import</tt> <tt class="py-name">escape</tt> </tt>
+<a name="L18"></a><tt class="py-lineno"> 18</tt>  <tt class="py-line"><tt class="py-keyword">from</tt> <tt class="py-name">urlparse</tt> <tt class="py-keyword">import</tt> <tt class="py-name">urlparse</tt> </tt>
+<a name="L19"></a><tt class="py-lineno"> 19</tt>  <tt class="py-line"><tt class="py-keyword">from</tt> <tt id="link-0" class="py-name" targets="Method web2py.gluon.dal.Field.formatter()=web2py.gluon.dal.Field-class.html#formatter,Method web2py.gluon.sql.Field.formatter()=web2py.gluon.sql.Field-class.html#formatter,Method web2py.gluon.validators.IS_DATE.formatter()=web2py.gluon.validators.IS_DATE-class.html#formatter,Method web2py.gluon.validators.IS_DATETIME.formatter()=web2py.gluon.validators.IS_DATETIME-class.html#formatter,Method web2py.gluon.validators.IS_EMPTY_OR.formatter()=web2py.gluon.validators.IS_EMPTY_OR-class.html#formatter,Method web2py.gluon.validators.Validator.formatter()=web2py.gluon.validators.Validator-class.html#formatter"><a title="web2py.gluon.dal.Field.formatter
+web2py.gluon.sql.Field.formatter
+web2py.gluon.validators.IS_DATE.formatter
+web2py.gluon.validators.IS_DATETIME.formatter
+web2py.gluon.validators.IS_EMPTY_OR.formatter
+web2py.gluon.validators.Validator.formatter" class="py-name" href="#" onclick="return doclink('link-0', 'formatter', 'link-0');">formatter</a></tt> <tt class="py-keyword">import</tt> <tt class="py-name">AbstractFormatter</tt> </tt>
+<a name="L20"></a><tt class="py-lineno"> 20</tt>  <tt class="py-line"><tt class="py-keyword">from</tt> <tt class="py-name">htmlentitydefs</tt> <tt class="py-keyword">import</tt> <tt class="py-name">entitydefs</tt> </tt>
+<a name="L21"></a><tt class="py-lineno"> 21</tt>  <tt class="py-line"><tt class="py-keyword">from</tt> <tt id="link-1" class="py-name" targets="Method web2py.gluon.dal.Rows.xml()=web2py.gluon.dal.Rows-class.html#xml,Method web2py.gluon.html.CODE.xml()=web2py.gluon.html.CODE-class.html#xml,Method web2py.gluon.html.DIV.xml()=web2py.gluon.html.DIV-class.html#xml,Method web2py.gluon.html.FORM.xml()=web2py.gluon.html.FORM-class.html#xml,Method web2py.gluon.html.HTML.xml()=web2py.gluon.html.HTML-class.html#xml,Method web2py.gluon.html.INPUT.xml()=web2py.gluon.html.INPUT-class.html#xml,Method web2py.gluon.html.MARKMIN.xml()=web2py.gluon.html.MARKMIN-class.html#xml,Method web2py.gluon.html.MENU.xml()=web2py.gluon.html.MENU-class.html#xml,Method web2py.gluon.html.P.xml()=web2py.gluon.html.P-class.html#xml,Method web2py.gluon.html.SCRIPT.xml()=web2py.gluon.html.SCRIPT-class.html#xml,Method web2py.gluon.html.STYLE.xml()=web2py.gluon.html.STYLE-class.html#xml,Method web2py.gluon.html.XHTML.xml()=web2py.gluon.html.XHTML-class.html#xml,Method web2py.gluon.html.XML.xml()=web2py.gluon.html.XML-class.html#xml,Method web2py.gluon.html.XmlComponent.xml()=web2py.gluon.html.XmlComponent-class.html#xml,Method web2py.gluon.languages.lazyT.xml()=web2py.gluon.languages.lazyT-class.html#xml,Function web2py.gluon.serializers.xml()=web2py.gluon.serializers-module.html#xml,Method web2py.gluon.sql.Rows.xml()=web2py.gluon.sql.Rows-class.html#xml,Method web2py.gluon.tools.Recaptcha.xml()=web2py.gluon.tools.Recaptcha-class.html#xml,Method web2py.gluon.tools.Service.xml()=web2py.gluon.tools.Service-class.html#xml"><a title="web2py.gluon.dal.Rows.xml
+web2py.gluon.html.CODE.xml
+web2py.gluon.html.DIV.xml
+web2py.gluon.html.FORM.xml
+web2py.gluon.html.HTML.xml
+web2py.gluon.html.INPUT.xml
+web2py.gluon.html.MARKMIN.xml
+web2py.gluon.html.MENU.xml
+web2py.gluon.html.P.xml
+web2py.gluon.html.SCRIPT.xml
+web2py.gluon.html.STYLE.xml
+web2py.gluon.html.XHTML.xml
+web2py.gluon.html.XML.xml
+web2py.gluon.html.XmlComponent.xml
+web2py.gluon.languages.lazyT.xml
+web2py.gluon.serializers.xml
+web2py.gluon.sql.Rows.xml
+web2py.gluon.tools.Recaptcha.xml
+web2py.gluon.tools.Service.xml" class="py-name" href="#" onclick="return doclink('link-1', 'xml', 'link-1');">xml</a></tt><tt class="py-op">.</tt><tt class="py-name">sax</tt><tt class="py-op">.</tt><tt class="py-name">saxutils</tt> <tt class="py-keyword">import</tt> <tt class="py-name">quoteattr</tt> </tt>
+<a name="L22"></a><tt class="py-lineno"> 22</tt>  <tt class="py-line"> </tt>
+<a name="L23"></a><tt class="py-lineno"> 23</tt>  <tt class="py-line"><tt class="py-name">__all__</tt> <tt class="py-op">=</tt> <tt class="py-op">[</tt><tt class="py-string">'sanitize'</tt><tt class="py-op">]</tt> </tt>
+<a name="L24"></a><tt class="py-lineno"> 24</tt>  <tt class="py-line"> </tt>
+<a name="L25"></a><tt class="py-lineno"> 25</tt>  <tt class="py-line"> </tt>
+<a name="xssescape"></a><div id="xssescape-def"><a name="L26"></a><tt class="py-lineno"> 26</tt> <a class="py-toggle" href="#" id="xssescape-toggle" onclick="return toggle('xssescape');">-</a><tt class="py-line"><tt class="py-keyword">def</tt> <a class="py-def-name" href="web2py.gluon.sanitizer-module.html#xssescape">xssescape</a><tt class="py-op">(</tt><tt class="py-param">text</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="xssescape-collapsed" style="display:none;" pad="+++" indent="++++"></div><div id="xssescape-expanded"><a name="L27"></a><tt class="py-lineno"> 27</tt>  <tt class="py-line">    <tt class="py-docstring">"""Gets rid of &lt; and &gt; and &amp; and, for good measure, :"""</tt> </tt>
+<a name="L28"></a><tt class="py-lineno"> 28</tt>  <tt class="py-line"> </tt>
+<a name="L29"></a><tt class="py-lineno"> 29</tt>  <tt class="py-line">    <tt class="py-keyword">return</tt> <tt class="py-name">escape</tt><tt class="py-op">(</tt><tt class="py-name">text</tt><tt class="py-op">,</tt> <tt class="py-name">quote</tt><tt class="py-op">=</tt><tt class="py-name">True</tt><tt class="py-op">)</tt><tt class="py-op">.</tt><tt id="link-2" class="py-name" targets="Function web2py.gluon.template.replace()=web2py.gluon.template-module.html#replace"><a title="web2py.gluon.template.replace" class="py-name" href="#" onclick="return doclink('link-2', 'replace', 'link-2');">replace</a></tt><tt class="py-op">(</tt><tt class="py-string">':'</tt><tt class="py-op">,</tt> <tt class="py-string">'&amp;#58;'</tt><tt class="py-op">)</tt> </tt>
+</div><a name="L30"></a><tt class="py-lineno"> 30</tt>  <tt class="py-line"> </tt>
+<a name="L31"></a><tt class="py-lineno"> 31</tt>  <tt class="py-line"> </tt>
+<a name="XssCleaner"></a><div id="XssCleaner-def"><a name="L32"></a><tt class="py-lineno"> 32</tt> <a class="py-toggle" href="#" id="XssCleaner-toggle" onclick="return toggle('XssCleaner');">-</a><tt class="py-line"><tt class="py-keyword">class</tt> <a class="py-def-name" href="web2py.gluon.sanitizer.XssCleaner-class.html">XssCleaner</a><tt class="py-op">(</tt><tt class="py-base-class">HTMLParser</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="XssCleaner-collapsed" style="display:none;" pad="+++" indent="++++"></div><div id="XssCleaner-expanded"><a name="L33"></a><tt class="py-lineno"> 33</tt>  <tt class="py-line"> </tt>
+<a name="XssCleaner.__init__"></a><div id="XssCleaner.__init__-def"><a name="L34"></a><tt class="py-lineno"> 34</tt> <a class="py-toggle" href="#" id="XssCleaner.__init__-toggle" onclick="return toggle('XssCleaner.__init__');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="web2py.gluon.sanitizer.XssCleaner-class.html#__init__">__init__</a><tt class="py-op">(</tt> </tt>
+<a name="L35"></a><tt class="py-lineno"> 35</tt>  <tt class="py-line">        <tt class="py-param">self</tt><tt class="py-op">,</tt> </tt>
+<a name="L36"></a><tt class="py-lineno"> 36</tt>  <tt class="py-line">        <tt class="py-param">permitted_tags</tt><tt class="py-op">=</tt><tt class="py-op">[</tt> </tt>
+<a name="L37"></a><tt class="py-lineno"> 37</tt>  <tt class="py-line">            <tt class="py-string">'a'</tt><tt class="py-op">,</tt> </tt>
+<a name="L38"></a><tt class="py-lineno"> 38</tt>  <tt class="py-line">            <tt class="py-string">'b'</tt><tt class="py-op">,</tt> </tt>
+<a name="L39"></a><tt class="py-lineno"> 39</tt>  <tt class="py-line">            <tt class="py-string">'blockquote'</tt><tt class="py-op">,</tt> </tt>
+<a name="L40"></a><tt class="py-lineno"> 40</tt>  <tt class="py-line">            <tt class="py-string">'br/'</tt><tt class="py-op">,</tt> </tt>
+<a name="L41"></a><tt class="py-lineno"> 41</tt>  <tt class="py-line">            <tt class="py-string">'i'</tt><tt class="py-op">,</tt> </tt>
+<a name="L42"></a><tt class="py-lineno"> 42</tt>  <tt class="py-line">            <tt class="py-string">'li'</tt><tt class="py-op">,</tt> </tt>
+<a name="L43"></a><tt class="py-lineno"> 43</tt>  <tt class="py-line">            <tt class="py-string">'ol'</tt><tt class="py-op">,</tt> </tt>
+<a name="L44"></a><tt class="py-lineno"> 44</tt>  <tt class="py-line">            <tt class="py-string">'ul'</tt><tt class="py-op">,</tt> </tt>
+<a name="L45"></a><tt class="py-lineno"> 45</tt>  <tt class="py-line">            <tt class="py-string">'p'</tt><tt class="py-op">,</tt> </tt>
+<a name="L46"></a><tt class="py-lineno"> 46</tt>  <tt class="py-line">            <tt class="py-string">'cite'</tt><tt class="py-op">,</tt> </tt>
+<a name="L47"></a><tt class="py-lineno"> 47</tt>  <tt class="py-line">            <tt class="py-string">'code'</tt><tt class="py-op">,</tt> </tt>
+<a name="L48"></a><tt class="py-lineno"> 48</tt>  <tt class="py-line">            <tt class="py-string">'pre'</tt><tt class="py-op">,</tt> </tt>
+<a name="L49"></a><tt class="py-lineno"> 49</tt>  <tt class="py-line">            <tt class="py-string">'img/'</tt><tt class="py-op">,</tt> </tt>
+<a name="L50"></a><tt class="py-lineno"> 50</tt>  <tt class="py-line">            <tt class="py-op">]</tt><tt class="py-op">,</tt> </tt>
+<a name="L51"></a><tt class="py-lineno"> 51</tt>  <tt class="py-line">        <tt class="py-param">allowed_attributes</tt><tt class="py-op">=</tt><tt class="py-op">{</tt><tt class="py-string">'a'</tt><tt class="py-op">:</tt> <tt class="py-op">[</tt><tt class="py-string">'href'</tt><tt class="py-op">,</tt> <tt class="py-string">'title'</tt><tt class="py-op">]</tt><tt class="py-op">,</tt> <tt class="py-string">'img'</tt><tt class="py-op">:</tt> <tt class="py-op">[</tt><tt class="py-string">'src'</tt><tt class="py-op">,</tt> <tt class="py-string">'alt'</tt> </tt>
+<a name="L52"></a><tt class="py-lineno"> 52</tt>  <tt class="py-line">                            <tt class="py-op">]</tt><tt class="py-op">,</tt> <tt class="py-string">'blockquote'</tt><tt class="py-op">:</tt> <tt class="py-op">[</tt><tt class="py-string">'type'</tt><tt class="py-op">]</tt><tt class="py-op">}</tt><tt class="py-op">,</tt> </tt>
+<a name="L53"></a><tt class="py-lineno"> 53</tt>  <tt class="py-line">        <tt class="py-name">fmt</tt><tt class="py-op">=</tt><tt class="py-name">AbstractFormatter</tt><tt class="py-op">,</tt> </tt>
+<a name="L54"></a><tt class="py-lineno"> 54</tt>  <tt class="py-line">        <tt class="py-name">strip_disallowed</tt> <tt class="py-op">=</tt> <tt class="py-name">False</tt> </tt>
+<a name="L55"></a><tt class="py-lineno"> 55</tt>  <tt class="py-line">        <tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="XssCleaner.__init__-collapsed" style="display:none;" pad="+++" indent="++++++++"></div><div id="XssCleaner.__init__-expanded"><a name="L56"></a><tt class="py-lineno"> 56</tt>  <tt class="py-line"> </tt>
+<a name="L57"></a><tt class="py-lineno"> 57</tt>  <tt class="py-line">        <tt class="py-name">HTMLParser</tt><tt class="py-op">.</tt><tt id="link-3" class="py-name" targets="Method web2py.gluon.cache.Cache.__init__()=web2py.gluon.cache.Cache-class.html#__init__,Method web2py.gluon.cache.CacheAbstract.__init__()=web2py.gluon.cache.CacheAbstract-class.html#__init__,Method web2py.gluon.cache.CacheInRam.__init__()=web2py.gluon.cache.CacheInRam-class.html#__init__,Method web2py.gluon.cache.CacheOnDisk.__init__()=web2py.gluon.cache.CacheOnDisk-class.html#__init__,Method web2py.gluon.compileapp.LoadFactory.__init__()=web2py.gluon.compileapp.LoadFactory-class.html#__init__,Method web2py.gluon.dal.BaseAdapter.__init__()=web2py.gluon.dal.BaseAdapter-class.html#__init__,Method web2py.gluon.dal.DAL.__init__()=web2py.gluon.dal.DAL-class.html#__init__,Method web2py.gluon.dal.DB2Adapter.__init__()=web2py.gluon.dal.DB2Adapter-class.html#__init__,Method web2py.gluon.dal.Expression.__init__()=web2py.gluon.dal.Expression-class.html#__init__,Method web2py.gluon.dal.Field.__init__()=web2py.gluon.dal.Field-class.html#__init__,Method web2py.gluon.dal.FireBirdAdapter.__init__()=web2py.gluon.dal.FireBirdAdapter-class.html#__init__,Method web2py.gluon.dal.FireBirdEmbeddedAdapter.__init__()=web2py.gluon.dal.FireBirdEmbeddedAdapter-class.html#__init__,Method web2py.gluon.dal.InformixAdapter.__init__()=web2py.gluon.dal.InformixAdapter-class.html#__init__,Method web2py.gluon.dal.IngresAdapter.__init__()=web2py.gluon.dal.IngresAdapter-class.html#__init__,Method web2py.gluon.dal.JDBCPostgreSQLAdapter.__init__()=web2py.gluon.dal.JDBCPostgreSQLAdapter-class.html#__init__,Method web2py.gluon.dal.JDBCSQLiteAdapter.__init__()=web2py.gluon.dal.JDBCSQLiteAdapter-class.html#__init__,Method web2py.gluon.dal.Logger.__init__()=web2py.gluon.dal.Logger-class.html#__init__,Method web2py.gluon.dal.MSSQLAdapter.__init__()=web2py.gluon.dal.MSSQLAdapter-class.html#__init__,Method web2py.gluon.dal.MySQLAdapter.__init__()=web2py.gluon.dal.MySQLAdapter-class.html#__init__,Method web2py.gluon.dal.OracleAdapter.__init__()=web2py.gluon.dal.OracleAdapter-class.html#__init__,Method web2py.gluon.dal.PostgreSQLAdapter.__init__()=web2py.gluon.dal.PostgreSQLAdapter-class.html#__init__,Method web2py.gluon.dal.Query.__init__()=web2py.gluon.dal.Query-class.html#__init__,Method web2py.gluon.dal.Rows.__init__()=web2py.gluon.dal.Rows-class.html#__init__,Method web2py.gluon.dal.SQLALL.__init__()=web2py.gluon.dal.SQLALL-class.html#__init__,Method web2py.gluon.dal.SQLCustomType.__init__()=web2py.gluon.dal.SQLCustomType-class.html#__init__,Method web2py.gluon.dal.SQLiteAdapter.__init__()=web2py.gluon.dal.SQLiteAdapter-class.html#__init__,Method web2py.gluon.dal.Set.__init__()=web2py.gluon.dal.Set-class.html#__init__,Method web2py.gluon.dal.Table.__init__()=web2py.gluon.dal.Table-class.html#__init__,Method web2py.gluon.globals.Request.__init__()=web2py.gluon.globals.Request-class.html#__init__,Method web2py.gluon.globals.Response.__init__()=web2py.gluon.globals.Response-class.html#__init__,Method web2py.gluon.highlight.Highlighter.__init__()=web2py.gluon.highlight.Highlighter-class.html#__init__,Method web2py.gluon.html.BEAUTIFY.__init__()=web2py.gluon.html.BEAUTIFY-class.html#__init__,Method web2py.gluon.html.DIV.__init__()=web2py.gluon.html.DIV-class.html#__init__,Method web2py.gluon.html.FORM.__init__()=web2py.gluon.html.FORM-class.html#__init__,Method web2py.gluon.html.MARKMIN.__init__()=web2py.gluon.html.MARKMIN-class.html#__init__,Method web2py.gluon.html.MENU.__init__()=web2py.gluon.html.MENU-class.html#__init__,Method web2py.gluon.html.XML.__init__()=web2py.gluon.html.XML-class.html#__init__,Method web2py.gluon.html.web2pyHTMLParser.__init__()=web2py.gluon.html.web2pyHTMLParser-class.html#__init__,Method web2py.gluon.http.HTTP.__init__()=web2py.gluon.http.HTTP-class.html#__init__,Method web2py.gluon.languages.lazyT.__init__()=web2py.gluon.languages.lazyT-class.html#__init__,Method web2py.gluon.languages.translator.__init__()=web2py.gluon.languages.translator-class.html#__init__,Method web2py.gluon.main.HttpServer.__init__()=web2py.gluon.main.HttpServer-class.html#__init__,Method web2py.gluon.newcron.Token.__init__()=web2py.gluon.newcron.Token-class.html#__init__,Method web2py.gluon.newcron.cronlauncher.__init__()=web2py.gluon.newcron.cronlauncher-class.html#__init__,Method web2py.gluon.newcron.extcron.__init__()=web2py.gluon.newcron.extcron-class.html#__init__,Method web2py.gluon.newcron.hardcron.__init__()=web2py.gluon.newcron.hardcron-class.html#__init__,Method web2py.gluon.newcron.softcron.__init__()=web2py.gluon.newcron.softcron-class.html#__init__,Method web2py.gluon.restricted.RestrictedError.__init__()=web2py.gluon.restricted.RestrictedError-class.html#__init__,Method web2py.gluon.restricted.TicketStorage.__init__()=web2py.gluon.restricted.TicketStorage-class.html#__init__,Method web2py.gluon.rocket.ChunkedReader.__init__()=web2py.gluon.rocket.ChunkedReader-class.html#__init__,Method web2py.gluon.rocket.Connection.__init__()=web2py.gluon.rocket.Connection-class.html#__init__,Method web2py.gluon.rocket.FileWrapper.__init__()=web2py.gluon.rocket.FileWrapper-class.html#__init__,Method web2py.gluon.rocket.Headers.__init__()=web2py.gluon.rocket.Headers-class.html#__init__,Method web2py.gluon.rocket.Rocket.__init__()=web2py.gluon.rocket.Rocket-class.html#__init__,Method web2py.gluon.rocket.ThreadPool.__init__()=web2py.gluon.rocket.ThreadPool-class.html#__init__,Method web2py.gluon.rocket.WSGIWorker.__init__()=web2py.gluon.rocket.WSGIWorker-class.html#__init__,Method web2py.gluon.rocket.Worker.__init__()=web2py.gluon.rocket.Worker-class.html#__init__,Method web2py.gluon.sanitizer.XssCleaner.__init__()=web2py.gluon.sanitizer.XssCleaner-class.html#__init__,Method web2py.gluon.sneaky.ChunkedReader.__init__()=web2py.gluon.sneaky.ChunkedReader-class.html#__init__,Method web2py.gluon.sneaky.Sneaky.__init__()=web2py.gluon.sneaky.Sneaky-class.html#__init__,Method web2py.gluon.sneaky2.ChunkedReader.__init__()=web2py.gluon.sneaky2.ChunkedReader-class.html#__init__,Method web2py.gluon.sneaky2.DispatcherThread.__init__()=web2py.gluon.sneaky2.DispatcherThread-class.html#__init__,Method web2py.gluon.sneaky2.Sneaky.__init__()=web2py.gluon.sneaky2.Sneaky-class.html#__init__,Method web2py.gluon.sneaky3.ChunkedReader.__init__()=web2py.gluon.sneaky3.ChunkedReader-class.html#__init__,Method web2py.gluon.sneaky3.Sneaky.__init__()=web2py.gluon.sneaky3.Sneaky-class.html#__init__,Method web2py.gluon.sql.Expression.__init__()=web2py.gluon.sql.Expression-class.html#__init__,Method web2py.gluon.sql.Field.__init__()=web2py.gluon.sql.Field-class.html#__init__,Method web2py.gluon.sql.KeyedTable.__init__()=web2py.gluon.sql.KeyedTable-class.html#__init__,Method web2py.gluon.sql.Query.__init__()=web2py.gluon.sql.Query-class.html#__init__,Method web2py.gluon.sql.Rows.__init__()=web2py.gluon.sql.Rows-class.html#__init__,Method web2py.gluon.sql.SQLALL.__init__()=web2py.gluon.sql.SQLALL-class.html#__init__,Method web2py.gluon.sql.SQLCustomType.__init__()=web2py.gluon.sql.SQLCustomType-class.html#__init__,Method web2py.gluon.sql.SQLDB.__init__()=web2py.gluon.sql.SQLDB-class.html#__init__,Method web2py.gluon.sql.SQLJoin.__init__()=web2py.gluon.sql.SQLJoin-class.html#__init__,Method web2py.gluon.sql.Set.__init__()=web2py.gluon.sql.Set-class.html#__init__,Method web2py.gluon.sql.Table.__init__()=web2py.gluon.sql.Table-class.html#__init__,Method web2py.gluon.sqlhtml.AutocompleteWidget.__init__()=web2py.gluon.sqlhtml.AutocompleteWidget-class.html#__init__,Method web2py.gluon.sqlhtml.SQLFORM.__init__()=web2py.gluon.sqlhtml.SQLFORM-class.html#__init__,Method web2py.gluon.sqlhtml.SQLTABLE.__init__()=web2py.gluon.sqlhtml.SQLTABLE-class.html#__init__,Method web2py.gluon.storage.Messages.__init__()=web2py.gluon.storage.Messages-class.html#__init__,Method web2py.gluon.template2.BlockNode.__init__()=web2py.gluon.template2.BlockNode-class.html#__init__,Method web2py.gluon.template2.Content.__init__()=web2py.gluon.template2.Content-class.html#__init__,Method web2py.gluon.template2.Node.__init__()=web2py.gluon.template2.Node-class.html#__init__,Method web2py.gluon.template2.SuperNode.__init__()=web2py.gluon.template2.SuperNode-class.html#__init__,Method web2py.gluon.template2.TemplateParser.__init__()=web2py.gluon.template2.TemplateParser-class.html#__init__,Method web2py.gluon.template_new.BlockNode.__init__()=web2py.gluon.template_new.BlockNode-class.html#__init__,Method web2py.gluon.template_new.Content.__init__()=web2py.gluon.template_new.Content-class.html#__init__,Method web2py.gluon.template_new.Node.__init__()=web2py.gluon.template_new.Node-class.html#__init__,Method web2py.gluon.template_new.SuperNode.__init__()=web2py.gluon.template_new.SuperNode-class.html#__init__,Method web2py.gluon.template_new.TemplateParser.__init__()=web2py.gluon.template_new.TemplateParser-class.html#__init__,Method web2py.gluon.tools.Auth.__init__()=web2py.gluon.tools.Auth-class.html#__init__,Method web2py.gluon.tools.Crud.__init__()=web2py.gluon.tools.Crud-class.html#__init__,Method web2py.gluon.tools.Mail.Attachment.__init__()=web2py.gluon.tools.Mail.Attachment-class.html#__init__,Method web2py.gluon.tools.Mail.__init__()=web2py.gluon.tools.Mail-class.html#__init__,Method web2py.gluon.tools.PluginManager.__init__()=web2py.gluon.tools.PluginManager-class.html#__init__,Method web2py.gluon.tools.Recaptcha.__init__()=web2py.gluon.tools.Recaptcha-class.html#__init__,Method web2py.gluon.tools.Service.__init__()=web2py.gluon.tools.Service-class.html#__init__,Method web2py.gluon.validators.CLEANUP.__init__()=web2py.gluon.validators.CLEANUP-class.html#__init__,Method web2py.gluon.validators.CRYPT.__init__()=web2py.gluon.validators.CRYPT-class.html#__init__,Method web2py.gluon.validators.IS_ALPHANUMERIC.__init__()=web2py.gluon.validators.IS_ALPHANUMERIC-class.html#__init__,Method web2py.gluon.validators.IS_DATE.__init__()=web2py.gluon.validators.IS_DATE-class.html#__init__,Method web2py.gluon.validators.IS_DATETIME.__init__()=web2py.gluon.validators.IS_DATETIME-class.html#__init__,Method web2py.gluon.validators.IS_DATETIME_IN_RANGE.__init__()=web2py.gluon.validators.IS_DATETIME_IN_RANGE-class.html#__init__,Method web2py.gluon.validators.IS_DATE_IN_RANGE.__init__()=web2py.gluon.validators.IS_DATE_IN_RANGE-class.html#__init__,Method web2py.gluon.validators.IS_DECIMAL_IN_RANGE.__init__()=web2py.gluon.validators.IS_DECIMAL_IN_RANGE-class.html#__init__,Method web2py.gluon.validators.IS_EMAIL.__init__()=web2py.gluon.validators.IS_EMAIL-class.html#__init__,Method web2py.gluon.validators.IS_EMPTY_OR.__init__()=web2py.gluon.validators.IS_EMPTY_OR-class.html#__init__,Method web2py.gluon.validators.IS_EQUAL_TO.__init__()=web2py.gluon.validators.IS_EQUAL_TO-class.html#__init__,Method web2py.gluon.validators.IS_EXPR.__init__()=web2py.gluon.validators.IS_EXPR-class.html#__init__,Method web2py.gluon.validators.IS_FLOAT_IN_RANGE.__init__()=web2py.gluon.validators.IS_FLOAT_IN_RANGE-class.html#__init__,Method web2py.gluon.validators.IS_GENERIC_URL.__init__()=web2py.gluon.validators.IS_GENERIC_URL-class.html#__init__,Method web2py.gluon.validators.IS_HTTP_URL.__init__()=web2py.gluon.validators.IS_HTTP_URL-class.html#__init__,Method web2py.gluon.validators.IS_IMAGE.__init__()=web2py.gluon.validators.IS_IMAGE-class.html#__init__,Method web2py.gluon.validators.IS_INT_IN_RANGE.__init__()=web2py.gluon.validators.IS_INT_IN_RANGE-class.html#__init__,Method web2py.gluon.validators.IS_IN_DB.__init__()=web2py.gluon.validators.IS_IN_DB-class.html#__init__,Method web2py.gluon.validators.IS_IN_SET.__init__()=web2py.gluon.validators.IS_IN_SET-class.html#__init__,Method web2py.gluon.validators.IS_IN_SUBSET.__init__()=web2py.gluon.validators.IS_IN_SUBSET-class.html#__init__,Method web2py.gluon.validators.IS_IPV4.__init__()=web2py.gluon.validators.IS_IPV4-class.html#__init__,Method web2py.gluon.validators.IS_LENGTH.__init__()=web2py.gluon.validators.IS_LENGTH-class.html#__init__,Method web2py.gluon.validators.IS_LIST_OF.__init__()=web2py.gluon.validators.IS_LIST_OF-class.html#__init__,Method web2py.gluon.validators.IS_MATCH.__init__()=web2py.gluon.validators.IS_MATCH-class.html#__init__,Method web2py.gluon.validators.IS_NOT_EMPTY.__init__()=web2py.gluon.validators.IS_NOT_EMPTY-class.html#__init__,Method web2py.gluon.validators.IS_NOT_IN_DB.__init__()=web2py.gluon.validators.IS_NOT_IN_DB-class.html#__init__,Method web2py.gluon.validators.IS_SLUG.__init__()=web2py.gluon.validators.IS_SLUG-class.html#__init__,Method web2py.gluon.validators.IS_STRONG.__init__()=web2py.gluon.validators.IS_STRONG-class.html#__init__,Method web2py.gluon.validators.IS_TIME.__init__()=web2py.gluon.validators.IS_TIME-class.html#__init__,Method web2py.gluon.validators.IS_UPLOAD_FILENAME.__init__()=web2py.gluon.validators.IS_UPLOAD_FILENAME-class.html#__init__,Method web2py.gluon.validators.IS_URL.__init__()=web2py.gluon.validators.IS_URL-class.html#__init__,Method web2py.gluon.widget.IO.__init__()=web2py.gluon.widget.IO-class.html#__init__,Method web2py.gluon.widget.web2pyDialog.__init__()=web2py.gluon.widget.web2pyDialog-class.html#__init__,Method web2py.gluon.winservice.Service.__init__()=web2py.gluon.winservice.Service-class.html#__init__,Method web2py.gluon.wsgiserver.CherryPyWSGIServer.__init__()=web2py.gluon.wsgiserver.CherryPyWSGIServer-class.html#__init__,Method web2py.gluon.wsgiserver.HTTPConnection.__init__()=web2py.gluon.wsgiserver.HTTPConnection-class.html#__init__,Method web2py.gluon.wsgiserver.HTTPRequest.__init__()=web2py.gluon.wsgiserver.HTTPRequest-class.html#__init__,Method web2py.gluon.wsgiserver.KnownLengthRFile.__init__()=web2py.gluon.wsgiserver.KnownLengthRFile-class.html#__init__,Method web2py.gluon.wsgiserver.SSLAdapter.__init__()=web2py.gluon.wsgiserver.SSLAdapter-class.html#__init__,Method web2py.gluon.wsgiserver.SSLConnection.__init__()=web2py.gluon.wsgiserver.SSLConnection-class.html#__init__,Method web2py.gluon.wsgiserver.SizeCheckWrapper.__init__()=web2py.gluon.wsgiserver.SizeCheckWrapper-class.html#__init__,Method web2py.gluon.wsgiserver.ThreadPool.__init__()=web2py.gluon.wsgiserver.ThreadPool-class.html#__init__,Method web2py.gluon.wsgiserver.WSGIPathInfoDispatcher.__init__()=web2py.gluon.wsgiserver.WSGIPathInfoDispatcher-class.html#__init__,Method web2py.gluon.wsgiserver.WorkerThread.__init__()=web2py.gluon.wsgiserver.WorkerThread-class.html#__init__,Method web2py.gluon.wsgiserver.pyOpenSSLAdapter.__init__()=web2py.gluon.wsgiserver.pyOpenSSLAdapter-class.html#__init__"><a title="web2py.gluon.cache.Cache.__init__
+web2py.gluon.cache.CacheAbstract.__init__
+web2py.gluon.cache.CacheInRam.__init__
+web2py.gluon.cache.CacheOnDisk.__init__
+web2py.gluon.compileapp.LoadFactory.__init__
+web2py.gluon.dal.BaseAdapter.__init__
+web2py.gluon.dal.DAL.__init__
+web2py.gluon.dal.DB2Adapter.__init__
+web2py.gluon.dal.Expression.__init__
+web2py.gluon.dal.Field.__init__
+web2py.gluon.dal.FireBirdAdapter.__init__
+web2py.gluon.dal.FireBirdEmbeddedAdapter.__init__
+web2py.gluon.dal.InformixAdapter.__init__
+web2py.gluon.dal.IngresAdapter.__init__
+web2py.gluon.dal.JDBCPostgreSQLAdapter.__init__
+web2py.gluon.dal.JDBCSQLiteAdapter.__init__
+web2py.gluon.dal.Logger.__init__
+web2py.gluon.dal.MSSQLAdapter.__init__
+web2py.gluon.dal.MySQLAdapter.__init__
+web2py.gluon.dal.OracleAdapter.__init__
+web2py.gluon.dal.PostgreSQLAdapter.__init__
+web2py.gluon.dal.Query.__init__
+web2py.gluon.dal.Rows.__init__
+web2py.gluon.dal.SQLALL.__init__
+web2py.gluon.dal.SQLCustomType.__init__
+web2py.gluon.dal.SQLiteAdapter.__init__
+web2py.gluon.dal.Set.__init__
+web2py.gluon.dal.Table.__init__
+web2py.gluon.globals.Request.__init__
+web2py.gluon.globals.Response.__init__
+web2py.gluon.highlight.Highlighter.__init__
+web2py.gluon.html.BEAUTIFY.__init__
+web2py.gluon.html.DIV.__init__
+web2py.gluon.html.FORM.__init__
+web2py.gluon.html.MARKMIN.__init__
+web2py.gluon.html.MENU.__init__
+web2py.gluon.html.XML.__init__
+web2py.gluon.html.web2pyHTMLParser.__init__
+web2py.gluon.http.HTTP.__init__
+web2py.gluon.languages.lazyT.__init__
+web2py.gluon.languages.translator.__init__
+web2py.gluon.main.HttpServer.__init__
+web2py.gluon.newcron.Token.__init__
+web2py.gluon.newcron.cronlauncher.__init__
+web2py.gluon.newcron.extcron.__init__
+web2py.gluon.newcron.hardcron.__init__
+web2py.gluon.newcron.softcron.__init__
+web2py.gluon.restricted.RestrictedError.__init__
+web2py.gluon.restricted.TicketStorage.__init__
+web2py.gluon.rocket.ChunkedReader.__init__
+web2py.gluon.rocket.Connection.__init__
+web2py.gluon.rocket.FileWrapper.__init__
+web2py.gluon.rocket.Headers.__init__
+web2py.gluon.rocket.Rocket.__init__
+web2py.gluon.rocket.ThreadPool.__init__
+web2py.gluon.rocket.WSGIWorker.__init__
+web2py.gluon.rocket.Worker.__init__
+web2py.gluon.sanitizer.XssCleaner.__init__
+web2py.gluon.sneaky.ChunkedReader.__init__
+web2py.gluon.sneaky.Sneaky.__init__
+web2py.gluon.sneaky2.ChunkedReader.__init__
+web2py.gluon.sneaky2.DispatcherThread.__init__
+web2py.gluon.sneaky2.Sneaky.__init__
+web2py.gluon.sneaky3.ChunkedReader.__init__
+web2py.gluon.sneaky3.Sneaky.__init__
+web2py.gluon.sql.Expression.__init__
+web2py.gluon.sql.Field.__init__
+web2py.gluon.sql.KeyedTable.__init__
+web2py.gluon.sql.Query.__init__
+web2py.gluon.sql.Rows.__init__
+web2py.gluon.sql.SQLALL.__init__
+web2py.gluon.sql.SQLCustomType.__init__
+web2py.gluon.sql.SQLDB.__init__
+web2py.gluon.sql.SQLJoin.__init__
+web2py.gluon.sql.Set.__init__
+web2py.gluon.sql.Table.__init__
+web2py.gluon.sqlhtml.AutocompleteWidget.__init__
+web2py.gluon.sqlhtml.SQLFORM.__init__
+web2py.gluon.sqlhtml.SQLTABLE.__init__
+web2py.gluon.storage.Messages.__init__
+web2py.gluon.template2.BlockNode.__init__
+web2py.gluon.template2.Content.__init__
+web2py.gluon.template2.Node.__init__
+web2py.gluon.template2.SuperNode.__init__
+web2py.gluon.template2.TemplateParser.__init__
+web2py.gluon.template_new.BlockNode.__init__
+web2py.gluon.template_new.Content.__init__
+web2py.gluon.template_new.Node.__init__
+web2py.gluon.template_new.SuperNode.__init__
+web2py.gluon.template_new.TemplateParser.__init__
+web2py.gluon.tools.Auth.__init__
+web2py.gluon.tools.Crud.__init__
+web2py.gluon.tools.Mail.Attachment.__init__
+web2py.gluon.tools.Mail.__init__
+web2py.gluon.tools.PluginManager.__init__
+web2py.gluon.tools.Recaptcha.__init__
+web2py.gluon.tools.Service.__init__
+web2py.gluon.validators.CLEANUP.__init__
+web2py.gluon.validators.CRYPT.__init__
+web2py.gluon.validators.IS_ALPHANUMERIC.__init__
+web2py.gluon.validators.IS_DATE.__init__
+web2py.gluon.validators.IS_DATETIME.__init__
+web2py.gluon.validators.IS_DATETIME_IN_RANGE.__init__
+web2py.gluon.validators.IS_DATE_IN_RANGE.__init__
+web2py.gluon.validators.IS_DECIMAL_IN_RANGE.__init__
+web2py.gluon.validators.IS_EMAIL.__init__
+web2py.gluon.validators.IS_EMPTY_OR.__init__
+web2py.gluon.validators.IS_EQUAL_TO.__init__
+web2py.gluon.validators.IS_EXPR.__init__
+web2py.gluon.validators.IS_FLOAT_IN_RANGE.__init__
+web2py.gluon.validators.IS_GENERIC_URL.__init__
+web2py.gluon.validators.IS_HTTP_URL.__init__
+web2py.gluon.validators.IS_IMAGE.__init__
+web2py.gluon.validators.IS_INT_IN_RANGE.__init__
+web2py.gluon.validators.IS_IN_DB.__init__
+web2py.gluon.validators.IS_IN_SET.__init__
+web2py.gluon.validators.IS_IN_SUBSET.__init__
+web2py.gluon.validators.IS_IPV4.__init__
+web2py.gluon.validators.IS_LENGTH.__init__
+web2py.gluon.validators.IS_LIST_OF.__init__
+web2py.gluon.validators.IS_MATCH.__init__
+web2py.gluon.validators.IS_NOT_EMPTY.__init__
+web2py.gluon.validators.IS_NOT_IN_DB.__init__
+web2py.gluon.validators.IS_SLUG.__init__
+web2py.gluon.validators.IS_STRONG.__init__
+web2py.gluon.validators.IS_TIME.__init__
+web2py.gluon.validators.IS_UPLOAD_FILENAME.__init__
+web2py.gluon.validators.IS_URL.__init__
+web2py.gluon.widget.IO.__init__
+web2py.gluon.widget.web2pyDialog.__init__
+web2py.gluon.winservice.Service.__init__
+web2py.gluon.wsgiserver.CherryPyWSGIServer.__init__
+web2py.gluon.wsgiserver.HTTPConnection.__init__
+web2py.gluon.wsgiserver.HTTPRequest.__init__
+web2py.gluon.wsgiserver.KnownLengthRFile.__init__
+web2py.gluon.wsgiserver.SSLAdapter.__init__
+web2py.gluon.wsgiserver.SSLConnection.__init__
+web2py.gluon.wsgiserver.SizeCheckWrapper.__init__
+web2py.gluon.wsgiserver.ThreadPool.__init__
+web2py.gluon.wsgiserver.WSGIPathInfoDispatcher.__init__
+web2py.gluon.wsgiserver.WorkerThread.__init__
+web2py.gluon.wsgiserver.pyOpenSSLAdapter.__init__" class="py-name" href="#" onclick="return doclink('link-3', '__init__', 'link-3');">__init__</a></tt><tt class="py-op">(</tt><tt class="py-name">self</tt><tt class="py-op">,</tt> <tt class="py-name">fmt</tt><tt class="py-op">)</tt> </tt>
+<a name="L58"></a><tt class="py-lineno"> 58</tt>  <tt class="py-line">        <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">result</tt> <tt class="py-op">=</tt> <tt class="py-string">''</tt> </tt>
+<a name="L59"></a><tt class="py-lineno"> 59</tt>  <tt class="py-line">        <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">open_tags</tt> <tt class="py-op">=</tt> <tt class="py-op">[</tt><tt class="py-op">]</tt> </tt>
+<a name="L60"></a><tt class="py-lineno"> 60</tt>  <tt class="py-line">        <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">permitted_tags</tt> <tt class="py-op">=</tt> <tt class="py-op">[</tt><tt class="py-name">i</tt> <tt class="py-keyword">for</tt> <tt class="py-name">i</tt> <tt class="py-keyword">in</tt> <tt class="py-name">permitted_tags</tt> <tt class="py-keyword">if</tt> <tt class="py-name">i</tt><tt class="py-op">[</tt><tt class="py-op">-</tt><tt class="py-number">1</tt><tt class="py-op">]</tt> <tt class="py-op">!=</tt> <tt class="py-string">'/'</tt><tt class="py-op">]</tt> </tt>
+<a name="L61"></a><tt class="py-lineno"> 61</tt>  <tt class="py-line">        <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">requires_no_close</tt> <tt class="py-op">=</tt> <tt class="py-op">[</tt><tt class="py-name">i</tt><tt class="py-op">[</tt><tt class="py-op">:</tt><tt class="py-op">-</tt><tt class="py-number">1</tt><tt class="py-op">]</tt> <tt class="py-keyword">for</tt> <tt class="py-name">i</tt> <tt class="py-keyword">in</tt> <tt class="py-name">permitted_tags</tt> </tt>
+<a name="L62"></a><tt class="py-lineno"> 62</tt>  <tt class="py-line">                                  <tt class="py-keyword">if</tt> <tt class="py-name">i</tt><tt class="py-op">[</tt><tt class="py-op">-</tt><tt class="py-number">1</tt><tt class="py-op">]</tt> <tt class="py-op">==</tt> <tt class="py-string">'/'</tt><tt class="py-op">]</tt> </tt>
+<a name="L63"></a><tt class="py-lineno"> 63</tt>  <tt class="py-line">        <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">permitted_tags</tt> <tt class="py-op">+=</tt> <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">requires_no_close</tt> </tt>
+<a name="L64"></a><tt class="py-lineno"> 64</tt>  <tt class="py-line">        <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">allowed_attributes</tt> <tt class="py-op">=</tt> <tt class="py-name">allowed_attributes</tt> </tt>
+<a name="L65"></a><tt class="py-lineno"> 65</tt>  <tt class="py-line"> </tt>
+<a name="L66"></a><tt class="py-lineno"> 66</tt>  <tt class="py-line">        <tt class="py-comment"># The only schemes allowed in URLs (for href and src attributes).</tt> </tt>
+<a name="L67"></a><tt class="py-lineno"> 67</tt>  <tt class="py-line"><tt class="py-comment"></tt>        <tt class="py-comment"># Adding "javascript" or "vbscript" to this list would not be smart.</tt> </tt>
+<a name="L68"></a><tt class="py-lineno"> 68</tt>  <tt class="py-line"><tt class="py-comment"></tt> </tt>
+<a name="L69"></a><tt class="py-lineno"> 69</tt>  <tt class="py-line">        <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">allowed_schemes</tt> <tt class="py-op">=</tt> <tt class="py-op">[</tt><tt class="py-string">'http'</tt><tt class="py-op">,</tt> <tt class="py-string">'https'</tt><tt class="py-op">,</tt> <tt class="py-string">'ftp'</tt><tt class="py-op">]</tt> </tt>
+<a name="L70"></a><tt class="py-lineno"> 70</tt>  <tt class="py-line"> </tt>
+<a name="L71"></a><tt class="py-lineno"> 71</tt>  <tt class="py-line">        <tt class="py-comment">#to strip or escape disallowed tags?</tt> </tt>
+<a name="L72"></a><tt class="py-lineno"> 72</tt>  <tt class="py-line"><tt class="py-comment"></tt>        <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">strip_disallowed</tt> <tt class="py-op">=</tt> <tt class="py-name">strip_disallowed</tt> </tt>
+<a name="L73"></a><tt class="py-lineno"> 73</tt>  <tt class="py-line">        <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">in_disallowed</tt> <tt class="py-op">=</tt> <tt class="py-name">False</tt> </tt>
+</div><a name="L74"></a><tt class="py-lineno"> 74</tt>  <tt class="py-line"> </tt>
+<a name="XssCleaner.handle_data"></a><div id="XssCleaner.handle_data-def"><a name="L75"></a><tt class="py-lineno"> 75</tt> <a class="py-toggle" href="#" id="XssCleaner.handle_data-toggle" onclick="return toggle('XssCleaner.handle_data');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="web2py.gluon.sanitizer.XssCleaner-class.html#handle_data">handle_data</a><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">,</tt> <tt class="py-param">data</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="XssCleaner.handle_data-collapsed" style="display:none;" pad="+++" indent="++++++++"></div><div id="XssCleaner.handle_data-expanded"><a name="L76"></a><tt class="py-lineno"> 76</tt>  <tt class="py-line">        <tt class="py-keyword">if</tt> <tt class="py-name">data</tt> <tt class="py-keyword">and</tt> <tt class="py-keyword">not</tt> <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">in_disallowed</tt><tt class="py-op">:</tt> </tt>
+<a name="L77"></a><tt class="py-lineno"> 77</tt>  <tt class="py-line">            <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">result</tt> <tt class="py-op">+=</tt> <tt id="link-4" class="py-name" targets="Function web2py.gluon.sanitizer.xssescape()=web2py.gluon.sanitizer-module.html#xssescape"><a title="web2py.gluon.sanitizer.xssescape" class="py-name" href="#" onclick="return doclink('link-4', 'xssescape', 'link-4');">xssescape</a></tt><tt class="py-op">(</tt><tt class="py-name">data</tt><tt class="py-op">)</tt> </tt>
+</div><a name="L78"></a><tt class="py-lineno"> 78</tt>  <tt class="py-line"> </tt>
+<a name="XssCleaner.handle_charref"></a><div id="XssCleaner.handle_charref-def"><a name="L79"></a><tt class="py-lineno"> 79</tt> <a class="py-toggle" href="#" id="XssCleaner.handle_charref-toggle" onclick="return toggle('XssCleaner.handle_charref');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="web2py.gluon.sanitizer.XssCleaner-class.html#handle_charref">handle_charref</a><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">,</tt> <tt class="py-param">ref</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="XssCleaner.handle_charref-collapsed" style="display:none;" pad="+++" indent="++++++++"></div><div id="XssCleaner.handle_charref-expanded"><a name="L80"></a><tt class="py-lineno"> 80</tt>  <tt class="py-line">        <tt class="py-keyword">if</tt> <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">in_disallowed</tt><tt class="py-op">:</tt> </tt>
+<a name="L81"></a><tt class="py-lineno"> 81</tt>  <tt class="py-line">            <tt class="py-keyword">return</tt> </tt>
+<a name="L82"></a><tt class="py-lineno"> 82</tt>  <tt class="py-line">        <tt class="py-keyword">elif</tt> <tt id="link-5" class="py-name" targets="Method web2py.gluon.dal.Field.len()=web2py.gluon.dal.Field-class.html#len,Method web2py.gluon.sql.Expression.len()=web2py.gluon.sql.Expression-class.html#len"><a title="web2py.gluon.dal.Field.len
+web2py.gluon.sql.Expression.len" class="py-name" href="#" onclick="return doclink('link-5', 'len', 'link-5');">len</a></tt><tt class="py-op">(</tt><tt class="py-name">ref</tt><tt class="py-op">)</tt> <tt class="py-op">&lt;</tt> <tt class="py-number">7</tt> <tt class="py-keyword">and</tt> <tt class="py-name">ref</tt><tt class="py-op">.</tt><tt class="py-name">isdigit</tt><tt class="py-op">(</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+<a name="L83"></a><tt class="py-lineno"> 83</tt>  <tt class="py-line">            <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">result</tt> <tt class="py-op">+=</tt> <tt class="py-string">'&amp;#%s;'</tt> <tt class="py-op">%</tt> <tt class="py-name">ref</tt> </tt>
+<a name="L84"></a><tt class="py-lineno"> 84</tt>  <tt class="py-line">        <tt class="py-keyword">else</tt><tt class="py-op">:</tt> </tt>
+<a name="L85"></a><tt class="py-lineno"> 85</tt>  <tt class="py-line">            <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">result</tt> <tt class="py-op">+=</tt> <tt id="link-6" class="py-name"><a title="web2py.gluon.sanitizer.xssescape" class="py-name" href="#" onclick="return doclink('link-6', 'xssescape', 'link-4');">xssescape</a></tt><tt class="py-op">(</tt><tt class="py-string">'&amp;#%s'</tt> <tt class="py-op">%</tt> <tt class="py-name">ref</tt><tt class="py-op">)</tt> </tt>
+</div><a name="L86"></a><tt class="py-lineno"> 86</tt>  <tt class="py-line"> </tt>
+<a name="XssCleaner.handle_entityref"></a><div id="XssCleaner.handle_entityref-def"><a name="L87"></a><tt class="py-lineno"> 87</tt> <a class="py-toggle" href="#" id="XssCleaner.handle_entityref-toggle" onclick="return toggle('XssCleaner.handle_entityref');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="web2py.gluon.sanitizer.XssCleaner-class.html#handle_entityref">handle_entityref</a><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">,</tt> <tt class="py-param">ref</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="XssCleaner.handle_entityref-collapsed" style="display:none;" pad="+++" indent="++++++++"></div><div id="XssCleaner.handle_entityref-expanded"><a name="L88"></a><tt class="py-lineno"> 88</tt>  <tt class="py-line">        <tt class="py-keyword">if</tt> <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">in_disallowed</tt><tt class="py-op">:</tt> </tt>
+<a name="L89"></a><tt class="py-lineno"> 89</tt>  <tt class="py-line">            <tt class="py-keyword">return</tt> </tt>
+<a name="L90"></a><tt class="py-lineno"> 90</tt>  <tt class="py-line">        <tt class="py-keyword">elif</tt> <tt class="py-name">ref</tt> <tt class="py-keyword">in</tt> <tt class="py-name">entitydefs</tt><tt class="py-op">:</tt> </tt>
+<a name="L91"></a><tt class="py-lineno"> 91</tt>  <tt class="py-line">            <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">result</tt> <tt class="py-op">+=</tt> <tt class="py-string">'&amp;%s;'</tt> <tt class="py-op">%</tt> <tt class="py-name">ref</tt> </tt>
+<a name="L92"></a><tt class="py-lineno"> 92</tt>  <tt class="py-line">        <tt class="py-keyword">else</tt><tt class="py-op">:</tt> </tt>
+<a name="L93"></a><tt class="py-lineno"> 93</tt>  <tt class="py-line">            <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">result</tt> <tt class="py-op">+=</tt> <tt id="link-7" class="py-name"><a title="web2py.gluon.sanitizer.xssescape" class="py-name" href="#" onclick="return doclink('link-7', 'xssescape', 'link-4');">xssescape</a></tt><tt class="py-op">(</tt><tt class="py-string">'&amp;%s'</tt> <tt class="py-op">%</tt> <tt class="py-name">ref</tt><tt class="py-op">)</tt> </tt>
+</div><a name="L94"></a><tt class="py-lineno"> 94</tt>  <tt class="py-line"> </tt>
+<a name="XssCleaner.handle_comment"></a><div id="XssCleaner.handle_comment-def"><a name="L95"></a><tt class="py-lineno"> 95</tt> <a class="py-toggle" href="#" id="XssCleaner.handle_comment-toggle" onclick="return toggle('XssCleaner.handle_comment');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="web2py.gluon.sanitizer.XssCleaner-class.html#handle_comment">handle_comment</a><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">,</tt> <tt class="py-param">comment</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="XssCleaner.handle_comment-collapsed" style="display:none;" pad="+++" indent="++++++++"></div><div id="XssCleaner.handle_comment-expanded"><a name="L96"></a><tt class="py-lineno"> 96</tt>  <tt class="py-line">        <tt class="py-keyword">if</tt> <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">in_disallowed</tt><tt class="py-op">:</tt> </tt>
+<a name="L97"></a><tt class="py-lineno"> 97</tt>  <tt class="py-line">            <tt class="py-keyword">return</tt> </tt>
+<a name="L98"></a><tt class="py-lineno"> 98</tt>  <tt class="py-line">        <tt class="py-keyword">elif</tt> <tt class="py-name">comment</tt><tt class="py-op">:</tt> </tt>
+<a name="L99"></a><tt class="py-lineno"> 99</tt>  <tt class="py-line">            <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">result</tt> <tt class="py-op">+=</tt> <tt id="link-8" class="py-name"><a title="web2py.gluon.sanitizer.xssescape" class="py-name" href="#" onclick="return doclink('link-8', 'xssescape', 'link-4');">xssescape</a></tt><tt class="py-op">(</tt><tt class="py-string">'&lt;!--%s--&gt;'</tt> <tt class="py-op">%</tt> <tt class="py-name">comment</tt><tt class="py-op">)</tt> </tt>
+</div><a name="L100"></a><tt class="py-lineno">100</tt>  <tt class="py-line"> </tt>
+<a name="XssCleaner.handle_starttag"></a><div id="XssCleaner.handle_starttag-def"><a name="L101"></a><tt class="py-lineno">101</tt> <a class="py-toggle" href="#" id="XssCleaner.handle_starttag-toggle" onclick="return toggle('XssCleaner.handle_starttag');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="web2py.gluon.sanitizer.XssCleaner-class.html#handle_starttag">handle_starttag</a><tt class="py-op">(</tt> </tt>
+<a name="L102"></a><tt class="py-lineno">102</tt>  <tt class="py-line">        <tt class="py-param">self</tt><tt class="py-op">,</tt> </tt>
+<a name="L103"></a><tt class="py-lineno">103</tt>  <tt class="py-line">        <tt class="py-param">tag</tt><tt class="py-op">,</tt> </tt>
+<a name="L104"></a><tt class="py-lineno">104</tt>  <tt class="py-line">        <tt class="py-param">method</tt><tt class="py-op">,</tt> </tt>
+<a name="L105"></a><tt class="py-lineno">105</tt>  <tt class="py-line">        <tt class="py-param">attrs</tt><tt class="py-op">,</tt> </tt>
+<a name="L106"></a><tt class="py-lineno">106</tt>  <tt class="py-line">        <tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="XssCleaner.handle_starttag-collapsed" style="display:none;" pad="+++" indent="++++++++"></div><div id="XssCleaner.handle_starttag-expanded"><a name="L107"></a><tt class="py-lineno">107</tt>  <tt class="py-line">        <tt class="py-keyword">if</tt> <tt id="link-9" class="py-name" targets="Variable web2py.gluon.html.A.tag=web2py.gluon.html.A-class.html#tag,Variable web2py.gluon.html.B.tag=web2py.gluon.html.B-class.html#tag,Variable web2py.gluon.html.BEAUTIFY.tag=web2py.gluon.html.BEAUTIFY-class.html#tag,Variable web2py.gluon.html.BODY.tag=web2py.gluon.html.BODY-class.html#tag,Variable web2py.gluon.html.BR.tag=web2py.gluon.html.BR-class.html#tag,Variable web2py.gluon.html.CENTER.tag=web2py.gluon.html.CENTER-class.html#tag,Variable web2py.gluon.html.DIV.tag=web2py.gluon.html.DIV-class.html#tag,Variable web2py.gluon.html.EM.tag=web2py.gluon.html.EM-class.html#tag,Variable web2py.gluon.html.EMBED.tag=web2py.gluon.html.EMBED-class.html#tag,Variable web2py.gluon.html.FIELDSET.tag=web2py.gluon.html.FIELDSET-class.html#tag,Variable web2py.gluon.html.FORM.tag=web2py.gluon.html.FORM-class.html#tag,Variable web2py.gluon.html.H1.tag=web2py.gluon.html.H1-class.html#tag,Variable web2py.gluon.html.H2.tag=web2py.gluon.html.H2-class.html#tag,Variable web2py.gluon.html.H3.tag=web2py.gluon.html.H3-class.html#tag,Variable web2py.gluon.html.H4.tag=web2py.gluon.html.H4-class.html#tag,Variable web2py.gluon.html.H5.tag=web2py.gluon.html.H5-class.html#tag,Variable web2py.gluon.html.H6.tag=web2py.gluon.html.H6-class.html#tag,Variable web2py.gluon.html.HEAD.tag=web2py.gluon.html.HEAD-class.html#tag,Variable web2py.gluon.html.HR.tag=web2py.gluon.html.HR-class.html#tag,Variable web2py.gluon.html.HTML.tag=web2py.gluon.html.HTML-class.html#tag,Variable web2py.gluon.html.I.tag=web2py.gluon.html.I-class.html#tag,Variable web2py.gluon.html.IFRAME.tag=web2py.gluon.html.IFRAME-class.html#tag,Variable web2py.gluon.html.IMG.tag=web2py.gluon.html.IMG-class.html#tag,Variable web2py.gluon.html.INPUT.tag=web2py.gluon.html.INPUT-class.html#tag,Variable web2py.gluon.html.LABEL.tag=web2py.gluon.html.LABEL-class.html#tag,Variable web2py.gluon.html.LEGEND.tag=web2py.gluon.html.LEGEND-class.html#tag,Variable web2py.gluon.html.LI.tag=web2py.gluon.html.LI-class.html#tag,Variable web2py.gluon.html.LINK.tag=web2py.gluon.html.LINK-class.html#tag,Variable web2py.gluon.html.MENU.tag=web2py.gluon.html.MENU-class.html#tag,Variable web2py.gluon.html.META.tag=web2py.gluon.html.META-class.html#tag,Variable web2py.gluon.html.OBJECT.tag=web2py.gluon.html.OBJECT-class.html#tag,Variable web2py.gluon.html.OL.tag=web2py.gluon.html.OL-class.html#tag,Variable web2py.gluon.html.OPTGROUP.tag=web2py.gluon.html.OPTGROUP-class.html#tag,Variable web2py.gluon.html.OPTION.tag=web2py.gluon.html.OPTION-class.html#tag,Variable web2py.gluon.html.P.tag=web2py.gluon.html.P-class.html#tag,Variable web2py.gluon.html.PRE.tag=web2py.gluon.html.PRE-class.html#tag,Variable web2py.gluon.html.SCRIPT.tag=web2py.gluon.html.SCRIPT-class.html#tag,Variable web2py.gluon.html.SELECT.tag=web2py.gluon.html.SELECT-class.html#tag,Variable web2py.gluon.html.SPAN.tag=web2py.gluon.html.SPAN-class.html#tag,Variable web2py.gluon.html.STYLE.tag=web2py.gluon.html.STYLE-class.html#tag,Variable web2py.gluon.html.TABLE.tag=web2py.gluon.html.TABLE-class.html#tag,Variable web2py.gluon.html.TBODY.tag=web2py.gluon.html.TBODY-class.html#tag,Variable web2py.gluon.html.TD.tag=web2py.gluon.html.TD-class.html#tag,Variable web2py.gluon.html.TEXTAREA.tag=web2py.gluon.html.TEXTAREA-class.html#tag,Variable web2py.gluon.html.TFOOT.tag=web2py.gluon.html.TFOOT-class.html#tag,Variable web2py.gluon.html.TH.tag=web2py.gluon.html.TH-class.html#tag,Variable web2py.gluon.html.THEAD.tag=web2py.gluon.html.THEAD-class.html#tag,Variable web2py.gluon.html.TITLE.tag=web2py.gluon.html.TITLE-class.html#tag,Variable web2py.gluon.html.TR.tag=web2py.gluon.html.TR-class.html#tag,Variable web2py.gluon.html.TT.tag=web2py.gluon.html.TT-class.html#tag,Variable web2py.gluon.html.UL.tag=web2py.gluon.html.UL-class.html#tag,Variable web2py.gluon.html.XHTML.tag=web2py.gluon.html.XHTML-class.html#tag"><a title="web2py.gluon.html.A.tag
+web2py.gluon.html.B.tag
+web2py.gluon.html.BEAUTIFY.tag
+web2py.gluon.html.BODY.tag
+web2py.gluon.html.BR.tag
+web2py.gluon.html.CENTER.tag
+web2py.gluon.html.DIV.tag
+web2py.gluon.html.EM.tag
+web2py.gluon.html.EMBED.tag
+web2py.gluon.html.FIELDSET.tag
+web2py.gluon.html.FORM.tag
+web2py.gluon.html.H1.tag
+web2py.gluon.html.H2.tag
+web2py.gluon.html.H3.tag
+web2py.gluon.html.H4.tag
+web2py.gluon.html.H5.tag
+web2py.gluon.html.H6.tag
+web2py.gluon.html.HEAD.tag
+web2py.gluon.html.HR.tag
+web2py.gluon.html.HTML.tag
+web2py.gluon.html.I.tag
+web2py.gluon.html.IFRAME.tag
+web2py.gluon.html.IMG.tag
+web2py.gluon.html.INPUT.tag
+web2py.gluon.html.LABEL.tag
+web2py.gluon.html.LEGEND.tag
+web2py.gluon.html.LI.tag
+web2py.gluon.html.LINK.tag
+web2py.gluon.html.MENU.tag
+web2py.gluon.html.META.tag
+web2py.gluon.html.OBJECT.tag
+web2py.gluon.html.OL.tag
+web2py.gluon.html.OPTGROUP.tag
+web2py.gluon.html.OPTION.tag
+web2py.gluon.html.P.tag
+web2py.gluon.html.PRE.tag
+web2py.gluon.html.SCRIPT.tag
+web2py.gluon.html.SELECT.tag
+web2py.gluon.html.SPAN.tag
+web2py.gluon.html.STYLE.tag
+web2py.gluon.html.TABLE.tag
+web2py.gluon.html.TBODY.tag
+web2py.gluon.html.TD.tag
+web2py.gluon.html.TEXTAREA.tag
+web2py.gluon.html.TFOOT.tag
+web2py.gluon.html.TH.tag
+web2py.gluon.html.THEAD.tag
+web2py.gluon.html.TITLE.tag
+web2py.gluon.html.TR.tag
+web2py.gluon.html.TT.tag
+web2py.gluon.html.UL.tag
+web2py.gluon.html.XHTML.tag" class="py-name" href="#" onclick="return doclink('link-9', 'tag', 'link-9');">tag</a></tt> <tt class="py-keyword">not</tt> <tt class="py-keyword">in</tt> <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">permitted_tags</tt><tt class="py-op">:</tt> </tt>
+<a name="L108"></a><tt class="py-lineno">108</tt>  <tt class="py-line">            <tt class="py-keyword">if</tt> <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">strip_disallowed</tt><tt class="py-op">:</tt> </tt>
+<a name="L109"></a><tt class="py-lineno">109</tt>  <tt class="py-line">                <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">in_disallowed</tt> <tt class="py-op">=</tt> <tt class="py-name">True</tt> </tt>
+<a name="L110"></a><tt class="py-lineno">110</tt>  <tt class="py-line">            <tt class="py-keyword">else</tt><tt class="py-op">:</tt> </tt>
+<a name="L111"></a><tt class="py-lineno">111</tt>  <tt class="py-line">                <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">result</tt> <tt class="py-op">+=</tt> <tt id="link-10" class="py-name"><a title="web2py.gluon.sanitizer.xssescape" class="py-name" href="#" onclick="return doclink('link-10', 'xssescape', 'link-4');">xssescape</a></tt><tt class="py-op">(</tt><tt class="py-string">'&lt;%s&gt;'</tt> <tt class="py-op">%</tt> <tt id="link-11" class="py-name"><a title="web2py.gluon.html.A.tag
+web2py.gluon.html.B.tag
+web2py.gluon.html.BEAUTIFY.tag
+web2py.gluon.html.BODY.tag
+web2py.gluon.html.BR.tag
+web2py.gluon.html.CENTER.tag
+web2py.gluon.html.DIV.tag
+web2py.gluon.html.EM.tag
+web2py.gluon.html.EMBED.tag
+web2py.gluon.html.FIELDSET.tag
+web2py.gluon.html.FORM.tag
+web2py.gluon.html.H1.tag
+web2py.gluon.html.H2.tag
+web2py.gluon.html.H3.tag
+web2py.gluon.html.H4.tag
+web2py.gluon.html.H5.tag
+web2py.gluon.html.H6.tag
+web2py.gluon.html.HEAD.tag
+web2py.gluon.html.HR.tag
+web2py.gluon.html.HTML.tag
+web2py.gluon.html.I.tag
+web2py.gluon.html.IFRAME.tag
+web2py.gluon.html.IMG.tag
+web2py.gluon.html.INPUT.tag
+web2py.gluon.html.LABEL.tag
+web2py.gluon.html.LEGEND.tag
+web2py.gluon.html.LI.tag
+web2py.gluon.html.LINK.tag
+web2py.gluon.html.MENU.tag
+web2py.gluon.html.META.tag
+web2py.gluon.html.OBJECT.tag
+web2py.gluon.html.OL.tag
+web2py.gluon.html.OPTGROUP.tag
+web2py.gluon.html.OPTION.tag
+web2py.gluon.html.P.tag
+web2py.gluon.html.PRE.tag
+web2py.gluon.html.SCRIPT.tag
+web2py.gluon.html.SELECT.tag
+web2py.gluon.html.SPAN.tag
+web2py.gluon.html.STYLE.tag
+web2py.gluon.html.TABLE.tag
+web2py.gluon.html.TBODY.tag
+web2py.gluon.html.TD.tag
+web2py.gluon.html.TEXTAREA.tag
+web2py.gluon.html.TFOOT.tag
+web2py.gluon.html.TH.tag
+web2py.gluon.html.THEAD.tag
+web2py.gluon.html.TITLE.tag
+web2py.gluon.html.TR.tag
+web2py.gluon.html.TT.tag
+web2py.gluon.html.UL.tag
+web2py.gluon.html.XHTML.tag" class="py-name" href="#" onclick="return doclink('link-11', 'tag', 'link-9');">tag</a></tt><tt class="py-op">)</tt> </tt>
+<a name="L112"></a><tt class="py-lineno">112</tt>  <tt class="py-line">        <tt class="py-keyword">else</tt><tt class="py-op">:</tt> </tt>
+<a name="L113"></a><tt class="py-lineno">113</tt>  <tt class="py-line">            <tt class="py-name">bt</tt> <tt class="py-op">=</tt> <tt class="py-string">'&lt;'</tt> <tt class="py-op">+</tt> <tt id="link-12" class="py-name"><a title="web2py.gluon.html.A.tag
+web2py.gluon.html.B.tag
+web2py.gluon.html.BEAUTIFY.tag
+web2py.gluon.html.BODY.tag
+web2py.gluon.html.BR.tag
+web2py.gluon.html.CENTER.tag
+web2py.gluon.html.DIV.tag
+web2py.gluon.html.EM.tag
+web2py.gluon.html.EMBED.tag
+web2py.gluon.html.FIELDSET.tag
+web2py.gluon.html.FORM.tag
+web2py.gluon.html.H1.tag
+web2py.gluon.html.H2.tag
+web2py.gluon.html.H3.tag
+web2py.gluon.html.H4.tag
+web2py.gluon.html.H5.tag
+web2py.gluon.html.H6.tag
+web2py.gluon.html.HEAD.tag
+web2py.gluon.html.HR.tag
+web2py.gluon.html.HTML.tag
+web2py.gluon.html.I.tag
+web2py.gluon.html.IFRAME.tag
+web2py.gluon.html.IMG.tag
+web2py.gluon.html.INPUT.tag
+web2py.gluon.html.LABEL.tag
+web2py.gluon.html.LEGEND.tag
+web2py.gluon.html.LI.tag
+web2py.gluon.html.LINK.tag
+web2py.gluon.html.MENU.tag
+web2py.gluon.html.META.tag
+web2py.gluon.html.OBJECT.tag
+web2py.gluon.html.OL.tag
+web2py.gluon.html.OPTGROUP.tag
+web2py.gluon.html.OPTION.tag
+web2py.gluon.html.P.tag
+web2py.gluon.html.PRE.tag
+web2py.gluon.html.SCRIPT.tag
+web2py.gluon.html.SELECT.tag
+web2py.gluon.html.SPAN.tag
+web2py.gluon.html.STYLE.tag
+web2py.gluon.html.TABLE.tag
+web2py.gluon.html.TBODY.tag
+web2py.gluon.html.TD.tag
+web2py.gluon.html.TEXTAREA.tag
+web2py.gluon.html.TFOOT.tag
+web2py.gluon.html.TH.tag
+web2py.gluon.html.THEAD.tag
+web2py.gluon.html.TITLE.tag
+web2py.gluon.html.TR.tag
+web2py.gluon.html.TT.tag
+web2py.gluon.html.UL.tag
+web2py.gluon.html.XHTML.tag" class="py-name" href="#" onclick="return doclink('link-12', 'tag', 'link-9');">tag</a></tt> </tt>
+<a name="L114"></a><tt class="py-lineno">114</tt>  <tt class="py-line">            <tt class="py-keyword">if</tt> <tt id="link-13" class="py-name"><a title="web2py.gluon.html.A.tag
+web2py.gluon.html.B.tag
+web2py.gluon.html.BEAUTIFY.tag
+web2py.gluon.html.BODY.tag
+web2py.gluon.html.BR.tag
+web2py.gluon.html.CENTER.tag
+web2py.gluon.html.DIV.tag
+web2py.gluon.html.EM.tag
+web2py.gluon.html.EMBED.tag
+web2py.gluon.html.FIELDSET.tag
+web2py.gluon.html.FORM.tag
+web2py.gluon.html.H1.tag
+web2py.gluon.html.H2.tag
+web2py.gluon.html.H3.tag
+web2py.gluon.html.H4.tag
+web2py.gluon.html.H5.tag
+web2py.gluon.html.H6.tag
+web2py.gluon.html.HEAD.tag
+web2py.gluon.html.HR.tag
+web2py.gluon.html.HTML.tag
+web2py.gluon.html.I.tag
+web2py.gluon.html.IFRAME.tag
+web2py.gluon.html.IMG.tag
+web2py.gluon.html.INPUT.tag
+web2py.gluon.html.LABEL.tag
+web2py.gluon.html.LEGEND.tag
+web2py.gluon.html.LI.tag
+web2py.gluon.html.LINK.tag
+web2py.gluon.html.MENU.tag
+web2py.gluon.html.META.tag
+web2py.gluon.html.OBJECT.tag
+web2py.gluon.html.OL.tag
+web2py.gluon.html.OPTGROUP.tag
+web2py.gluon.html.OPTION.tag
+web2py.gluon.html.P.tag
+web2py.gluon.html.PRE.tag
+web2py.gluon.html.SCRIPT.tag
+web2py.gluon.html.SELECT.tag
+web2py.gluon.html.SPAN.tag
+web2py.gluon.html.STYLE.tag
+web2py.gluon.html.TABLE.tag
+web2py.gluon.html.TBODY.tag
+web2py.gluon.html.TD.tag
+web2py.gluon.html.TEXTAREA.tag
+web2py.gluon.html.TFOOT.tag
+web2py.gluon.html.TH.tag
+web2py.gluon.html.THEAD.tag
+web2py.gluon.html.TITLE.tag
+web2py.gluon.html.TR.tag
+web2py.gluon.html.TT.tag
+web2py.gluon.html.UL.tag
+web2py.gluon.html.XHTML.tag" class="py-name" href="#" onclick="return doclink('link-13', 'tag', 'link-9');">tag</a></tt> <tt class="py-keyword">in</tt> <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">allowed_attributes</tt><tt class="py-op">:</tt> </tt>
+<a name="L115"></a><tt class="py-lineno">115</tt>  <tt class="py-line">                <tt class="py-name">attrs</tt> <tt class="py-op">=</tt> <tt class="py-name">dict</tt><tt class="py-op">(</tt><tt class="py-name">attrs</tt><tt class="py-op">)</tt> </tt>
+<a name="L116"></a><tt class="py-lineno">116</tt>  <tt class="py-line">                <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">allowed_attributes_here</tt> <tt class="py-op">=</tt> <tt class="py-op">[</tt><tt id="link-14" class="py-name" targets="Variable web2py.gluon.sql.x=web2py.gluon.sql-module.html#x"><a title="web2py.gluon.sql.x" class="py-name" href="#" onclick="return doclink('link-14', 'x', 'link-14');">x</a></tt> <tt class="py-keyword">for</tt> <tt id="link-15" class="py-name"><a title="web2py.gluon.sql.x" class="py-name" href="#" onclick="return doclink('link-15', 'x', 'link-14');">x</a></tt> <tt class="py-keyword">in</tt> </tt>
+<a name="L117"></a><tt class="py-lineno">117</tt>  <tt class="py-line">                        <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">allowed_attributes</tt><tt class="py-op">[</tt><tt id="link-16" class="py-name"><a title="web2py.gluon.html.A.tag
+web2py.gluon.html.B.tag
+web2py.gluon.html.BEAUTIFY.tag
+web2py.gluon.html.BODY.tag
+web2py.gluon.html.BR.tag
+web2py.gluon.html.CENTER.tag
+web2py.gluon.html.DIV.tag
+web2py.gluon.html.EM.tag
+web2py.gluon.html.EMBED.tag
+web2py.gluon.html.FIELDSET.tag
+web2py.gluon.html.FORM.tag
+web2py.gluon.html.H1.tag
+web2py.gluon.html.H2.tag
+web2py.gluon.html.H3.tag
+web2py.gluon.html.H4.tag
+web2py.gluon.html.H5.tag
+web2py.gluon.html.H6.tag
+web2py.gluon.html.HEAD.tag
+web2py.gluon.html.HR.tag
+web2py.gluon.html.HTML.tag
+web2py.gluon.html.I.tag
+web2py.gluon.html.IFRAME.tag
+web2py.gluon.html.IMG.tag
+web2py.gluon.html.INPUT.tag
+web2py.gluon.html.LABEL.tag
+web2py.gluon.html.LEGEND.tag
+web2py.gluon.html.LI.tag
+web2py.gluon.html.LINK.tag
+web2py.gluon.html.MENU.tag
+web2py.gluon.html.META.tag
+web2py.gluon.html.OBJECT.tag
+web2py.gluon.html.OL.tag
+web2py.gluon.html.OPTGROUP.tag
+web2py.gluon.html.OPTION.tag
+web2py.gluon.html.P.tag
+web2py.gluon.html.PRE.tag
+web2py.gluon.html.SCRIPT.tag
+web2py.gluon.html.SELECT.tag
+web2py.gluon.html.SPAN.tag
+web2py.gluon.html.STYLE.tag
+web2py.gluon.html.TABLE.tag
+web2py.gluon.html.TBODY.tag
+web2py.gluon.html.TD.tag
+web2py.gluon.html.TEXTAREA.tag
+web2py.gluon.html.TFOOT.tag
+web2py.gluon.html.TH.tag
+web2py.gluon.html.THEAD.tag
+web2py.gluon.html.TITLE.tag
+web2py.gluon.html.TR.tag
+web2py.gluon.html.TT.tag
+web2py.gluon.html.UL.tag
+web2py.gluon.html.XHTML.tag" class="py-name" href="#" onclick="return doclink('link-16', 'tag', 'link-9');">tag</a></tt><tt class="py-op">]</tt> <tt class="py-keyword">if</tt> <tt id="link-17" class="py-name"><a title="web2py.gluon.sql.x" class="py-name" href="#" onclick="return doclink('link-17', 'x', 'link-14');">x</a></tt> <tt class="py-keyword">in</tt> <tt class="py-name">attrs</tt> </tt>
+<a name="L118"></a><tt class="py-lineno">118</tt>  <tt class="py-line">                         <tt class="py-keyword">and</tt> <tt id="link-18" class="py-name"><a title="web2py.gluon.dal.Field.len
+web2py.gluon.sql.Expression.len" class="py-name" href="#" onclick="return doclink('link-18', 'len', 'link-5');">len</a></tt><tt class="py-op">(</tt><tt class="py-name">attrs</tt><tt class="py-op">[</tt><tt id="link-19" class="py-name"><a title="web2py.gluon.sql.x" class="py-name" href="#" onclick="return doclink('link-19', 'x', 'link-14');">x</a></tt><tt class="py-op">]</tt><tt class="py-op">)</tt> <tt class="py-op">&gt;</tt> <tt class="py-number">0</tt><tt class="py-op">]</tt> </tt>
+<a name="L119"></a><tt class="py-lineno">119</tt>  <tt class="py-line">                <tt class="py-keyword">for</tt> <tt class="py-name">attribute</tt> <tt class="py-keyword">in</tt> <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">allowed_attributes_here</tt><tt class="py-op">:</tt> </tt>
+<a name="L120"></a><tt class="py-lineno">120</tt>  <tt class="py-line">                    <tt class="py-keyword">if</tt> <tt class="py-name">attribute</tt> <tt class="py-keyword">in</tt> <tt class="py-op">[</tt><tt class="py-string">'href'</tt><tt class="py-op">,</tt> <tt class="py-string">'src'</tt><tt class="py-op">,</tt> <tt class="py-string">'background'</tt><tt class="py-op">]</tt><tt class="py-op">:</tt> </tt>
+<a name="L121"></a><tt class="py-lineno">121</tt>  <tt class="py-line">                        <tt class="py-keyword">if</tt> <tt class="py-name">self</tt><tt class="py-op">.</tt><tt id="link-20" class="py-name" targets="Method web2py.gluon.sanitizer.XssCleaner.url_is_acceptable()=web2py.gluon.sanitizer.XssCleaner-class.html#url_is_acceptable"><a title="web2py.gluon.sanitizer.XssCleaner.url_is_acceptable" class="py-name" href="#" onclick="return doclink('link-20', 'url_is_acceptable', 'link-20');">url_is_acceptable</a></tt><tt class="py-op">(</tt><tt class="py-name">attrs</tt><tt class="py-op">[</tt><tt class="py-name">attribute</tt><tt class="py-op">]</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+<a name="L122"></a><tt class="py-lineno">122</tt>  <tt class="py-line">                            <tt class="py-name">bt</tt> <tt class="py-op">+=</tt> <tt class="py-string">' %s="%s"'</tt> <tt class="py-op">%</tt> <tt class="py-op">(</tt><tt class="py-name">attribute</tt><tt class="py-op">,</tt> </tt>
+<a name="L123"></a><tt class="py-lineno">123</tt>  <tt class="py-line">                                    <tt class="py-name">attrs</tt><tt class="py-op">[</tt><tt class="py-name">attribute</tt><tt class="py-op">]</tt><tt class="py-op">)</tt> </tt>
+<a name="L124"></a><tt class="py-lineno">124</tt>  <tt class="py-line">                    <tt class="py-keyword">else</tt><tt class="py-op">:</tt> </tt>
+<a name="L125"></a><tt class="py-lineno">125</tt>  <tt class="py-line">                        <tt class="py-name">bt</tt> <tt class="py-op">+=</tt> <tt class="py-string">' %s=%s'</tt> <tt class="py-op">%</tt> <tt class="py-op">(</tt><tt id="link-21" class="py-name"><a title="web2py.gluon.sanitizer.xssescape" class="py-name" href="#" onclick="return doclink('link-21', 'xssescape', 'link-4');">xssescape</a></tt><tt class="py-op">(</tt><tt class="py-name">attribute</tt><tt class="py-op">)</tt><tt class="py-op">,</tt> </tt>
+<a name="L126"></a><tt class="py-lineno">126</tt>  <tt class="py-line">                                <tt class="py-name">quoteattr</tt><tt class="py-op">(</tt><tt class="py-name">attrs</tt><tt class="py-op">[</tt><tt class="py-name">attribute</tt><tt class="py-op">]</tt><tt class="py-op">)</tt><tt class="py-op">)</tt> </tt>
+<a name="L127"></a><tt class="py-lineno">127</tt>  <tt class="py-line">            <tt class="py-keyword">if</tt> <tt class="py-name">bt</tt> <tt class="py-op">==</tt> <tt class="py-string">'&lt;a'</tt> <tt class="py-keyword">or</tt> <tt class="py-name">bt</tt> <tt class="py-op">==</tt> <tt class="py-string">'&lt;img'</tt><tt class="py-op">:</tt> </tt>
+<a name="L128"></a><tt class="py-lineno">128</tt>  <tt class="py-line">                <tt class="py-keyword">return</tt> </tt>
+<a name="L129"></a><tt class="py-lineno">129</tt>  <tt class="py-line">            <tt class="py-keyword">if</tt> <tt id="link-22" class="py-name"><a title="web2py.gluon.html.A.tag
+web2py.gluon.html.B.tag
+web2py.gluon.html.BEAUTIFY.tag
+web2py.gluon.html.BODY.tag
+web2py.gluon.html.BR.tag
+web2py.gluon.html.CENTER.tag
+web2py.gluon.html.DIV.tag
+web2py.gluon.html.EM.tag
+web2py.gluon.html.EMBED.tag
+web2py.gluon.html.FIELDSET.tag
+web2py.gluon.html.FORM.tag
+web2py.gluon.html.H1.tag
+web2py.gluon.html.H2.tag
+web2py.gluon.html.H3.tag
+web2py.gluon.html.H4.tag
+web2py.gluon.html.H5.tag
+web2py.gluon.html.H6.tag
+web2py.gluon.html.HEAD.tag
+web2py.gluon.html.HR.tag
+web2py.gluon.html.HTML.tag
+web2py.gluon.html.I.tag
+web2py.gluon.html.IFRAME.tag
+web2py.gluon.html.IMG.tag
+web2py.gluon.html.INPUT.tag
+web2py.gluon.html.LABEL.tag
+web2py.gluon.html.LEGEND.tag
+web2py.gluon.html.LI.tag
+web2py.gluon.html.LINK.tag
+web2py.gluon.html.MENU.tag
+web2py.gluon.html.META.tag
+web2py.gluon.html.OBJECT.tag
+web2py.gluon.html.OL.tag
+web2py.gluon.html.OPTGROUP.tag
+web2py.gluon.html.OPTION.tag
+web2py.gluon.html.P.tag
+web2py.gluon.html.PRE.tag
+web2py.gluon.html.SCRIPT.tag
+web2py.gluon.html.SELECT.tag
+web2py.gluon.html.SPAN.tag
+web2py.gluon.html.STYLE.tag
+web2py.gluon.html.TABLE.tag
+web2py.gluon.html.TBODY.tag
+web2py.gluon.html.TD.tag
+web2py.gluon.html.TEXTAREA.tag
+web2py.gluon.html.TFOOT.tag
+web2py.gluon.html.TH.tag
+web2py.gluon.html.THEAD.tag
+web2py.gluon.html.TITLE.tag
+web2py.gluon.html.TR.tag
+web2py.gluon.html.TT.tag
+web2py.gluon.html.UL.tag
+web2py.gluon.html.XHTML.tag" class="py-name" href="#" onclick="return doclink('link-22', 'tag', 'link-9');">tag</a></tt> <tt class="py-keyword">in</tt> <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">requires_no_close</tt><tt class="py-op">:</tt> </tt>
+<a name="L130"></a><tt class="py-lineno">130</tt>  <tt class="py-line">                <tt class="py-name">bt</tt> <tt class="py-op">+=</tt> <tt class="py-string">' /'</tt> </tt>
+<a name="L131"></a><tt class="py-lineno">131</tt>  <tt class="py-line">            <tt class="py-name">bt</tt> <tt class="py-op">+=</tt> <tt class="py-string">'&gt;'</tt> </tt>
+<a name="L132"></a><tt class="py-lineno">132</tt>  <tt class="py-line">            <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">result</tt> <tt class="py-op">+=</tt> <tt class="py-name">bt</tt> </tt>
+<a name="L133"></a><tt class="py-lineno">133</tt>  <tt class="py-line">            <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">open_tags</tt><tt class="py-op">.</tt><tt id="link-23" class="py-name" targets="Method web2py.gluon.dal.Table.insert()=web2py.gluon.dal.Table-class.html#insert,Method web2py.gluon.html.DIV.insert()=web2py.gluon.html.DIV-class.html#insert,Method web2py.gluon.sql.KeyedTable.insert()=web2py.gluon.sql.KeyedTable-class.html#insert,Method web2py.gluon.sql.Table.insert()=web2py.gluon.sql.Table-class.html#insert,Method web2py.gluon.template_new.Content.insert()=web2py.gluon.template_new.Content-class.html#insert"><a title="web2py.gluon.dal.Table.insert
+web2py.gluon.html.DIV.insert
+web2py.gluon.sql.KeyedTable.insert
+web2py.gluon.sql.Table.insert
+web2py.gluon.template_new.Content.insert" class="py-name" href="#" onclick="return doclink('link-23', 'insert', 'link-23');">insert</a></tt><tt class="py-op">(</tt><tt class="py-number">0</tt><tt class="py-op">,</tt> <tt id="link-24" class="py-name"><a title="web2py.gluon.html.A.tag
+web2py.gluon.html.B.tag
+web2py.gluon.html.BEAUTIFY.tag
+web2py.gluon.html.BODY.tag
+web2py.gluon.html.BR.tag
+web2py.gluon.html.CENTER.tag
+web2py.gluon.html.DIV.tag
+web2py.gluon.html.EM.tag
+web2py.gluon.html.EMBED.tag
+web2py.gluon.html.FIELDSET.tag
+web2py.gluon.html.FORM.tag
+web2py.gluon.html.H1.tag
+web2py.gluon.html.H2.tag
+web2py.gluon.html.H3.tag
+web2py.gluon.html.H4.tag
+web2py.gluon.html.H5.tag
+web2py.gluon.html.H6.tag
+web2py.gluon.html.HEAD.tag
+web2py.gluon.html.HR.tag
+web2py.gluon.html.HTML.tag
+web2py.gluon.html.I.tag
+web2py.gluon.html.IFRAME.tag
+web2py.gluon.html.IMG.tag
+web2py.gluon.html.INPUT.tag
+web2py.gluon.html.LABEL.tag
+web2py.gluon.html.LEGEND.tag
+web2py.gluon.html.LI.tag
+web2py.gluon.html.LINK.tag
+web2py.gluon.html.MENU.tag
+web2py.gluon.html.META.tag
+web2py.gluon.html.OBJECT.tag
+web2py.gluon.html.OL.tag
+web2py.gluon.html.OPTGROUP.tag
+web2py.gluon.html.OPTION.tag
+web2py.gluon.html.P.tag
+web2py.gluon.html.PRE.tag
+web2py.gluon.html.SCRIPT.tag
+web2py.gluon.html.SELECT.tag
+web2py.gluon.html.SPAN.tag
+web2py.gluon.html.STYLE.tag
+web2py.gluon.html.TABLE.tag
+web2py.gluon.html.TBODY.tag
+web2py.gluon.html.TD.tag
+web2py.gluon.html.TEXTAREA.tag
+web2py.gluon.html.TFOOT.tag
+web2py.gluon.html.TH.tag
+web2py.gluon.html.THEAD.tag
+web2py.gluon.html.TITLE.tag
+web2py.gluon.html.TR.tag
+web2py.gluon.html.TT.tag
+web2py.gluon.html.UL.tag
+web2py.gluon.html.XHTML.tag" class="py-name" href="#" onclick="return doclink('link-24', 'tag', 'link-9');">tag</a></tt><tt class="py-op">)</tt> </tt>
+</div><a name="L134"></a><tt class="py-lineno">134</tt>  <tt class="py-line"> </tt>
+<a name="XssCleaner.handle_endtag"></a><div id="XssCleaner.handle_endtag-def"><a name="L135"></a><tt class="py-lineno">135</tt> <a class="py-toggle" href="#" id="XssCleaner.handle_endtag-toggle" onclick="return toggle('XssCleaner.handle_endtag');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="web2py.gluon.sanitizer.XssCleaner-class.html#handle_endtag">handle_endtag</a><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">,</tt> <tt class="py-param">tag</tt><tt class="py-op">,</tt> <tt class="py-param">attrs</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="XssCleaner.handle_endtag-collapsed" style="display:none;" pad="+++" indent="++++++++"></div><div id="XssCleaner.handle_endtag-expanded"><a name="L136"></a><tt class="py-lineno">136</tt>  <tt class="py-line">        <tt class="py-name">bracketed</tt> <tt class="py-op">=</tt> <tt class="py-string">'&lt;/%s&gt;'</tt> <tt class="py-op">%</tt> <tt id="link-25" class="py-name"><a title="web2py.gluon.html.A.tag
+web2py.gluon.html.B.tag
+web2py.gluon.html.BEAUTIFY.tag
+web2py.gluon.html.BODY.tag
+web2py.gluon.html.BR.tag
+web2py.gluon.html.CENTER.tag
+web2py.gluon.html.DIV.tag
+web2py.gluon.html.EM.tag
+web2py.gluon.html.EMBED.tag
+web2py.gluon.html.FIELDSET.tag
+web2py.gluon.html.FORM.tag
+web2py.gluon.html.H1.tag
+web2py.gluon.html.H2.tag
+web2py.gluon.html.H3.tag
+web2py.gluon.html.H4.tag
+web2py.gluon.html.H5.tag
+web2py.gluon.html.H6.tag
+web2py.gluon.html.HEAD.tag
+web2py.gluon.html.HR.tag
+web2py.gluon.html.HTML.tag
+web2py.gluon.html.I.tag
+web2py.gluon.html.IFRAME.tag
+web2py.gluon.html.IMG.tag
+web2py.gluon.html.INPUT.tag
+web2py.gluon.html.LABEL.tag
+web2py.gluon.html.LEGEND.tag
+web2py.gluon.html.LI.tag
+web2py.gluon.html.LINK.tag
+web2py.gluon.html.MENU.tag
+web2py.gluon.html.META.tag
+web2py.gluon.html.OBJECT.tag
+web2py.gluon.html.OL.tag
+web2py.gluon.html.OPTGROUP.tag
+web2py.gluon.html.OPTION.tag
+web2py.gluon.html.P.tag
+web2py.gluon.html.PRE.tag
+web2py.gluon.html.SCRIPT.tag
+web2py.gluon.html.SELECT.tag
+web2py.gluon.html.SPAN.tag
+web2py.gluon.html.STYLE.tag
+web2py.gluon.html.TABLE.tag
+web2py.gluon.html.TBODY.tag
+web2py.gluon.html.TD.tag
+web2py.gluon.html.TEXTAREA.tag
+web2py.gluon.html.TFOOT.tag
+web2py.gluon.html.TH.tag
+web2py.gluon.html.THEAD.tag
+web2py.gluon.html.TITLE.tag
+web2py.gluon.html.TR.tag
+web2py.gluon.html.TT.tag
+web2py.gluon.html.UL.tag
+web2py.gluon.html.XHTML.tag" class="py-name" href="#" onclick="return doclink('link-25', 'tag', 'link-9');">tag</a></tt> </tt>
+<a name="L137"></a><tt class="py-lineno">137</tt>  <tt class="py-line">        <tt class="py-keyword">if</tt> <tt id="link-26" class="py-name"><a title="web2py.gluon.html.A.tag
+web2py.gluon.html.B.tag
+web2py.gluon.html.BEAUTIFY.tag
+web2py.gluon.html.BODY.tag
+web2py.gluon.html.BR.tag
+web2py.gluon.html.CENTER.tag
+web2py.gluon.html.DIV.tag
+web2py.gluon.html.EM.tag
+web2py.gluon.html.EMBED.tag
+web2py.gluon.html.FIELDSET.tag
+web2py.gluon.html.FORM.tag
+web2py.gluon.html.H1.tag
+web2py.gluon.html.H2.tag
+web2py.gluon.html.H3.tag
+web2py.gluon.html.H4.tag
+web2py.gluon.html.H5.tag
+web2py.gluon.html.H6.tag
+web2py.gluon.html.HEAD.tag
+web2py.gluon.html.HR.tag
+web2py.gluon.html.HTML.tag
+web2py.gluon.html.I.tag
+web2py.gluon.html.IFRAME.tag
+web2py.gluon.html.IMG.tag
+web2py.gluon.html.INPUT.tag
+web2py.gluon.html.LABEL.tag
+web2py.gluon.html.LEGEND.tag
+web2py.gluon.html.LI.tag
+web2py.gluon.html.LINK.tag
+web2py.gluon.html.MENU.tag
+web2py.gluon.html.META.tag
+web2py.gluon.html.OBJECT.tag
+web2py.gluon.html.OL.tag
+web2py.gluon.html.OPTGROUP.tag
+web2py.gluon.html.OPTION.tag
+web2py.gluon.html.P.tag
+web2py.gluon.html.PRE.tag
+web2py.gluon.html.SCRIPT.tag
+web2py.gluon.html.SELECT.tag
+web2py.gluon.html.SPAN.tag
+web2py.gluon.html.STYLE.tag
+web2py.gluon.html.TABLE.tag
+web2py.gluon.html.TBODY.tag
+web2py.gluon.html.TD.tag
+web2py.gluon.html.TEXTAREA.tag
+web2py.gluon.html.TFOOT.tag
+web2py.gluon.html.TH.tag
+web2py.gluon.html.THEAD.tag
+web2py.gluon.html.TITLE.tag
+web2py.gluon.html.TR.tag
+web2py.gluon.html.TT.tag
+web2py.gluon.html.UL.tag
+web2py.gluon.html.XHTML.tag" class="py-name" href="#" onclick="return doclink('link-26', 'tag', 'link-9');">tag</a></tt> <tt class="py-keyword">not</tt> <tt class="py-keyword">in</tt> <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">permitted_tags</tt><tt class="py-op">:</tt> </tt>
+<a name="L138"></a><tt class="py-lineno">138</tt>  <tt class="py-line">            <tt class="py-keyword">if</tt> <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">strip_disallowed</tt><tt class="py-op">:</tt> </tt>
+<a name="L139"></a><tt class="py-lineno">139</tt>  <tt class="py-line">                <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">in_disallowed</tt> <tt class="py-op">=</tt> <tt class="py-name">False</tt> </tt>
+<a name="L140"></a><tt class="py-lineno">140</tt>  <tt class="py-line">            <tt class="py-keyword">else</tt><tt class="py-op">:</tt> </tt>
+<a name="L141"></a><tt class="py-lineno">141</tt>  <tt class="py-line">                <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">result</tt> <tt class="py-op">+=</tt> <tt id="link-27" class="py-name"><a title="web2py.gluon.sanitizer.xssescape" class="py-name" href="#" onclick="return doclink('link-27', 'xssescape', 'link-4');">xssescape</a></tt><tt class="py-op">(</tt><tt class="py-name">bracketed</tt><tt class="py-op">)</tt> </tt>
+<a name="L142"></a><tt class="py-lineno">142</tt>  <tt class="py-line">        <tt class="py-keyword">elif</tt> <tt id="link-28" class="py-name"><a title="web2py.gluon.html.A.tag
+web2py.gluon.html.B.tag
+web2py.gluon.html.BEAUTIFY.tag
+web2py.gluon.html.BODY.tag
+web2py.gluon.html.BR.tag
+web2py.gluon.html.CENTER.tag
+web2py.gluon.html.DIV.tag
+web2py.gluon.html.EM.tag
+web2py.gluon.html.EMBED.tag
+web2py.gluon.html.FIELDSET.tag
+web2py.gluon.html.FORM.tag
+web2py.gluon.html.H1.tag
+web2py.gluon.html.H2.tag
+web2py.gluon.html.H3.tag
+web2py.gluon.html.H4.tag
+web2py.gluon.html.H5.tag
+web2py.gluon.html.H6.tag
+web2py.gluon.html.HEAD.tag
+web2py.gluon.html.HR.tag
+web2py.gluon.html.HTML.tag
+web2py.gluon.html.I.tag
+web2py.gluon.html.IFRAME.tag
+web2py.gluon.html.IMG.tag
+web2py.gluon.html.INPUT.tag
+web2py.gluon.html.LABEL.tag
+web2py.gluon.html.LEGEND.tag
+web2py.gluon.html.LI.tag
+web2py.gluon.html.LINK.tag
+web2py.gluon.html.MENU.tag
+web2py.gluon.html.META.tag
+web2py.gluon.html.OBJECT.tag
+web2py.gluon.html.OL.tag
+web2py.gluon.html.OPTGROUP.tag
+web2py.gluon.html.OPTION.tag
+web2py.gluon.html.P.tag
+web2py.gluon.html.PRE.tag
+web2py.gluon.html.SCRIPT.tag
+web2py.gluon.html.SELECT.tag
+web2py.gluon.html.SPAN.tag
+web2py.gluon.html.STYLE.tag
+web2py.gluon.html.TABLE.tag
+web2py.gluon.html.TBODY.tag
+web2py.gluon.html.TD.tag
+web2py.gluon.html.TEXTAREA.tag
+web2py.gluon.html.TFOOT.tag
+web2py.gluon.html.TH.tag
+web2py.gluon.html.THEAD.tag
+web2py.gluon.html.TITLE.tag
+web2py.gluon.html.TR.tag
+web2py.gluon.html.TT.tag
+web2py.gluon.html.UL.tag
+web2py.gluon.html.XHTML.tag" class="py-name" href="#" onclick="return doclink('link-28', 'tag', 'link-9');">tag</a></tt> <tt class="py-keyword">in</tt> <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">open_tags</tt><tt class="py-op">:</tt> </tt>
+<a name="L143"></a><tt class="py-lineno">143</tt>  <tt class="py-line">            <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">result</tt> <tt class="py-op">+=</tt> <tt class="py-name">bracketed</tt> </tt>
+<a name="L144"></a><tt class="py-lineno">144</tt>  <tt class="py-line">            <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">open_tags</tt><tt class="py-op">.</tt><tt class="py-name">remove</tt><tt class="py-op">(</tt><tt id="link-29" class="py-name"><a title="web2py.gluon.html.A.tag
+web2py.gluon.html.B.tag
+web2py.gluon.html.BEAUTIFY.tag
+web2py.gluon.html.BODY.tag
+web2py.gluon.html.BR.tag
+web2py.gluon.html.CENTER.tag
+web2py.gluon.html.DIV.tag
+web2py.gluon.html.EM.tag
+web2py.gluon.html.EMBED.tag
+web2py.gluon.html.FIELDSET.tag
+web2py.gluon.html.FORM.tag
+web2py.gluon.html.H1.tag
+web2py.gluon.html.H2.tag
+web2py.gluon.html.H3.tag
+web2py.gluon.html.H4.tag
+web2py.gluon.html.H5.tag
+web2py.gluon.html.H6.tag
+web2py.gluon.html.HEAD.tag
+web2py.gluon.html.HR.tag
+web2py.gluon.html.HTML.tag
+web2py.gluon.html.I.tag
+web2py.gluon.html.IFRAME.tag
+web2py.gluon.html.IMG.tag
+web2py.gluon.html.INPUT.tag
+web2py.gluon.html.LABEL.tag
+web2py.gluon.html.LEGEND.tag
+web2py.gluon.html.LI.tag
+web2py.gluon.html.LINK.tag
+web2py.gluon.html.MENU.tag
+web2py.gluon.html.META.tag
+web2py.gluon.html.OBJECT.tag
+web2py.gluon.html.OL.tag
+web2py.gluon.html.OPTGROUP.tag
+web2py.gluon.html.OPTION.tag
+web2py.gluon.html.P.tag
+web2py.gluon.html.PRE.tag
+web2py.gluon.html.SCRIPT.tag
+web2py.gluon.html.SELECT.tag
+web2py.gluon.html.SPAN.tag
+web2py.gluon.html.STYLE.tag
+web2py.gluon.html.TABLE.tag
+web2py.gluon.html.TBODY.tag
+web2py.gluon.html.TD.tag
+web2py.gluon.html.TEXTAREA.tag
+web2py.gluon.html.TFOOT.tag
+web2py.gluon.html.TH.tag
+web2py.gluon.html.THEAD.tag
+web2py.gluon.html.TITLE.tag
+web2py.gluon.html.TR.tag
+web2py.gluon.html.TT.tag
+web2py.gluon.html.UL.tag
+web2py.gluon.html.XHTML.tag" class="py-name" href="#" onclick="return doclink('link-29', 'tag', 'link-9');">tag</a></tt><tt class="py-op">)</tt> </tt>
+</div><a name="L145"></a><tt class="py-lineno">145</tt>  <tt class="py-line"> </tt>
+<a name="XssCleaner.unknown_starttag"></a><div id="XssCleaner.unknown_starttag-def"><a name="L146"></a><tt class="py-lineno">146</tt> <a class="py-toggle" href="#" id="XssCleaner.unknown_starttag-toggle" onclick="return toggle('XssCleaner.unknown_starttag');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="web2py.gluon.sanitizer.XssCleaner-class.html#unknown_starttag">unknown_starttag</a><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">,</tt> <tt class="py-param">tag</tt><tt class="py-op">,</tt> <tt class="py-param">attributes</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="XssCleaner.unknown_starttag-collapsed" style="display:none;" pad="+++" indent="++++++++"></div><div id="XssCleaner.unknown_starttag-expanded"><a name="L147"></a><tt class="py-lineno">147</tt>  <tt class="py-line">        <tt class="py-name">self</tt><tt class="py-op">.</tt><tt id="link-30" class="py-name" targets="Method web2py.gluon.html.web2pyHTMLParser.handle_starttag()=web2py.gluon.html.web2pyHTMLParser-class.html#handle_starttag,Method web2py.gluon.sanitizer.XssCleaner.handle_starttag()=web2py.gluon.sanitizer.XssCleaner-class.html#handle_starttag"><a title="web2py.gluon.html.web2pyHTMLParser.handle_starttag
+web2py.gluon.sanitizer.XssCleaner.handle_starttag" class="py-name" href="#" onclick="return doclink('link-30', 'handle_starttag', 'link-30');">handle_starttag</a></tt><tt class="py-op">(</tt><tt id="link-31" class="py-name"><a title="web2py.gluon.html.A.tag
+web2py.gluon.html.B.tag
+web2py.gluon.html.BEAUTIFY.tag
+web2py.gluon.html.BODY.tag
+web2py.gluon.html.BR.tag
+web2py.gluon.html.CENTER.tag
+web2py.gluon.html.DIV.tag
+web2py.gluon.html.EM.tag
+web2py.gluon.html.EMBED.tag
+web2py.gluon.html.FIELDSET.tag
+web2py.gluon.html.FORM.tag
+web2py.gluon.html.H1.tag
+web2py.gluon.html.H2.tag
+web2py.gluon.html.H3.tag
+web2py.gluon.html.H4.tag
+web2py.gluon.html.H5.tag
+web2py.gluon.html.H6.tag
+web2py.gluon.html.HEAD.tag
+web2py.gluon.html.HR.tag
+web2py.gluon.html.HTML.tag
+web2py.gluon.html.I.tag
+web2py.gluon.html.IFRAME.tag
+web2py.gluon.html.IMG.tag
+web2py.gluon.html.INPUT.tag
+web2py.gluon.html.LABEL.tag
+web2py.gluon.html.LEGEND.tag
+web2py.gluon.html.LI.tag
+web2py.gluon.html.LINK.tag
+web2py.gluon.html.MENU.tag
+web2py.gluon.html.META.tag
+web2py.gluon.html.OBJECT.tag
+web2py.gluon.html.OL.tag
+web2py.gluon.html.OPTGROUP.tag
+web2py.gluon.html.OPTION.tag
+web2py.gluon.html.P.tag
+web2py.gluon.html.PRE.tag
+web2py.gluon.html.SCRIPT.tag
+web2py.gluon.html.SELECT.tag
+web2py.gluon.html.SPAN.tag
+web2py.gluon.html.STYLE.tag
+web2py.gluon.html.TABLE.tag
+web2py.gluon.html.TBODY.tag
+web2py.gluon.html.TD.tag
+web2py.gluon.html.TEXTAREA.tag
+web2py.gluon.html.TFOOT.tag
+web2py.gluon.html.TH.tag
+web2py.gluon.html.THEAD.tag
+web2py.gluon.html.TITLE.tag
+web2py.gluon.html.TR.tag
+web2py.gluon.html.TT.tag
+web2py.gluon.html.UL.tag
+web2py.gluon.html.XHTML.tag" class="py-name" href="#" onclick="return doclink('link-31', 'tag', 'link-9');">tag</a></tt><tt class="py-op">,</tt> <tt class="py-name">None</tt><tt class="py-op">,</tt> <tt class="py-name">attributes</tt><tt class="py-op">)</tt> </tt>
+</div><a name="L148"></a><tt class="py-lineno">148</tt>  <tt class="py-line"> </tt>
+<a name="XssCleaner.unknown_endtag"></a><div id="XssCleaner.unknown_endtag-def"><a name="L149"></a><tt class="py-lineno">149</tt> <a class="py-toggle" href="#" id="XssCleaner.unknown_endtag-toggle" onclick="return toggle('XssCleaner.unknown_endtag');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="web2py.gluon.sanitizer.XssCleaner-class.html#unknown_endtag">unknown_endtag</a><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">,</tt> <tt class="py-param">tag</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="XssCleaner.unknown_endtag-collapsed" style="display:none;" pad="+++" indent="++++++++"></div><div id="XssCleaner.unknown_endtag-expanded"><a name="L150"></a><tt class="py-lineno">150</tt>  <tt class="py-line">        <tt class="py-name">self</tt><tt class="py-op">.</tt><tt id="link-32" class="py-name" targets="Method web2py.gluon.html.web2pyHTMLParser.handle_endtag()=web2py.gluon.html.web2pyHTMLParser-class.html#handle_endtag,Method web2py.gluon.sanitizer.XssCleaner.handle_endtag()=web2py.gluon.sanitizer.XssCleaner-class.html#handle_endtag"><a title="web2py.gluon.html.web2pyHTMLParser.handle_endtag
+web2py.gluon.sanitizer.XssCleaner.handle_endtag" class="py-name" href="#" onclick="return doclink('link-32', 'handle_endtag', 'link-32');">handle_endtag</a></tt><tt class="py-op">(</tt><tt id="link-33" class="py-name"><a title="web2py.gluon.html.A.tag
+web2py.gluon.html.B.tag
+web2py.gluon.html.BEAUTIFY.tag
+web2py.gluon.html.BODY.tag
+web2py.gluon.html.BR.tag
+web2py.gluon.html.CENTER.tag
+web2py.gluon.html.DIV.tag
+web2py.gluon.html.EM.tag
+web2py.gluon.html.EMBED.tag
+web2py.gluon.html.FIELDSET.tag
+web2py.gluon.html.FORM.tag
+web2py.gluon.html.H1.tag
+web2py.gluon.html.H2.tag
+web2py.gluon.html.H3.tag
+web2py.gluon.html.H4.tag
+web2py.gluon.html.H5.tag
+web2py.gluon.html.H6.tag
+web2py.gluon.html.HEAD.tag
+web2py.gluon.html.HR.tag
+web2py.gluon.html.HTML.tag
+web2py.gluon.html.I.tag
+web2py.gluon.html.IFRAME.tag
+web2py.gluon.html.IMG.tag
+web2py.gluon.html.INPUT.tag
+web2py.gluon.html.LABEL.tag
+web2py.gluon.html.LEGEND.tag
+web2py.gluon.html.LI.tag
+web2py.gluon.html.LINK.tag
+web2py.gluon.html.MENU.tag
+web2py.gluon.html.META.tag
+web2py.gluon.html.OBJECT.tag
+web2py.gluon.html.OL.tag
+web2py.gluon.html.OPTGROUP.tag
+web2py.gluon.html.OPTION.tag
+web2py.gluon.html.P.tag
+web2py.gluon.html.PRE.tag
+web2py.gluon.html.SCRIPT.tag
+web2py.gluon.html.SELECT.tag
+web2py.gluon.html.SPAN.tag
+web2py.gluon.html.STYLE.tag
+web2py.gluon.html.TABLE.tag
+web2py.gluon.html.TBODY.tag
+web2py.gluon.html.TD.tag
+web2py.gluon.html.TEXTAREA.tag
+web2py.gluon.html.TFOOT.tag
+web2py.gluon.html.TH.tag
+web2py.gluon.html.THEAD.tag
+web2py.gluon.html.TITLE.tag
+web2py.gluon.html.TR.tag
+web2py.gluon.html.TT.tag
+web2py.gluon.html.UL.tag
+web2py.gluon.html.XHTML.tag" class="py-name" href="#" onclick="return doclink('link-33', 'tag', 'link-9');">tag</a></tt><tt class="py-op">,</tt> <tt class="py-name">None</tt><tt class="py-op">)</tt> </tt>
+</div><a name="L151"></a><tt class="py-lineno">151</tt>  <tt class="py-line"> </tt>
+<a name="XssCleaner.url_is_acceptable"></a><div id="XssCleaner.url_is_acceptable-def"><a name="L152"></a><tt class="py-lineno">152</tt> <a class="py-toggle" href="#" id="XssCleaner.url_is_acceptable-toggle" onclick="return toggle('XssCleaner.url_is_acceptable');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="web2py.gluon.sanitizer.XssCleaner-class.html#url_is_acceptable">url_is_acceptable</a><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">,</tt> <tt class="py-param">url</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="XssCleaner.url_is_acceptable-collapsed" style="display:none;" pad="+++" indent="++++++++"></div><div id="XssCleaner.url_is_acceptable-expanded"><a name="L153"></a><tt class="py-lineno">153</tt>  <tt class="py-line">        <tt class="py-docstring">"""</tt> </tt>
+<a name="L154"></a><tt class="py-lineno">154</tt>  <tt class="py-line"><tt class="py-docstring">        Requires all URLs to be \"absolute.\"</tt> </tt>
+<a name="L155"></a><tt class="py-lineno">155</tt>  <tt class="py-line"><tt class="py-docstring">        """</tt> </tt>
+<a name="L156"></a><tt class="py-lineno">156</tt>  <tt class="py-line"> </tt>
+<a name="L157"></a><tt class="py-lineno">157</tt>  <tt class="py-line">        <tt class="py-name">parsed</tt> <tt class="py-op">=</tt> <tt class="py-name">urlparse</tt><tt class="py-op">(</tt><tt id="link-34" class="py-name" targets="Method web2py.gluon.tools.Auth.url()=web2py.gluon.tools.Auth-class.html#url,Method web2py.gluon.tools.Crud.url()=web2py.gluon.tools.Crud-class.html#url"><a title="web2py.gluon.tools.Auth.url
+web2py.gluon.tools.Crud.url" class="py-name" href="#" onclick="return doclink('link-34', 'url', 'link-34');">url</a></tt><tt class="py-op">)</tt> </tt>
+<a name="L158"></a><tt class="py-lineno">158</tt>  <tt class="py-line">        <tt class="py-keyword">return</tt> <tt class="py-name">parsed</tt><tt class="py-op">[</tt><tt class="py-number">0</tt><tt class="py-op">]</tt> <tt class="py-keyword">in</tt> <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">allowed_schemes</tt> <tt class="py-keyword">and</tt> <tt class="py-string">'.'</tt> <tt class="py-keyword">in</tt> <tt class="py-name">parsed</tt><tt class="py-op">[</tt><tt class="py-number">1</tt><tt class="py-op">]</tt> </tt>
+</div><a name="L159"></a><tt class="py-lineno">159</tt>  <tt class="py-line"> </tt>
+<a name="XssCleaner.strip"></a><div id="XssCleaner.strip-def"><a name="L160"></a><tt class="py-lineno">160</tt> <a class="py-toggle" href="#" id="XssCleaner.strip-toggle" onclick="return toggle('XssCleaner.strip');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="web2py.gluon.sanitizer.XssCleaner-class.html#strip">strip</a><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">,</tt> <tt class="py-param">rawstring</tt><tt class="py-op">,</tt> <tt class="py-param">escape</tt><tt class="py-op">=</tt><tt class="py-name">True</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="XssCleaner.strip-collapsed" style="display:none;" pad="+++" indent="++++++++"></div><div id="XssCleaner.strip-expanded"><a name="L161"></a><tt class="py-lineno">161</tt>  <tt class="py-line">        <tt class="py-docstring">"""</tt> </tt>
+<a name="L162"></a><tt class="py-lineno">162</tt>  <tt class="py-line"><tt class="py-docstring">        Returns the argument stripped of potentially harmful</tt> </tt>
+<a name="L163"></a><tt class="py-lineno">163</tt>  <tt class="py-line"><tt class="py-docstring">        HTML or Javascript code</tt> </tt>
+<a name="L164"></a><tt class="py-lineno">164</tt>  <tt class="py-line"><tt class="py-docstring"></tt> </tt>
+<a name="L165"></a><tt class="py-lineno">165</tt>  <tt class="py-line"><tt class="py-docstring">        @type escape: boolean</tt> </tt>
+<a name="L166"></a><tt class="py-lineno">166</tt>  <tt class="py-line"><tt class="py-docstring">        @param escape: If True (default) it escapes the potentially harmful</tt> </tt>
+<a name="L167"></a><tt class="py-lineno">167</tt>  <tt class="py-line"><tt class="py-docstring">          content, otherwise remove it</tt> </tt>
+<a name="L168"></a><tt class="py-lineno">168</tt>  <tt class="py-line"><tt class="py-docstring">        """</tt> </tt>
+<a name="L169"></a><tt class="py-lineno">169</tt>  <tt class="py-line"> </tt>
+<a name="L170"></a><tt class="py-lineno">170</tt>  <tt class="py-line">        <tt class="py-keyword">for</tt> <tt id="link-35" class="py-name"><a title="web2py.gluon.html.A.tag
+web2py.gluon.html.B.tag
+web2py.gluon.html.BEAUTIFY.tag
+web2py.gluon.html.BODY.tag
+web2py.gluon.html.BR.tag
+web2py.gluon.html.CENTER.tag
+web2py.gluon.html.DIV.tag
+web2py.gluon.html.EM.tag
+web2py.gluon.html.EMBED.tag
+web2py.gluon.html.FIELDSET.tag
+web2py.gluon.html.FORM.tag
+web2py.gluon.html.H1.tag
+web2py.gluon.html.H2.tag
+web2py.gluon.html.H3.tag
+web2py.gluon.html.H4.tag
+web2py.gluon.html.H5.tag
+web2py.gluon.html.H6.tag
+web2py.gluon.html.HEAD.tag
+web2py.gluon.html.HR.tag
+web2py.gluon.html.HTML.tag
+web2py.gluon.html.I.tag
+web2py.gluon.html.IFRAME.tag
+web2py.gluon.html.IMG.tag
+web2py.gluon.html.INPUT.tag
+web2py.gluon.html.LABEL.tag
+web2py.gluon.html.LEGEND.tag
+web2py.gluon.html.LI.tag
+web2py.gluon.html.LINK.tag
+web2py.gluon.html.MENU.tag
+web2py.gluon.html.META.tag
+web2py.gluon.html.OBJECT.tag
+web2py.gluon.html.OL.tag
+web2py.gluon.html.OPTGROUP.tag
+web2py.gluon.html.OPTION.tag
+web2py.gluon.html.P.tag
+web2py.gluon.html.PRE.tag
+web2py.gluon.html.SCRIPT.tag
+web2py.gluon.html.SELECT.tag
+web2py.gluon.html.SPAN.tag
+web2py.gluon.html.STYLE.tag
+web2py.gluon.html.TABLE.tag
+web2py.gluon.html.TBODY.tag
+web2py.gluon.html.TD.tag
+web2py.gluon.html.TEXTAREA.tag
+web2py.gluon.html.TFOOT.tag
+web2py.gluon.html.TH.tag
+web2py.gluon.html.THEAD.tag
+web2py.gluon.html.TITLE.tag
+web2py.gluon.html.TR.tag
+web2py.gluon.html.TT.tag
+web2py.gluon.html.UL.tag
+web2py.gluon.html.XHTML.tag" class="py-name" href="#" onclick="return doclink('link-35', 'tag', 'link-9');">tag</a></tt> <tt class="py-keyword">in</tt> <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">requires_no_close</tt><tt class="py-op">:</tt> </tt>
+<a name="L171"></a><tt class="py-lineno">171</tt>  <tt class="py-line">            <tt class="py-name">rawstring</tt> <tt class="py-op">=</tt> <tt class="py-name">rawstring</tt><tt class="py-op">.</tt><tt id="link-36" class="py-name"><a title="web2py.gluon.template.replace" class="py-name" href="#" onclick="return doclink('link-36', 'replace', 'link-2');">replace</a></tt><tt class="py-op">(</tt><tt class="py-string">"&lt;%s/&gt;"</tt> <tt class="py-op">%</tt> <tt id="link-37" class="py-name"><a title="web2py.gluon.html.A.tag
+web2py.gluon.html.B.tag
+web2py.gluon.html.BEAUTIFY.tag
+web2py.gluon.html.BODY.tag
+web2py.gluon.html.BR.tag
+web2py.gluon.html.CENTER.tag
+web2py.gluon.html.DIV.tag
+web2py.gluon.html.EM.tag
+web2py.gluon.html.EMBED.tag
+web2py.gluon.html.FIELDSET.tag
+web2py.gluon.html.FORM.tag
+web2py.gluon.html.H1.tag
+web2py.gluon.html.H2.tag
+web2py.gluon.html.H3.tag
+web2py.gluon.html.H4.tag
+web2py.gluon.html.H5.tag
+web2py.gluon.html.H6.tag
+web2py.gluon.html.HEAD.tag
+web2py.gluon.html.HR.tag
+web2py.gluon.html.HTML.tag
+web2py.gluon.html.I.tag
+web2py.gluon.html.IFRAME.tag
+web2py.gluon.html.IMG.tag
+web2py.gluon.html.INPUT.tag
+web2py.gluon.html.LABEL.tag
+web2py.gluon.html.LEGEND.tag
+web2py.gluon.html.LI.tag
+web2py.gluon.html.LINK.tag
+web2py.gluon.html.MENU.tag
+web2py.gluon.html.META.tag
+web2py.gluon.html.OBJECT.tag
+web2py.gluon.html.OL.tag
+web2py.gluon.html.OPTGROUP.tag
+web2py.gluon.html.OPTION.tag
+web2py.gluon.html.P.tag
+web2py.gluon.html.PRE.tag
+web2py.gluon.html.SCRIPT.tag
+web2py.gluon.html.SELECT.tag
+web2py.gluon.html.SPAN.tag
+web2py.gluon.html.STYLE.tag
+web2py.gluon.html.TABLE.tag
+web2py.gluon.html.TBODY.tag
+web2py.gluon.html.TD.tag
+web2py.gluon.html.TEXTAREA.tag
+web2py.gluon.html.TFOOT.tag
+web2py.gluon.html.TH.tag
+web2py.gluon.html.THEAD.tag
+web2py.gluon.html.TITLE.tag
+web2py.gluon.html.TR.tag
+web2py.gluon.html.TT.tag
+web2py.gluon.html.UL.tag
+web2py.gluon.html.XHTML.tag" class="py-name" href="#" onclick="return doclink('link-37', 'tag', 'link-9');">tag</a></tt><tt class="py-op">,</tt> <tt class="py-string">"&lt;%s /&gt;"</tt> <tt class="py-op">%</tt> <tt id="link-38" class="py-name"><a title="web2py.gluon.html.A.tag
+web2py.gluon.html.B.tag
+web2py.gluon.html.BEAUTIFY.tag
+web2py.gluon.html.BODY.tag
+web2py.gluon.html.BR.tag
+web2py.gluon.html.CENTER.tag
+web2py.gluon.html.DIV.tag
+web2py.gluon.html.EM.tag
+web2py.gluon.html.EMBED.tag
+web2py.gluon.html.FIELDSET.tag
+web2py.gluon.html.FORM.tag
+web2py.gluon.html.H1.tag
+web2py.gluon.html.H2.tag
+web2py.gluon.html.H3.tag
+web2py.gluon.html.H4.tag
+web2py.gluon.html.H5.tag
+web2py.gluon.html.H6.tag
+web2py.gluon.html.HEAD.tag
+web2py.gluon.html.HR.tag
+web2py.gluon.html.HTML.tag
+web2py.gluon.html.I.tag
+web2py.gluon.html.IFRAME.tag
+web2py.gluon.html.IMG.tag
+web2py.gluon.html.INPUT.tag
+web2py.gluon.html.LABEL.tag
+web2py.gluon.html.LEGEND.tag
+web2py.gluon.html.LI.tag
+web2py.gluon.html.LINK.tag
+web2py.gluon.html.MENU.tag
+web2py.gluon.html.META.tag
+web2py.gluon.html.OBJECT.tag
+web2py.gluon.html.OL.tag
+web2py.gluon.html.OPTGROUP.tag
+web2py.gluon.html.OPTION.tag
+web2py.gluon.html.P.tag
+web2py.gluon.html.PRE.tag
+web2py.gluon.html.SCRIPT.tag
+web2py.gluon.html.SELECT.tag
+web2py.gluon.html.SPAN.tag
+web2py.gluon.html.STYLE.tag
+web2py.gluon.html.TABLE.tag
+web2py.gluon.html.TBODY.tag
+web2py.gluon.html.TD.tag
+web2py.gluon.html.TEXTAREA.tag
+web2py.gluon.html.TFOOT.tag
+web2py.gluon.html.TH.tag
+web2py.gluon.html.THEAD.tag
+web2py.gluon.html.TITLE.tag
+web2py.gluon.html.TR.tag
+web2py.gluon.html.TT.tag
+web2py.gluon.html.UL.tag
+web2py.gluon.html.XHTML.tag" class="py-name" href="#" onclick="return doclink('link-38', 'tag', 'link-9');">tag</a></tt><tt class="py-op">)</tt> </tt>
+<a name="L172"></a><tt class="py-lineno">172</tt>  <tt class="py-line">        <tt class="py-keyword">if</tt> <tt class="py-keyword">not</tt> <tt class="py-name">escape</tt><tt class="py-op">:</tt> </tt>
+<a name="L173"></a><tt class="py-lineno">173</tt>  <tt class="py-line">            <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">strip_disallowed</tt> <tt class="py-op">=</tt> <tt class="py-name">True</tt> </tt>
+<a name="L174"></a><tt class="py-lineno">174</tt>  <tt class="py-line">        <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">result</tt> <tt class="py-op">=</tt> <tt class="py-string">''</tt> </tt>
+<a name="L175"></a><tt class="py-lineno">175</tt>  <tt class="py-line">        <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">feed</tt><tt class="py-op">(</tt><tt class="py-name">rawstring</tt><tt class="py-op">)</tt> </tt>
+<a name="L176"></a><tt class="py-lineno">176</tt>  <tt class="py-line">        <tt class="py-keyword">for</tt> <tt class="py-name">endtag</tt> <tt class="py-keyword">in</tt> <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">open_tags</tt><tt class="py-op">:</tt> </tt>
+<a name="L177"></a><tt class="py-lineno">177</tt>  <tt class="py-line">            <tt class="py-keyword">if</tt> <tt class="py-name">endtag</tt> <tt class="py-keyword">not</tt> <tt class="py-keyword">in</tt> <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">requires_no_close</tt><tt class="py-op">:</tt> </tt>
+<a name="L178"></a><tt class="py-lineno">178</tt>  <tt class="py-line">                <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">result</tt> <tt class="py-op">+=</tt> <tt class="py-string">'&lt;/%s&gt;'</tt> <tt class="py-op">%</tt> <tt class="py-name">endtag</tt> </tt>
+<a name="L179"></a><tt class="py-lineno">179</tt>  <tt class="py-line">        <tt class="py-keyword">return</tt> <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">result</tt> </tt>
+</div><a name="L180"></a><tt class="py-lineno">180</tt>  <tt class="py-line"> </tt>
+<a name="XssCleaner.xtags"></a><div id="XssCleaner.xtags-def"><a name="L181"></a><tt class="py-lineno">181</tt> <a class="py-toggle" href="#" id="XssCleaner.xtags-toggle" onclick="return toggle('XssCleaner.xtags');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="web2py.gluon.sanitizer.XssCleaner-class.html#xtags">xtags</a><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="XssCleaner.xtags-collapsed" style="display:none;" pad="+++" indent="++++++++"></div><div id="XssCleaner.xtags-expanded"><a name="L182"></a><tt class="py-lineno">182</tt>  <tt class="py-line">        <tt class="py-docstring">"""</tt> </tt>
+<a name="L183"></a><tt class="py-lineno">183</tt>  <tt class="py-line"><tt class="py-docstring">        Returns a printable string informing the user which tags are allowed</tt> </tt>
+<a name="L184"></a><tt class="py-lineno">184</tt>  <tt class="py-line"><tt class="py-docstring">        """</tt> </tt>
+<a name="L185"></a><tt class="py-lineno">185</tt>  <tt class="py-line"> </tt>
+<a name="L186"></a><tt class="py-lineno">186</tt>  <tt class="py-line">        <tt class="py-name">tg</tt> <tt class="py-op">=</tt> <tt class="py-string">''</tt> </tt>
+<a name="L187"></a><tt class="py-lineno">187</tt>  <tt class="py-line">        <tt class="py-keyword">for</tt> <tt id="link-39" class="py-name"><a title="web2py.gluon.sql.x" class="py-name" href="#" onclick="return doclink('link-39', 'x', 'link-14');">x</a></tt> <tt class="py-keyword">in</tt> <tt class="py-name">sorted</tt><tt class="py-op">(</tt><tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">permitted_tags</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+<a name="L188"></a><tt class="py-lineno">188</tt>  <tt class="py-line">            <tt class="py-name">tg</tt> <tt class="py-op">+=</tt> <tt class="py-string">'&lt;'</tt> <tt class="py-op">+</tt> <tt id="link-40" class="py-name"><a title="web2py.gluon.sql.x" class="py-name" href="#" onclick="return doclink('link-40', 'x', 'link-14');">x</a></tt> </tt>
+<a name="L189"></a><tt class="py-lineno">189</tt>  <tt class="py-line">            <tt class="py-keyword">if</tt> <tt id="link-41" class="py-name"><a title="web2py.gluon.sql.x" class="py-name" href="#" onclick="return doclink('link-41', 'x', 'link-14');">x</a></tt> <tt class="py-keyword">in</tt> <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">allowed_attributes</tt><tt class="py-op">:</tt> </tt>
+<a name="L190"></a><tt class="py-lineno">190</tt>  <tt class="py-line">                <tt class="py-keyword">for</tt> <tt class="py-name">y</tt> <tt class="py-keyword">in</tt> <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">allowed_attributes</tt><tt class="py-op">[</tt><tt id="link-42" class="py-name"><a title="web2py.gluon.sql.x" class="py-name" href="#" onclick="return doclink('link-42', 'x', 'link-14');">x</a></tt><tt class="py-op">]</tt><tt class="py-op">:</tt> </tt>
+<a name="L191"></a><tt class="py-lineno">191</tt>  <tt class="py-line">                    <tt class="py-name">tg</tt> <tt class="py-op">+=</tt> <tt class="py-string">' %s=""'</tt> <tt class="py-op">%</tt> <tt class="py-name">y</tt> </tt>
+<a name="L192"></a><tt class="py-lineno">192</tt>  <tt class="py-line">            <tt class="py-name">tg</tt> <tt class="py-op">+=</tt> <tt class="py-string">'&gt; '</tt> </tt>
+<a name="L193"></a><tt class="py-lineno">193</tt>  <tt class="py-line">        <tt class="py-keyword">return</tt> <tt id="link-43" class="py-name"><a title="web2py.gluon.sanitizer.xssescape" class="py-name" href="#" onclick="return doclink('link-43', 'xssescape', 'link-4');">xssescape</a></tt><tt class="py-op">(</tt><tt class="py-name">tg</tt><tt class="py-op">.</tt><tt id="link-44" class="py-name" targets="Method web2py.gluon.sanitizer.XssCleaner.strip()=web2py.gluon.sanitizer.XssCleaner-class.html#strip"><a title="web2py.gluon.sanitizer.XssCleaner.strip" class="py-name" href="#" onclick="return doclink('link-44', 'strip', 'link-44');">strip</a></tt><tt class="py-op">(</tt><tt class="py-op">)</tt><tt class="py-op">)</tt> </tt>
+</div></div><a name="L194"></a><tt class="py-lineno">194</tt>  <tt class="py-line"> </tt>
+<a name="L195"></a><tt class="py-lineno">195</tt>  <tt class="py-line"> </tt>
+<a name="sanitize"></a><div id="sanitize-def"><a name="L196"></a><tt class="py-lineno">196</tt> <a class="py-toggle" href="#" id="sanitize-toggle" onclick="return toggle('sanitize');">-</a><tt class="py-line"><tt class="py-keyword">def</tt> <a class="py-def-name" href="web2py.gluon.sanitizer-module.html#sanitize">sanitize</a><tt class="py-op">(</tt><tt class="py-param">text</tt><tt class="py-op">,</tt> <tt class="py-param">permitted_tags</tt><tt class="py-op">=</tt><tt class="py-op">[</tt> </tt>
+<a name="L197"></a><tt class="py-lineno">197</tt>  <tt class="py-line">    <tt class="py-string">'a'</tt><tt class="py-op">,</tt> </tt>
+<a name="L198"></a><tt class="py-lineno">198</tt>  <tt class="py-line">    <tt class="py-string">'b'</tt><tt class="py-op">,</tt> </tt>
+<a name="L199"></a><tt class="py-lineno">199</tt>  <tt class="py-line">    <tt class="py-string">'blockquote'</tt><tt class="py-op">,</tt> </tt>
+<a name="L200"></a><tt class="py-lineno">200</tt>  <tt class="py-line">    <tt class="py-string">'br/'</tt><tt class="py-op">,</tt> </tt>
+<a name="L201"></a><tt class="py-lineno">201</tt>  <tt class="py-line">    <tt class="py-string">'i'</tt><tt class="py-op">,</tt> </tt>
+<a name="L202"></a><tt class="py-lineno">202</tt>  <tt class="py-line">    <tt class="py-string">'li'</tt><tt class="py-op">,</tt> </tt>
+<a name="L203"></a><tt class="py-lineno">203</tt>  <tt class="py-line">    <tt class="py-string">'ol'</tt><tt class="py-op">,</tt> </tt>
+<a name="L204"></a><tt class="py-lineno">204</tt>  <tt class="py-line">    <tt class="py-string">'ul'</tt><tt class="py-op">,</tt> </tt>
+<a name="L205"></a><tt class="py-lineno">205</tt>  <tt class="py-line">    <tt class="py-string">'p'</tt><tt class="py-op">,</tt> </tt>
+<a name="L206"></a><tt class="py-lineno">206</tt>  <tt class="py-line">    <tt class="py-string">'cite'</tt><tt class="py-op">,</tt> </tt>
+<a name="L207"></a><tt class="py-lineno">207</tt>  <tt class="py-line">    <tt class="py-string">'code'</tt><tt class="py-op">,</tt> </tt>
+<a name="L208"></a><tt class="py-lineno">208</tt>  <tt class="py-line">    <tt class="py-string">'pre'</tt><tt class="py-op">,</tt> </tt>
+<a name="L209"></a><tt class="py-lineno">209</tt>  <tt class="py-line">    <tt class="py-string">'img/'</tt><tt class="py-op">,</tt> </tt>
+<a name="L210"></a><tt class="py-lineno">210</tt>  <tt class="py-line">    <tt class="py-op">]</tt><tt class="py-op">,</tt> <tt class="py-param">allowed_attributes</tt><tt class="py-op">=</tt><tt class="py-op">{</tt><tt class="py-string">'a'</tt><tt class="py-op">:</tt> <tt class="py-op">[</tt><tt class="py-string">'href'</tt><tt class="py-op">,</tt> <tt class="py-string">'title'</tt><tt class="py-op">]</tt><tt class="py-op">,</tt> <tt class="py-string">'img'</tt><tt class="py-op">:</tt> <tt class="py-op">[</tt><tt class="py-string">'src'</tt><tt class="py-op">,</tt> <tt class="py-string">'alt'</tt> </tt>
+<a name="L211"></a><tt class="py-lineno">211</tt>  <tt class="py-line">                           <tt class="py-op">]</tt><tt class="py-op">,</tt> <tt class="py-string">'blockquote'</tt><tt class="py-op">:</tt> <tt class="py-op">[</tt><tt class="py-string">'type'</tt><tt class="py-op">]</tt><tt class="py-op">}</tt><tt class="py-op">,</tt> </tt>
+<a name="L212"></a><tt class="py-lineno">212</tt>  <tt class="py-line">    <tt class="py-name">escape</tt><tt class="py-op">=</tt><tt class="py-name">True</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="sanitize-collapsed" style="display:none;" pad="+++" indent="++++"></div><div id="sanitize-expanded"><a name="L213"></a><tt class="py-lineno">213</tt>  <tt class="py-line">    <tt class="py-keyword">return</tt> <tt id="link-45" class="py-name" targets="Class web2py.gluon.sanitizer.XssCleaner=web2py.gluon.sanitizer.XssCleaner-class.html"><a title="web2py.gluon.sanitizer.XssCleaner" class="py-name" href="#" onclick="return doclink('link-45', 'XssCleaner', 'link-45');">XssCleaner</a></tt><tt class="py-op">(</tt><tt class="py-name">permitted_tags</tt><tt class="py-op">=</tt><tt class="py-name">permitted_tags</tt><tt class="py-op">,</tt> </tt>
+<a name="L214"></a><tt class="py-lineno">214</tt>  <tt class="py-line">                      <tt class="py-name">allowed_attributes</tt><tt class="py-op">=</tt><tt class="py-name">allowed_attributes</tt><tt class="py-op">)</tt><tt class="py-op">.</tt><tt id="link-46" class="py-name"><a title="web2py.gluon.sanitizer.XssCleaner.strip" class="py-name" href="#" onclick="return doclink('link-46', 'strip', 'link-44');">strip</a></tt><tt class="py-op">(</tt><tt class="py-name">text</tt><tt class="py-op">,</tt> <tt class="py-name">escape</tt><tt class="py-op">)</tt> </tt>
+</div><a name="L215"></a><tt class="py-lineno">215</tt>  <tt class="py-line"> </tt><script type="text/javascript">
+<!--
+expandto(location.href);
+// -->
+</script>
+</pre>
+<br />
+<!-- ==================== NAVIGATION BAR ==================== -->
+<table class="navbar" border="0" width="100%" cellpadding="0"
+       bgcolor="#a0c0ff" cellspacing="0">
+  <tr valign="middle">
+  <!-- Home link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="web2py.gluon-module.html">Home</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Tree link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="module-tree.html">Trees</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Index link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="identifier-index.html">Indices</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Help link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Project homepage -->
+      <th class="navbar" align="right" width="100%">
+        <table border="0" cellpadding="0" cellspacing="0">
+          <tr><th class="navbar" align="center"
+            ><a class="navbar" target="_top" href="http://www.web2py.com">web2py Web Framework</a></th>
+          </tr></table></th>
+  </tr>
+</table>
+<table border="0" cellpadding="0" cellspacing="0" width="100%%">
+  <tr>
+    <td align="left" class="footer">
+    Generated by Epydoc 3.0beta1 on Thu Jul 22 23:56:16 2010
+    </td>
+    <td align="right" class="footer">
+      <a href="http://epydoc.sourceforge.net">http://epydoc.sourceforge.net</a>
+    </td>
+  </tr>
+</table>
+
+<script type="text/javascript">
+  <!--
+  // Private objects are initially displayed (because if
+  // javascript is turned off then we want them to be
+  // visible); but by default, we want to hide them.  So hide
+  // them unless we have a cookie that says to show them.
+  checkCookie()
+  // -->
+</script>
+  
+</body>
+</html>

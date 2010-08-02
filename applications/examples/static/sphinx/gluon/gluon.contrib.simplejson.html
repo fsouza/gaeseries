@@ -1,0 +1,694 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Simplejson Documentation &mdash; Web2Py v1.64.4 documentation</title>
+    <link rel="stylesheet" href="../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '1.64.4',
+        COLLAPSE_MODINDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="top" title="Web2Py v1.64.4 documentation" href="../index.html" />
+    <link rel="up" title="Contrib Documentation" href="gluon.contrib.html" />
+    <link rel="prev" title="Memcache Documentation" href="gluon.contrib.memcache.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../modindex.html" title="Global Module Index"
+             accesskey="M">modules</a> |</li>
+        <li class="right" >
+          <a href="gluon.contrib.memcache.html" title="Memcache Documentation"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../index.html">Web2Py v1.64.4 documentation</a> &raquo;</li>
+          <li><a href="../modules.html" >Web2Py Modules</a> &raquo;</li>
+          <li><a href="gluon.html" >Gluon Package</a> &raquo;</li>
+          <li><a href="gluon.contrib.html" accesskey="U">Contrib Documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="simplejson-documentation">
+<h1>Simplejson Documentation<a class="headerlink" href="#simplejson-documentation" title="Permalink to this headline">¶</a></h1>
+<p>This page contains the Simplejson Package documentation.</p>
+<div class="section" id="module-gluon.contrib.simplejson.encoder">
+<h2>The <tt class="xref docutils literal"><span class="pre">encoder</span></tt> Module<a class="headerlink" href="#module-gluon.contrib.simplejson.encoder" title="Permalink to this headline">¶</a></h2>
+<p>Implementation of JSONEncoder
+Modified by Massimo Di Pierro to handle datetime</p>
+<dl class="class">
+<dt id="gluon.contrib.simplejson.encoder.JSONEncoder">
+<em class="property">
+class </em><tt class="descclassname">gluon.contrib.simplejson.encoder.</tt><tt class="descname">JSONEncoder</tt><big>(</big><em>skipkeys=False</em>, <em>ensure_ascii=True</em>, <em>check_circular=True</em>, <em>allow_nan=True</em>, <em>sort_keys=False</em>, <em>indent=None</em>, <em>separators=None</em>, <em>encoding='utf-8'</em>, <em>default=None</em><big>)</big><a class="headerlink" href="#gluon.contrib.simplejson.encoder.JSONEncoder" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a title="(in Python v2.7)" class="reference external" href="http://docs.python.org/dev/library/functions.html#object"><tt class="xref docutils literal"><span class="pre">object</span></tt></a></p>
+<p>Extensible JSON &lt;<a class="reference external" href="http://json.org">http://json.org</a>&gt; encoder for Python data structures.</p>
+<p>Supports the following objects and types by default:</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="56%" />
+<col width="44%" />
+</colgroup>
+<thead valign="bottom">
+<tr><th class="head">Python</th>
+<th class="head">JSON</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr><td>dict</td>
+<td>object</td>
+</tr>
+<tr><td>list, tuple</td>
+<td>array</td>
+</tr>
+<tr><td>str, unicode</td>
+<td>string</td>
+</tr>
+<tr><td>int, long, float</td>
+<td>number</td>
+</tr>
+<tr><td>True</td>
+<td>true</td>
+</tr>
+<tr><td>False</td>
+<td>false</td>
+</tr>
+<tr><td>None</td>
+<td>null</td>
+</tr>
+<tr><td>date</td>
+<td>string</td>
+</tr>
+<tr><td>datetime</td>
+<td>string</td>
+</tr>
+<tr><td>time</td>
+<td>string</td>
+</tr>
+</tbody>
+</table>
+<p>To extend this to recognize other objects, subclass and implement a
+<tt class="docutils literal"><span class="pre">.default()</span></tt> method with another method that returns a serializable
+object for <tt class="docutils literal"><span class="pre">o</span></tt> if possible, otherwise it should call the superclass
+implementation (to raise <tt class="docutils literal"><span class="pre">TypeError</span></tt>).</p>
+<dl class="method">
+<dt id="gluon.contrib.simplejson.encoder.JSONEncoder.default">
+<tt class="descname">default</tt><big>(</big><em>o</em><big>)</big><a class="headerlink" href="#gluon.contrib.simplejson.encoder.JSONEncoder.default" title="Permalink to this definition">¶</a></dt>
+<dd><p>Implement this method in a subclass such that it returns
+a serializable object for <tt class="docutils literal"><span class="pre">o</span></tt>, or calls the base implementation
+(to raise a <tt class="docutils literal"><span class="pre">TypeError</span></tt>).</p>
+<p>For example, to support arbitrary iterators, you could
+implement default like this:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">default</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">o</span><span class="p">):</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">iterable</span> <span class="o">=</span> <span class="nb">iter</span><span class="p">(</span><span class="n">o</span><span class="p">)</span>
+    <span class="k">except</span> <span class="ne">TypeError</span><span class="p">:</span>
+        <span class="k">pass</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="nb">list</span><span class="p">(</span><span class="n">iterable</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">JSONEncoder</span><span class="o">.</span><span class="n">default</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">o</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="gluon.contrib.simplejson.encoder.JSONEncoder.encode">
+<tt class="descname">encode</tt><big>(</big><em>o</em><big>)</big><a class="headerlink" href="#gluon.contrib.simplejson.encoder.JSONEncoder.encode" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return a JSON string representation of a Python data structure.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">JSONEncoder</span><span class="p">()</span><span class="o">.</span><span class="n">encode</span><span class="p">({</span><span class="s">&quot;foo&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s">&quot;bar&quot;</span><span class="p">,</span> <span class="s">&quot;baz&quot;</span><span class="p">]})</span>
+<span class="go">&#39;{&quot;foo&quot;: [&quot;bar&quot;, &quot;baz&quot;]}&#39;</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="gluon.contrib.simplejson.encoder.JSONEncoder.iterencode">
+<tt class="descname">iterencode</tt><big>(</big><em>o</em>, <em>_one_shot=False</em><big>)</big><a class="headerlink" href="#gluon.contrib.simplejson.encoder.JSONEncoder.iterencode" title="Permalink to this definition">¶</a></dt>
+<dd><p>Encode the given object and yield each string
+representation as available.</p>
+<p>For example:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">for</span> <span class="n">chunk</span> <span class="ow">in</span> <span class="n">JSONEncoder</span><span class="p">()</span><span class="o">.</span><span class="n">iterencode</span><span class="p">(</span><span class="n">bigobject</span><span class="p">):</span>
+    <span class="n">mysocket</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">chunk</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="function">
+<dt id="gluon.contrib.simplejson.encoder.encode_basestring">
+<tt class="descclassname">gluon.contrib.simplejson.encoder.</tt><tt class="descname">encode_basestring</tt><big>(</big><em>s</em><big>)</big><a class="headerlink" href="#gluon.contrib.simplejson.encoder.encode_basestring" title="Permalink to this definition">¶</a></dt>
+<dd>Return a JSON representation of a Python string</dd></dl>
+
+<dl class="function">
+<dt id="gluon.contrib.simplejson.encoder.encode_basestring_ascii">
+<tt class="descclassname">gluon.contrib.simplejson.encoder.</tt><tt class="descname">encode_basestring_ascii</tt><big>(</big><em>s</em><big>)</big><a class="headerlink" href="#gluon.contrib.simplejson.encoder.encode_basestring_ascii" title="Permalink to this definition">¶</a></dt>
+<dd>Return an ASCII-only JSON representation of a Python string</dd></dl>
+
+<dl class="function">
+<dt id="gluon.contrib.simplejson.encoder.py_encode_basestring_ascii">
+<tt class="descclassname">gluon.contrib.simplejson.encoder.</tt><tt class="descname">py_encode_basestring_ascii</tt><big>(</big><em>s</em><big>)</big><a class="headerlink" href="#gluon.contrib.simplejson.encoder.py_encode_basestring_ascii" title="Permalink to this definition">¶</a></dt>
+<dd>Return an ASCII-only JSON representation of a Python string</dd></dl>
+
+</div>
+<div class="section" id="module-gluon.contrib.simplejson">
+<h2>The <tt class="xref docutils literal"><span class="pre">simplejson</span></tt> Package<a class="headerlink" href="#module-gluon.contrib.simplejson" title="Permalink to this headline">¶</a></h2>
+<p>JSON (JavaScript Object Notation) &lt;<a class="reference external" href="http://json.org">http://json.org</a>&gt; is a subset of
+JavaScript syntax (ECMA-262 3rd edition) used as a lightweight data
+interchange format.</p>
+<p><tt class="xref docutils literal"><span class="pre">simplejson</span></tt> exposes an API familiar to users of the standard library
+<a title="(in Python v2.7)" class="reference external" href="http://docs.python.org/dev/library/marshal.html#module-marshal"><tt class="xref docutils literal"><span class="pre">marshal</span></tt></a> and <a title="(in Python v2.7)" class="reference external" href="http://docs.python.org/dev/library/pickle.html#module-pickle"><tt class="xref docutils literal"><span class="pre">pickle</span></tt></a> modules. It is the externally maintained
+version of the <a title="(in Python v2.7)" class="reference external" href="http://docs.python.org/dev/library/json.html#module-json"><tt class="xref docutils literal"><span class="pre">json</span></tt></a> library contained in Python 2.6, but maintains
+compatibility with Python 2.4 and Python 2.5 and (currently) has
+significant performance advantages, even without using the optional C
+extension for speedups.</p>
+<p>Encoding basic Python object hierarchies:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">simplejson</span> <span class="kn">as</span> <span class="nn">json</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">([</span><span class="s">&#39;foo&#39;</span><span class="p">,</span> <span class="p">{</span><span class="s">&#39;bar&#39;</span><span class="p">:</span> <span class="p">(</span><span class="s">&#39;baz&#39;</span><span class="p">,</span> <span class="bp">None</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span> <span class="mf">2</span><span class="p">)}])</span>
+<span class="go">&#39;[&quot;foo&quot;, {&quot;bar&quot;: [&quot;baz&quot;, null, 1.0, 2]}]&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span> <span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="s">&quot;</span><span class="se">\&quot;</span><span class="s">foo</span><span class="se">\b</span><span class="s">ar&quot;</span><span class="p">)</span>
+<span class="go">&quot;\&quot;foo\bar&quot;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span> <span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="s">u&#39;</span><span class="se">\u1234</span><span class="s">&#39;</span><span class="p">)</span>
+<span class="go">&quot;\u1234&quot;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span> <span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="s">&#39;</span><span class="se">\\</span><span class="s">&#39;</span><span class="p">)</span>
+<span class="go">&quot;\\&quot;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span> <span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">({</span><span class="s">&quot;c&quot;</span><span class="p">:</span> <span class="mf">0</span><span class="p">,</span> <span class="s">&quot;b&quot;</span><span class="p">:</span> <span class="mf">0</span><span class="p">,</span> <span class="s">&quot;a&quot;</span><span class="p">:</span> <span class="mf">0</span><span class="p">},</span> <span class="n">sort_keys</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+<span class="go">{&quot;a&quot;: 0, &quot;b&quot;: 0, &quot;c&quot;: 0}</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">StringIO</span> <span class="kn">import</span> <span class="n">StringIO</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">io</span> <span class="o">=</span> <span class="n">StringIO</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">json</span><span class="o">.</span><span class="n">dump</span><span class="p">([</span><span class="s">&#39;streaming API&#39;</span><span class="p">],</span> <span class="n">io</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">io</span><span class="o">.</span><span class="n">getvalue</span><span class="p">()</span>
+<span class="go">&#39;[&quot;streaming API&quot;]&#39;</span>
+</pre></div>
+</div>
+<p>Compact encoding:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">simplejson</span> <span class="kn">as</span> <span class="nn">json</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">([</span><span class="mf">1</span><span class="p">,</span><span class="mf">2</span><span class="p">,</span><span class="mf">3</span><span class="p">,{</span><span class="s">&#39;4&#39;</span><span class="p">:</span> <span class="mf">5</span><span class="p">,</span> <span class="s">&#39;6&#39;</span><span class="p">:</span> <span class="mf">7</span><span class="p">}],</span> <span class="n">separators</span><span class="o">=</span><span class="p">(</span><span class="s">&#39;,&#39;</span><span class="p">,</span><span class="s">&#39;:&#39;</span><span class="p">))</span>
+<span class="go">&#39;[1,2,3,{&quot;4&quot;:5,&quot;6&quot;:7}]&#39;</span>
+</pre></div>
+</div>
+<p>Pretty printing:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">simplejson</span> <span class="kn">as</span> <span class="nn">json</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">s</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">({</span><span class="s">&#39;4&#39;</span><span class="p">:</span> <span class="mf">5</span><span class="p">,</span> <span class="s">&#39;6&#39;</span><span class="p">:</span> <span class="mf">7</span><span class="p">},</span> <span class="n">sort_keys</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">indent</span><span class="o">=</span><span class="mf">4</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span> <span class="s">&#39;</span><span class="se">\n</span><span class="s">&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="n">l</span><span class="o">.</span><span class="n">rstrip</span><span class="p">()</span> <span class="k">for</span> <span class="n">l</span> <span class="ow">in</span>  <span class="n">s</span><span class="o">.</span><span class="n">splitlines</span><span class="p">()])</span>
+<span class="go">{</span>
+<span class="go">    &quot;4&quot;: 5,</span>
+<span class="go">    &quot;6&quot;: 7</span>
+<span class="go">}</span>
+</pre></div>
+</div>
+<p>Decoding JSON:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">simplejson</span> <span class="kn">as</span> <span class="nn">json</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">obj</span> <span class="o">=</span> <span class="p">[</span><span class="s">u&#39;foo&#39;</span><span class="p">,</span> <span class="p">{</span><span class="s">u&#39;bar&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s">u&#39;baz&#39;</span><span class="p">,</span> <span class="bp">None</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span> <span class="mf">2</span><span class="p">]}]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="s">&#39;[&quot;foo&quot;, {&quot;bar&quot;:[&quot;baz&quot;, null, 1.0, 2]}]&#39;</span><span class="p">)</span> <span class="o">==</span> <span class="n">obj</span>
+<span class="go">True</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="s">&#39;&quot;</span><span class="se">\\</span><span class="s">&quot;foo</span><span class="se">\\</span><span class="s">bar&quot;&#39;</span><span class="p">)</span> <span class="o">==</span> <span class="s">u&#39;&quot;foo</span><span class="se">\x08</span><span class="s">ar&#39;</span>
+<span class="go">True</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">StringIO</span> <span class="kn">import</span> <span class="n">StringIO</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">io</span> <span class="o">=</span> <span class="n">StringIO</span><span class="p">(</span><span class="s">&#39;[&quot;streaming API&quot;]&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">json</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">io</span><span class="p">)[</span><span class="mf">0</span><span class="p">]</span> <span class="o">==</span> <span class="s">&#39;streaming API&#39;</span>
+<span class="go">True</span>
+</pre></div>
+</div>
+<p>Specializing JSON object decoding:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">simplejson</span> <span class="kn">as</span> <span class="nn">json</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">def</span> <span class="nf">as_complex</span><span class="p">(</span><span class="n">dct</span><span class="p">):</span>
+<span class="gp">... </span>    <span class="k">if</span> <span class="s">&#39;__complex__&#39;</span> <span class="ow">in</span> <span class="n">dct</span><span class="p">:</span>
+<span class="gp">... </span>        <span class="k">return</span> <span class="nb">complex</span><span class="p">(</span><span class="n">dct</span><span class="p">[</span><span class="s">&#39;real&#39;</span><span class="p">],</span> <span class="n">dct</span><span class="p">[</span><span class="s">&#39;imag&#39;</span><span class="p">])</span>
+<span class="gp">... </span>    <span class="k">return</span> <span class="n">dct</span>
+<span class="gp">...</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="s">&#39;{&quot;__complex__&quot;: true, &quot;real&quot;: 1, &quot;imag&quot;: 2}&#39;</span><span class="p">,</span>
+<span class="gp">... </span>    <span class="n">object_hook</span><span class="o">=</span><span class="n">as_complex</span><span class="p">)</span>
+<span class="go">(1+2j)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">decimal</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="s">&#39;1.1&#39;</span><span class="p">,</span> <span class="n">parse_float</span><span class="o">=</span><span class="n">decimal</span><span class="o">.</span><span class="n">Decimal</span><span class="p">)</span> <span class="o">==</span> <span class="n">decimal</span><span class="o">.</span><span class="n">Decimal</span><span class="p">(</span><span class="s">&#39;1.1&#39;</span><span class="p">)</span>
+<span class="go">True</span>
+</pre></div>
+</div>
+<p>Specializing JSON object encoding:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">simplejson</span> <span class="kn">as</span> <span class="nn">json</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">def</span> <span class="nf">encode_complex</span><span class="p">(</span><span class="n">obj</span><span class="p">):</span>
+<span class="gp">... </span>    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="nb">complex</span><span class="p">):</span>
+<span class="gp">... </span>        <span class="k">return</span> <span class="p">[</span><span class="n">obj</span><span class="o">.</span><span class="n">real</span><span class="p">,</span> <span class="n">obj</span><span class="o">.</span><span class="n">imag</span><span class="p">]</span>
+<span class="gp">... </span>    <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s">&quot;</span><span class="si">%r</span><span class="s"> is not JSON serializable&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">o</span><span class="p">,))</span>
+<span class="gp">...</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="mf">2</span> <span class="o">+</span> <span class="mf">1</span><span class="n">j</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="n">encode_complex</span><span class="p">)</span>
+<span class="go">&#39;[2.0, 1.0]&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">json</span><span class="o">.</span><span class="n">JSONEncoder</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="n">encode_complex</span><span class="p">)</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="mf">2</span> <span class="o">+</span> <span class="mf">1</span><span class="n">j</span><span class="p">)</span>
+<span class="go">&#39;[2.0, 1.0]&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="s">&#39;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">json</span><span class="o">.</span><span class="n">JSONEncoder</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="n">encode_complex</span><span class="p">)</span><span class="o">.</span><span class="n">iterencode</span><span class="p">(</span><span class="mf">2</span> <span class="o">+</span> <span class="mf">1</span><span class="n">j</span><span class="p">))</span>
+<span class="go">&#39;[2.0, 1.0]&#39;</span>
+</pre></div>
+</div>
+<p>Using simplejson.tool from the shell to validate and pretty-print:</p>
+<div class="highlight-python"><pre>$ echo '{"json":"obj"}' | python -msimplejson.tool
+{
+    "json": "obj"
+}
+$ echo '{ 1.2:3.4}' | python -msimplejson.tool
+Expecting property name: line 1 column 2 (char 2)</pre>
+</div>
+<dl class="function">
+<dt id="gluon.contrib.simplejson.dump">
+<tt class="descclassname">gluon.contrib.simplejson.</tt><tt class="descname">dump</tt><big>(</big><em>obj</em>, <em>fp</em>, <em>skipkeys=False</em>, <em>ensure_ascii=True</em>, <em>check_circular=True</em>, <em>allow_nan=True</em>, <em>cls=None</em>, <em>indent=None</em>, <em>separators=None</em>, <em>encoding='utf-8'</em>, <em>default=None</em>, <em>**kw</em><big>)</big><a class="headerlink" href="#gluon.contrib.simplejson.dump" title="Permalink to this definition">¶</a></dt>
+<dd><p>Serialize <tt class="docutils literal"><span class="pre">obj</span></tt> as a JSON formatted stream to <tt class="docutils literal"><span class="pre">fp</span></tt> (a
+<tt class="docutils literal"><span class="pre">.write()</span></tt>-supporting file-like object).</p>
+<p>If <tt class="docutils literal"><span class="pre">skipkeys</span></tt> is <tt class="xref docutils literal"><span class="pre">True</span></tt> then <tt class="docutils literal"><span class="pre">dict</span></tt> keys that are not basic types
+(<tt class="docutils literal"><span class="pre">str</span></tt>, <tt class="docutils literal"><span class="pre">unicode</span></tt>, <tt class="docutils literal"><span class="pre">int</span></tt>, <tt class="docutils literal"><span class="pre">long</span></tt>, <tt class="docutils literal"><span class="pre">float</span></tt>, <tt class="docutils literal"><span class="pre">bool</span></tt>, <tt class="xref docutils literal"><span class="pre">None</span></tt>)
+will be skipped instead of raising a <tt class="docutils literal"><span class="pre">TypeError</span></tt>.</p>
+<p>If <tt class="docutils literal"><span class="pre">ensure_ascii</span></tt> is <tt class="xref docutils literal"><span class="pre">False</span></tt>, then the some chunks written to <tt class="docutils literal"><span class="pre">fp</span></tt>
+may be <tt class="docutils literal"><span class="pre">unicode</span></tt> instances, subject to normal Python <tt class="docutils literal"><span class="pre">str</span></tt> to
+<tt class="docutils literal"><span class="pre">unicode</span></tt> coercion rules. Unless <tt class="docutils literal"><span class="pre">fp.write()</span></tt> explicitly
+understands <tt class="docutils literal"><span class="pre">unicode</span></tt> (as in <tt class="docutils literal"><span class="pre">codecs.getwriter()</span></tt>) this is likely
+to cause an error.</p>
+<p>If <tt class="docutils literal"><span class="pre">check_circular</span></tt> is <tt class="xref docutils literal"><span class="pre">False</span></tt>, then the circular reference check
+for container types will be skipped and a circular reference will
+result in an <tt class="docutils literal"><span class="pre">OverflowError</span></tt> (or worse).</p>
+<p>If <tt class="docutils literal"><span class="pre">allow_nan</span></tt> is <tt class="xref docutils literal"><span class="pre">False</span></tt>, then it will be a <tt class="docutils literal"><span class="pre">ValueError</span></tt> to
+serialize out of range <tt class="docutils literal"><span class="pre">float</span></tt> values (<tt class="docutils literal"><span class="pre">nan</span></tt>, <tt class="docutils literal"><span class="pre">inf</span></tt>, <tt class="docutils literal"><span class="pre">-inf</span></tt>)
+in strict compliance of the JSON specification, instead of using the
+JavaScript equivalents (<tt class="docutils literal"><span class="pre">NaN</span></tt>, <tt class="docutils literal"><span class="pre">Infinity</span></tt>, <tt class="docutils literal"><span class="pre">-Infinity</span></tt>).</p>
+<p>If <tt class="docutils literal"><span class="pre">indent</span></tt> is a non-negative integer, then JSON array elements and object
+members will be pretty-printed with that indent level. An indent level
+of 0 will only insert newlines. <tt class="xref docutils literal"><span class="pre">None</span></tt> is the most compact representation.</p>
+<p>If <tt class="docutils literal"><span class="pre">separators</span></tt> is an <tt class="docutils literal"><span class="pre">(item_separator,</span> <span class="pre">dict_separator)</span></tt> tuple
+then it will be used instead of the default <tt class="docutils literal"><span class="pre">(',</span> <span class="pre">',</span> <span class="pre">':</span> <span class="pre">')</span></tt> separators.
+<tt class="docutils literal"><span class="pre">(',',</span> <span class="pre">':')</span></tt> is the most compact JSON representation.</p>
+<p><tt class="docutils literal"><span class="pre">encoding</span></tt> is the character encoding for str instances, default is UTF-8.</p>
+<p><tt class="docutils literal"><span class="pre">default(obj)</span></tt> is a function that should return a serializable version
+of obj or raise TypeError. The default simply raises TypeError.</p>
+<p>To use a custom <tt class="docutils literal"><span class="pre">JSONEncoder</span></tt> subclass (e.g. one that overrides the
+<tt class="docutils literal"><span class="pre">.default()</span></tt> method to serialize additional types), specify it with
+the <tt class="docutils literal"><span class="pre">cls</span></tt> kwarg.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="gluon.contrib.simplejson.dumps">
+<tt class="descclassname">gluon.contrib.simplejson.</tt><tt class="descname">dumps</tt><big>(</big><em>obj</em>, <em>skipkeys=False</em>, <em>ensure_ascii=True</em>, <em>check_circular=True</em>, <em>allow_nan=True</em>, <em>cls=None</em>, <em>indent=None</em>, <em>separators=None</em>, <em>encoding='utf-8'</em>, <em>default=None</em>, <em>**kw</em><big>)</big><a class="headerlink" href="#gluon.contrib.simplejson.dumps" title="Permalink to this definition">¶</a></dt>
+<dd><p>Serialize <tt class="docutils literal"><span class="pre">obj</span></tt> to a JSON formatted <tt class="docutils literal"><span class="pre">str</span></tt>.</p>
+<p>If <tt class="docutils literal"><span class="pre">skipkeys</span></tt> is <tt class="xref docutils literal"><span class="pre">True</span></tt> then <tt class="docutils literal"><span class="pre">dict</span></tt> keys that are not basic types
+(<tt class="docutils literal"><span class="pre">str</span></tt>, <tt class="docutils literal"><span class="pre">unicode</span></tt>, <tt class="docutils literal"><span class="pre">int</span></tt>, <tt class="docutils literal"><span class="pre">long</span></tt>, <tt class="docutils literal"><span class="pre">float</span></tt>, <tt class="docutils literal"><span class="pre">bool</span></tt>, <tt class="xref docutils literal"><span class="pre">None</span></tt>)
+will be skipped instead of raising a <tt class="docutils literal"><span class="pre">TypeError</span></tt>.</p>
+<p>If <tt class="docutils literal"><span class="pre">ensure_ascii</span></tt> is <tt class="xref docutils literal"><span class="pre">False</span></tt>, then the return value will be a
+<tt class="docutils literal"><span class="pre">unicode</span></tt> instance subject to normal Python <tt class="docutils literal"><span class="pre">str</span></tt> to <tt class="docutils literal"><span class="pre">unicode</span></tt>
+coercion rules instead of being escaped to an ASCII <tt class="docutils literal"><span class="pre">str</span></tt>.</p>
+<p>If <tt class="docutils literal"><span class="pre">check_circular</span></tt> is <tt class="xref docutils literal"><span class="pre">False</span></tt>, then the circular reference check
+for container types will be skipped and a circular reference will
+result in an <tt class="docutils literal"><span class="pre">OverflowError</span></tt> (or worse).</p>
+<p>If <tt class="docutils literal"><span class="pre">allow_nan</span></tt> is <tt class="xref docutils literal"><span class="pre">False</span></tt>, then it will be a <tt class="docutils literal"><span class="pre">ValueError</span></tt> to
+serialize out of range <tt class="docutils literal"><span class="pre">float</span></tt> values (<tt class="docutils literal"><span class="pre">nan</span></tt>, <tt class="docutils literal"><span class="pre">inf</span></tt>, <tt class="docutils literal"><span class="pre">-inf</span></tt>) in
+strict compliance of the JSON specification, instead of using the
+JavaScript equivalents (<tt class="docutils literal"><span class="pre">NaN</span></tt>, <tt class="docutils literal"><span class="pre">Infinity</span></tt>, <tt class="docutils literal"><span class="pre">-Infinity</span></tt>).</p>
+<p>If <tt class="docutils literal"><span class="pre">indent</span></tt> is a non-negative integer, then JSON array elements and
+object members will be pretty-printed with that indent level. An indent
+level of 0 will only insert newlines. <tt class="xref docutils literal"><span class="pre">None</span></tt> is the most compact
+representation.</p>
+<p>If <tt class="docutils literal"><span class="pre">separators</span></tt> is an <tt class="docutils literal"><span class="pre">(item_separator,</span> <span class="pre">dict_separator)</span></tt> tuple
+then it will be used instead of the default <tt class="docutils literal"><span class="pre">(',</span> <span class="pre">',</span> <span class="pre">':</span> <span class="pre">')</span></tt> separators.
+<tt class="docutils literal"><span class="pre">(',',</span> <span class="pre">':')</span></tt> is the most compact JSON representation.</p>
+<p><tt class="docutils literal"><span class="pre">encoding</span></tt> is the character encoding for str instances, default is UTF-8.</p>
+<p><tt class="docutils literal"><span class="pre">default(obj)</span></tt> is a function that should return a serializable version
+of obj or raise TypeError. The default simply raises TypeError.</p>
+<p>To use a custom <tt class="docutils literal"><span class="pre">JSONEncoder</span></tt> subclass (e.g. one that overrides the
+<tt class="docutils literal"><span class="pre">.default()</span></tt> method to serialize additional types), specify it with
+the <tt class="docutils literal"><span class="pre">cls</span></tt> kwarg.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="gluon.contrib.simplejson.load">
+<tt class="descclassname">gluon.contrib.simplejson.</tt><tt class="descname">load</tt><big>(</big><em>fp</em>, <em>encoding=None</em>, <em>cls=None</em>, <em>object_hook=None</em>, <em>parse_float=None</em>, <em>parse_int=None</em>, <em>parse_constant=None</em>, <em>**kw</em><big>)</big><a class="headerlink" href="#gluon.contrib.simplejson.load" title="Permalink to this definition">¶</a></dt>
+<dd><p>Deserialize <tt class="docutils literal"><span class="pre">fp</span></tt> (a <tt class="docutils literal"><span class="pre">.read()</span></tt>-supporting file-like object containing
+a JSON document) to a Python object.</p>
+<p>If the contents of <tt class="docutils literal"><span class="pre">fp</span></tt> is encoded with an ASCII based encoding other
+than utf-8 (e.g. latin-1), then an appropriate <tt class="docutils literal"><span class="pre">encoding</span></tt> name must
+be specified. Encodings that are not ASCII based (such as UCS-2) are
+not allowed, and should be wrapped with
+<tt class="docutils literal"><span class="pre">codecs.getreader(fp)(encoding)</span></tt>, or simply decoded to a <tt class="docutils literal"><span class="pre">unicode</span></tt>
+object and passed to <tt class="docutils literal"><span class="pre">loads()</span></tt></p>
+<p><tt class="docutils literal"><span class="pre">object_hook</span></tt> is an optional function that will be called with the
+result of any object literal decode (a <tt class="docutils literal"><span class="pre">dict</span></tt>). The return value of
+<tt class="docutils literal"><span class="pre">object_hook</span></tt> will be used instead of the <tt class="docutils literal"><span class="pre">dict</span></tt>. This feature
+can be used to implement custom decoders (e.g. JSON-RPC class hinting).</p>
+<p>To use a custom <tt class="docutils literal"><span class="pre">JSONDecoder</span></tt> subclass, specify it with the <tt class="docutils literal"><span class="pre">cls</span></tt>
+kwarg.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="gluon.contrib.simplejson.loads">
+<tt class="descclassname">gluon.contrib.simplejson.</tt><tt class="descname">loads</tt><big>(</big><em>s</em>, <em>encoding=None</em>, <em>cls=None</em>, <em>object_hook=None</em>, <em>parse_float=None</em>, <em>parse_int=None</em>, <em>parse_constant=None</em>, <em>**kw</em><big>)</big><a class="headerlink" href="#gluon.contrib.simplejson.loads" title="Permalink to this definition">¶</a></dt>
+<dd><p>Deserialize <tt class="docutils literal"><span class="pre">s</span></tt> (a <tt class="docutils literal"><span class="pre">str</span></tt> or <tt class="docutils literal"><span class="pre">unicode</span></tt> instance containing a JSON
+document) to a Python object.</p>
+<p>If <tt class="docutils literal"><span class="pre">s</span></tt> is a <tt class="docutils literal"><span class="pre">str</span></tt> instance and is encoded with an ASCII based encoding
+other than utf-8 (e.g. latin-1) then an appropriate <tt class="docutils literal"><span class="pre">encoding</span></tt> name
+must be specified. Encodings that are not ASCII based (such as UCS-2)
+are not allowed and should be decoded to <tt class="docutils literal"><span class="pre">unicode</span></tt> first.</p>
+<p><tt class="docutils literal"><span class="pre">object_hook</span></tt> is an optional function that will be called with the
+result of any object literal decode (a <tt class="docutils literal"><span class="pre">dict</span></tt>). The return value of
+<tt class="docutils literal"><span class="pre">object_hook</span></tt> will be used instead of the <tt class="docutils literal"><span class="pre">dict</span></tt>. This feature
+can be used to implement custom decoders (e.g. JSON-RPC class hinting).</p>
+<p><tt class="docutils literal"><span class="pre">parse_float</span></tt>, if specified, will be called with the string
+of every JSON float to be decoded. By default this is equivalent to
+float(num_str). This can be used to use another datatype or parser
+for JSON floats (e.g. decimal.Decimal).</p>
+<p><tt class="docutils literal"><span class="pre">parse_int</span></tt>, if specified, will be called with the string
+of every JSON int to be decoded. By default this is equivalent to
+int(num_str). This can be used to use another datatype or parser
+for JSON integers (e.g. float).</p>
+<p><tt class="docutils literal"><span class="pre">parse_constant</span></tt>, if specified, will be called with one of the
+following strings: -Infinity, Infinity, NaN, null, true, false.
+This can be used to raise an exception if invalid JSON numbers
+are encountered.</p>
+<p>To use a custom <tt class="docutils literal"><span class="pre">JSONDecoder</span></tt> subclass, specify it with the <tt class="docutils literal"><span class="pre">cls</span></tt>
+kwarg.</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="gluon.contrib.simplejson.JSONDecoder">
+<em class="property">
+class </em><tt class="descclassname">gluon.contrib.simplejson.</tt><tt class="descname">JSONDecoder</tt><big>(</big><em>encoding=None</em>, <em>object_hook=None</em>, <em>parse_float=None</em>, <em>parse_int=None</em>, <em>parse_constant=None</em>, <em>strict=True</em><big>)</big><a class="headerlink" href="#gluon.contrib.simplejson.JSONDecoder" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a title="(in Python v2.7)" class="reference external" href="http://docs.python.org/dev/library/functions.html#object"><tt class="xref docutils literal"><span class="pre">object</span></tt></a></p>
+<p>Simple JSON &lt;<a class="reference external" href="http://json.org">http://json.org</a>&gt; decoder</p>
+<p>Performs the following translations in decoding by default:</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="44%" />
+<col width="56%" />
+</colgroup>
+<thead valign="bottom">
+<tr><th class="head">JSON</th>
+<th class="head">Python</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr><td>object</td>
+<td>dict</td>
+</tr>
+<tr><td>array</td>
+<td>list</td>
+</tr>
+<tr><td>string</td>
+<td>unicode</td>
+</tr>
+<tr><td>number (int)</td>
+<td>int, long</td>
+</tr>
+<tr><td>number (real)</td>
+<td>float</td>
+</tr>
+<tr><td>true</td>
+<td>True</td>
+</tr>
+<tr><td>false</td>
+<td>False</td>
+</tr>
+<tr><td>null</td>
+<td>None</td>
+</tr>
+</tbody>
+</table>
+<p>It also understands <tt class="docutils literal"><span class="pre">NaN</span></tt>, <tt class="docutils literal"><span class="pre">Infinity</span></tt>, and <tt class="docutils literal"><span class="pre">-Infinity</span></tt> as
+their corresponding <tt class="docutils literal"><span class="pre">float</span></tt> values, which is outside the JSON spec.</p>
+<dl class="method">
+<dt id="gluon.contrib.simplejson.JSONDecoder.decode">
+<tt class="descname">decode</tt><big>(</big><em>s</em>, <em>_w=&lt;built-in method match of _sre.SRE_Pattern object at 0x206bb00&gt;</em><big>)</big><a class="headerlink" href="#gluon.contrib.simplejson.JSONDecoder.decode" title="Permalink to this definition">¶</a></dt>
+<dd>Return the Python representation of <tt class="docutils literal"><span class="pre">s</span></tt> (a <tt class="docutils literal"><span class="pre">str</span></tt> or <tt class="docutils literal"><span class="pre">unicode</span></tt>
+instance containing a JSON document)</dd></dl>
+
+<dl class="method">
+<dt id="gluon.contrib.simplejson.JSONDecoder.raw_decode">
+<tt class="descname">raw_decode</tt><big>(</big><em>s</em>, <em>idx=0</em><big>)</big><a class="headerlink" href="#gluon.contrib.simplejson.JSONDecoder.raw_decode" title="Permalink to this definition">¶</a></dt>
+<dd><p>Decode a JSON document from <tt class="docutils literal"><span class="pre">s</span></tt> (a <tt class="docutils literal"><span class="pre">str</span></tt> or <tt class="docutils literal"><span class="pre">unicode</span></tt> beginning
+with a JSON document) and return a 2-tuple of the Python
+representation and the index in <tt class="docutils literal"><span class="pre">s</span></tt> where the document ended.</p>
+<p>This can be used to decode a JSON document from a string that may
+have extraneous data at the end.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="gluon.contrib.simplejson.JSONEncoder">
+<em class="property">
+class </em><tt class="descclassname">gluon.contrib.simplejson.</tt><tt class="descname">JSONEncoder</tt><big>(</big><em>skipkeys=False</em>, <em>ensure_ascii=True</em>, <em>check_circular=True</em>, <em>allow_nan=True</em>, <em>sort_keys=False</em>, <em>indent=None</em>, <em>separators=None</em>, <em>encoding='utf-8'</em>, <em>default=None</em><big>)</big><a class="headerlink" href="#gluon.contrib.simplejson.JSONEncoder" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a title="(in Python v2.7)" class="reference external" href="http://docs.python.org/dev/library/functions.html#object"><tt class="xref docutils literal"><span class="pre">object</span></tt></a></p>
+<p>Extensible JSON &lt;<a class="reference external" href="http://json.org">http://json.org</a>&gt; encoder for Python data structures.</p>
+<p>Supports the following objects and types by default:</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="56%" />
+<col width="44%" />
+</colgroup>
+<thead valign="bottom">
+<tr><th class="head">Python</th>
+<th class="head">JSON</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr><td>dict</td>
+<td>object</td>
+</tr>
+<tr><td>list, tuple</td>
+<td>array</td>
+</tr>
+<tr><td>str, unicode</td>
+<td>string</td>
+</tr>
+<tr><td>int, long, float</td>
+<td>number</td>
+</tr>
+<tr><td>True</td>
+<td>true</td>
+</tr>
+<tr><td>False</td>
+<td>false</td>
+</tr>
+<tr><td>None</td>
+<td>null</td>
+</tr>
+<tr><td>date</td>
+<td>string</td>
+</tr>
+<tr><td>datetime</td>
+<td>string</td>
+</tr>
+<tr><td>time</td>
+<td>string</td>
+</tr>
+</tbody>
+</table>
+<p>To extend this to recognize other objects, subclass and implement a
+<tt class="docutils literal"><span class="pre">.default()</span></tt> method with another method that returns a serializable
+object for <tt class="docutils literal"><span class="pre">o</span></tt> if possible, otherwise it should call the superclass
+implementation (to raise <tt class="docutils literal"><span class="pre">TypeError</span></tt>).</p>
+<dl class="method">
+<dt id="gluon.contrib.simplejson.JSONEncoder.default">
+<tt class="descname">default</tt><big>(</big><em>o</em><big>)</big><a class="headerlink" href="#gluon.contrib.simplejson.JSONEncoder.default" title="Permalink to this definition">¶</a></dt>
+<dd><p>Implement this method in a subclass such that it returns
+a serializable object for <tt class="docutils literal"><span class="pre">o</span></tt>, or calls the base implementation
+(to raise a <tt class="docutils literal"><span class="pre">TypeError</span></tt>).</p>
+<p>For example, to support arbitrary iterators, you could
+implement default like this:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">default</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">o</span><span class="p">):</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">iterable</span> <span class="o">=</span> <span class="nb">iter</span><span class="p">(</span><span class="n">o</span><span class="p">)</span>
+    <span class="k">except</span> <span class="ne">TypeError</span><span class="p">:</span>
+        <span class="k">pass</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="nb">list</span><span class="p">(</span><span class="n">iterable</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">JSONEncoder</span><span class="o">.</span><span class="n">default</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">o</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="gluon.contrib.simplejson.JSONEncoder.encode">
+<tt class="descname">encode</tt><big>(</big><em>o</em><big>)</big><a class="headerlink" href="#gluon.contrib.simplejson.JSONEncoder.encode" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return a JSON string representation of a Python data structure.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">JSONEncoder</span><span class="p">()</span><span class="o">.</span><span class="n">encode</span><span class="p">({</span><span class="s">&quot;foo&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s">&quot;bar&quot;</span><span class="p">,</span> <span class="s">&quot;baz&quot;</span><span class="p">]})</span>
+<span class="go">&#39;{&quot;foo&quot;: [&quot;bar&quot;, &quot;baz&quot;]}&#39;</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="gluon.contrib.simplejson.JSONEncoder.iterencode">
+<tt class="descname">iterencode</tt><big>(</big><em>o</em>, <em>_one_shot=False</em><big>)</big><a class="headerlink" href="#gluon.contrib.simplejson.JSONEncoder.iterencode" title="Permalink to this definition">¶</a></dt>
+<dd><p>Encode the given object and yield each string
+representation as available.</p>
+<p>For example:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">for</span> <span class="n">chunk</span> <span class="ow">in</span> <span class="n">JSONEncoder</span><span class="p">()</span><span class="o">.</span><span class="n">iterencode</span><span class="p">(</span><span class="n">bigobject</span><span class="p">):</span>
+    <span class="n">mysocket</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">chunk</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-gluon.contrib.simplejson.scanner">
+<h2>The <tt class="xref docutils literal"><span class="pre">scanner</span></tt> Module<a class="headerlink" href="#module-gluon.contrib.simplejson.scanner" title="Permalink to this headline">¶</a></h2>
+<p>JSON token scanner</p>
+<dl class="function">
+<dt id="gluon.contrib.simplejson.scanner.make_scanner">
+<tt class="descclassname">gluon.contrib.simplejson.scanner.</tt><tt class="descname">make_scanner</tt><big>(</big><em>context</em><big>)</big><a class="headerlink" href="#gluon.contrib.simplejson.scanner.make_scanner" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div>
+<div class="section" id="module-gluon.contrib.simplejson.decoder">
+<h2>The <tt class="xref docutils literal"><span class="pre">decoder</span></tt> Module<a class="headerlink" href="#module-gluon.contrib.simplejson.decoder" title="Permalink to this headline">¶</a></h2>
+<p>Implementation of JSONDecoder</p>
+<dl class="class">
+<dt id="gluon.contrib.simplejson.decoder.JSONDecoder">
+<em class="property">
+class </em><tt class="descclassname">gluon.contrib.simplejson.decoder.</tt><tt class="descname">JSONDecoder</tt><big>(</big><em>encoding=None</em>, <em>object_hook=None</em>, <em>parse_float=None</em>, <em>parse_int=None</em>, <em>parse_constant=None</em>, <em>strict=True</em><big>)</big><a class="headerlink" href="#gluon.contrib.simplejson.decoder.JSONDecoder" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a title="(in Python v2.7)" class="reference external" href="http://docs.python.org/dev/library/functions.html#object"><tt class="xref docutils literal"><span class="pre">object</span></tt></a></p>
+<p>Simple JSON &lt;<a class="reference external" href="http://json.org">http://json.org</a>&gt; decoder</p>
+<p>Performs the following translations in decoding by default:</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="44%" />
+<col width="56%" />
+</colgroup>
+<thead valign="bottom">
+<tr><th class="head">JSON</th>
+<th class="head">Python</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr><td>object</td>
+<td>dict</td>
+</tr>
+<tr><td>array</td>
+<td>list</td>
+</tr>
+<tr><td>string</td>
+<td>unicode</td>
+</tr>
+<tr><td>number (int)</td>
+<td>int, long</td>
+</tr>
+<tr><td>number (real)</td>
+<td>float</td>
+</tr>
+<tr><td>true</td>
+<td>True</td>
+</tr>
+<tr><td>false</td>
+<td>False</td>
+</tr>
+<tr><td>null</td>
+<td>None</td>
+</tr>
+</tbody>
+</table>
+<p>It also understands <tt class="docutils literal"><span class="pre">NaN</span></tt>, <tt class="docutils literal"><span class="pre">Infinity</span></tt>, and <tt class="docutils literal"><span class="pre">-Infinity</span></tt> as
+their corresponding <tt class="docutils literal"><span class="pre">float</span></tt> values, which is outside the JSON spec.</p>
+<dl class="method">
+<dt id="gluon.contrib.simplejson.decoder.JSONDecoder.decode">
+<tt class="descname">decode</tt><big>(</big><em>s</em>, <em>_w=&lt;built-in method match of _sre.SRE_Pattern object at 0x206bb00&gt;</em><big>)</big><a class="headerlink" href="#gluon.contrib.simplejson.decoder.JSONDecoder.decode" title="Permalink to this definition">¶</a></dt>
+<dd>Return the Python representation of <tt class="docutils literal"><span class="pre">s</span></tt> (a <tt class="docutils literal"><span class="pre">str</span></tt> or <tt class="docutils literal"><span class="pre">unicode</span></tt>
+instance containing a JSON document)</dd></dl>
+
+<dl class="method">
+<dt id="gluon.contrib.simplejson.decoder.JSONDecoder.raw_decode">
+<tt class="descname">raw_decode</tt><big>(</big><em>s</em>, <em>idx=0</em><big>)</big><a class="headerlink" href="#gluon.contrib.simplejson.decoder.JSONDecoder.raw_decode" title="Permalink to this definition">¶</a></dt>
+<dd><p>Decode a JSON document from <tt class="docutils literal"><span class="pre">s</span></tt> (a <tt class="docutils literal"><span class="pre">str</span></tt> or <tt class="docutils literal"><span class="pre">unicode</span></tt> beginning
+with a JSON document) and return a 2-tuple of the Python
+representation and the index in <tt class="docutils literal"><span class="pre">s</span></tt> where the document ended.</p>
+<p>This can be used to decode a JSON document from a string that may
+have extraneous data at the end.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../index.html">
+              <img class="logo" src="../_static/logo_colored_small.png" alt="Logo"/>
+            </a></p>
+            <h3><a href="../index.html">Table Of Contents</a></h3>
+            <ul>
+<li><a class="reference external" href="">Simplejson Documentation</a><ul>
+<li><a class="reference external" href="#module-gluon.contrib.simplejson.encoder">The <tt class="docutils literal"><span class="pre">encoder</span></tt> Module</a></li>
+<li><a class="reference external" href="#module-gluon.contrib.simplejson">The <tt class="docutils literal"><span class="pre">simplejson</span></tt> Package</a></li>
+<li><a class="reference external" href="#module-gluon.contrib.simplejson.scanner">The <tt class="docutils literal"><span class="pre">scanner</span></tt> Module</a></li>
+<li><a class="reference external" href="#module-gluon.contrib.simplejson.decoder">The <tt class="docutils literal"><span class="pre">decoder</span></tt> Module</a></li>
+</ul>
+</li>
+</ul>
+
+            <h4>Previous topic</h4>
+            <p class="topless"><a href="gluon.contrib.memcache.html"
+                                  title="previous chapter">Memcache Documentation</a></p>
+            <h3>This Page</h3>
+            <ul class="this-page-menu">
+              <li><a href="../_sources/gluon/gluon.contrib.simplejson.txt"
+                     rel="nofollow">Show Source</a></li>
+            </ul>
+          <div id="searchbox" style="display: none">
+            <h3>Quick search</h3>
+              <form class="search" action="../search.html" method="get">
+                <input type="text" name="q" size="18" />
+                <input type="submit" value="Go" />
+                <input type="hidden" name="check_keywords" value="yes" />
+                <input type="hidden" name="area" value="default" />
+              </form>
+              <p class="searchtip" style="font-size: 90%">
+              Enter search terms or a module, class or function name.
+              </p>
+          </div>
+          <script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../modindex.html" title="Global Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="gluon.contrib.memcache.html" title="Memcache Documentation"
+             >previous</a> |</li>
+        <li><a href="../index.html">Web2Py v1.64.4 documentation</a> &raquo;</li>
+          <li><a href="../modules.html" >Web2Py Modules</a> &raquo;</li>
+          <li><a href="gluon.html" >Gluon Package</a> &raquo;</li>
+          <li><a href="gluon.contrib.html" >Contrib Documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+      &copy; Copyright 2009, The web2py developers.
+      Last updated on Jun 30, 2009.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 0.6.1.
+    </div>
+  </body>
+</html>

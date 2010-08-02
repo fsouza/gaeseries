@@ -1,0 +1,243 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Markdown Documentation &mdash; Web2Py v1.64.4 documentation</title>
+    <link rel="stylesheet" href="../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '1.64.4',
+        COLLAPSE_MODINDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="top" title="Web2Py v1.64.4 documentation" href="../index.html" />
+    <link rel="up" title="Contrib Documentation" href="gluon.contrib.html" />
+    <link rel="next" title="Memcache Documentation" href="gluon.contrib.memcache.html" />
+    <link rel="prev" title="Gateways Documentation" href="gluon.contrib.gateways.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../modindex.html" title="Global Module Index"
+             accesskey="M">modules</a> |</li>
+        <li class="right" >
+          <a href="gluon.contrib.memcache.html" title="Memcache Documentation"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="gluon.contrib.gateways.html" title="Gateways Documentation"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../index.html">Web2Py v1.64.4 documentation</a> &raquo;</li>
+          <li><a href="../modules.html" >Web2Py Modules</a> &raquo;</li>
+          <li><a href="gluon.html" >Gluon Package</a> &raquo;</li>
+          <li><a href="gluon.contrib.html" accesskey="U">Contrib Documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="markdown-documentation">
+<h1>Markdown Documentation<a class="headerlink" href="#markdown-documentation" title="Permalink to this headline">¶</a></h1>
+<p>This page contains the Markdown Package documentation.</p>
+<div class="section" id="module-gluon.contrib.markdown">
+<h2>The <tt class="xref docutils literal"><span class="pre">markdown</span></tt> Package<a class="headerlink" href="#module-gluon.contrib.markdown" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="gluon.contrib.markdown.WIKI">
+<tt class="descclassname">gluon.contrib.markdown.</tt><tt class="descname">WIKI</tt><big>(</big><em>text</em>, <em>encoding='utf8'</em>, <em>safe_mode='escape'</em>, <em>**attributes</em><big>)</big><a class="headerlink" href="#gluon.contrib.markdown.WIKI" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="gluon.contrib.markdown.random">
+<tt class="descclassname">gluon.contrib.markdown.</tt><tt class="descname">random</tt><big>(</big><big>)</big><a class="headerlink" href="#gluon.contrib.markdown.random" title="Permalink to this definition">¶</a></dt>
+<dd>random() -&gt; x in the interval [0, 1).</dd></dl>
+
+</div>
+<div class="section" id="module-gluon.contrib.markdown.markdown2">
+<h2>The <tt class="xref docutils literal"><span class="pre">markdown2</span></tt> Module<a class="headerlink" href="#module-gluon.contrib.markdown.markdown2" title="Permalink to this headline">¶</a></h2>
+<p>A fast and complete Python implementation of Markdown.</p>
+<p>[from <a class="reference external" href="http://daringfireball.net/projects/markdown/">http://daringfireball.net/projects/markdown/</a>]
+&gt; Markdown is a text-to-HTML filter; it translates an easy-to-read /
+&gt; easy-to-write structured text format into HTML.  Markdown&#8217;s text
+&gt; format is most similar to that of plain text email, and supports
+&gt; features such as headers, <em>emphasis</em>, code blocks, blockquotes, and
+&gt; links.
+&gt;
+&gt; Markdown&#8217;s syntax is designed not as a generic markup language, but
+&gt; specifically to serve as a front-end to (X)HTML. You can use span-level
+&gt; HTML tags anywhere in a Markdown document, and you can use block level
+&gt; HTML tags (like &lt;div&gt; and &lt;table&gt; as well).</p>
+<p>Module usage:</p>
+<blockquote>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">markdown2</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">markdown2</span><span class="o">.</span><span class="n">markdown</span><span class="p">(</span><span class="s">&quot;*boo!*&quot;</span><span class="p">)</span>  <span class="c"># or use `html = markdown_path(PATH)`</span>
+<span class="go">u&#39;&lt;p&gt;&lt;em&gt;boo!&lt;/em&gt;&lt;/p&gt;\n&#39;</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">markdowner</span> <span class="o">=</span> <span class="n">Markdown</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">markdowner</span><span class="o">.</span><span class="n">convert</span><span class="p">(</span><span class="s">&quot;*boo!*&quot;</span><span class="p">)</span>
+<span class="go">u&#39;&lt;p&gt;&lt;em&gt;boo!&lt;/em&gt;&lt;/p&gt;\n&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">markdowner</span><span class="o">.</span><span class="n">convert</span><span class="p">(</span><span class="s">&quot;**boom!**&quot;</span><span class="p">)</span>
+<span class="go">u&#39;&lt;p&gt;&lt;strong&gt;boom!&lt;/strong&gt;&lt;/p&gt;\n&#39;</span>
+</pre></div>
+</div>
+</blockquote>
+<p>This implementation of Markdown implements the full &#8220;core&#8221; syntax plus a
+number of extras (e.g., code syntax coloring, footnotes) as described on
+&lt;<a class="reference external" href="http://code.google.com/p/python-markdown2/wiki/Extras">http://code.google.com/p/python-markdown2/wiki/Extras</a>&gt;.</p>
+<dl class="class">
+<dt id="gluon.contrib.markdown.markdown2.Markdown">
+<em class="property">
+class </em><tt class="descclassname">gluon.contrib.markdown.markdown2.</tt><tt class="descname">Markdown</tt><big>(</big><em>html4tags=False</em>, <em>tab_width=4</em>, <em>safe_mode=None</em>, <em>extras=None</em>, <em>link_patterns=None</em>, <em>use_file_vars=False</em><big>)</big><a class="headerlink" href="#gluon.contrib.markdown.markdown2.Markdown" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a title="(in Python v2.7)" class="reference external" href="http://docs.python.org/dev/library/functions.html#object"><tt class="xref docutils literal"><span class="pre">object</span></tt></a></p>
+<dl class="method">
+<dt id="gluon.contrib.markdown.markdown2.Markdown.convert">
+<tt class="descname">convert</tt><big>(</big><em>text</em><big>)</big><a class="headerlink" href="#gluon.contrib.markdown.markdown2.Markdown.convert" title="Permalink to this definition">¶</a></dt>
+<dd>Convert the given text.</dd></dl>
+
+<dl class="method">
+<dt id="gluon.contrib.markdown.markdown2.Markdown.reset">
+<tt class="descname">reset</tt><big>(</big><big>)</big><a class="headerlink" href="#gluon.contrib.markdown.markdown2.Markdown.reset" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="exception">
+<dt id="gluon.contrib.markdown.markdown2.MarkdownError">
+<em class="property">
+exception </em><tt class="descclassname">gluon.contrib.markdown.markdown2.</tt><tt class="descname">MarkdownError</tt><a class="headerlink" href="#gluon.contrib.markdown.markdown2.MarkdownError" title="Permalink to this definition">¶</a></dt>
+<dd>Bases: <a title="(in Python v2.7)" class="reference external" href="http://docs.python.org/dev/library/exceptions.html#exceptions.Exception"><tt class="xref docutils literal"><span class="pre">exceptions.Exception</span></tt></a></dd></dl>
+
+<dl class="class">
+<dt id="gluon.contrib.markdown.markdown2.MarkdownWithExtras">
+<em class="property">
+class </em><tt class="descclassname">gluon.contrib.markdown.markdown2.</tt><tt class="descname">MarkdownWithExtras</tt><big>(</big><em>html4tags=False</em>, <em>tab_width=4</em>, <em>safe_mode=None</em>, <em>extras=None</em>, <em>link_patterns=None</em>, <em>use_file_vars=False</em><big>)</big><a class="headerlink" href="#gluon.contrib.markdown.markdown2.MarkdownWithExtras" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a title="gluon.contrib.markdown.markdown2.Markdown" class="reference internal" href="#gluon.contrib.markdown.markdown2.Markdown"><tt class="xref docutils literal"><span class="pre">gluon.contrib.markdown.markdown2.Markdown</span></tt></a></p>
+<p>A markdowner class that enables most extras:</p>
+<ul class="simple">
+<li>footnotes</li>
+<li>code-color (only has effect if &#8216;pygments&#8217; Python module on path)</li>
+</ul>
+<p>These are not included:
+- pyshell (specific to Python-related documenting)
+- code-friendly (because it <em>disables</em> part of the syntax)
+- link-patterns (because you need to specify some actual</p>
+<div class="system-message">
+<p class="system-message-title">System Message: ERROR/3 (<tt class="docutils">/Users/mdipierro/web2py/gluon/contrib/markdown/markdown2.py:docstring of gluon.contrib.markdown.markdown2</tt>, line 9)</p>
+Unexpected indentation.</div>
+<blockquote>
+link-patterns anyway)</blockquote>
+</dd></dl>
+
+<dl class="function">
+<dt id="gluon.contrib.markdown.markdown2.main">
+<tt class="descclassname">gluon.contrib.markdown.markdown2.</tt><tt class="descname">main</tt><big>(</big><em>argv=None</em><big>)</big><a class="headerlink" href="#gluon.contrib.markdown.markdown2.main" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="gluon.contrib.markdown.markdown2.markdown">
+<tt class="descclassname">gluon.contrib.markdown.markdown2.</tt><tt class="descname">markdown</tt><big>(</big><em>text</em>, <em>html4tags=False</em>, <em>tab_width=4</em>, <em>safe_mode=None</em>, <em>extras=None</em>, <em>link_patterns=None</em>, <em>use_file_vars=False</em><big>)</big><a class="headerlink" href="#gluon.contrib.markdown.markdown2.markdown" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="gluon.contrib.markdown.markdown2.markdown_path">
+<tt class="descclassname">gluon.contrib.markdown.markdown2.</tt><tt class="descname">markdown_path</tt><big>(</big><em>path</em>, <em>encoding='utf-8'</em>, <em>html4tags=False</em>, <em>tab_width=4</em>, <em>safe_mode=None</em>, <em>extras=None</em>, <em>link_patterns=None</em>, <em>use_file_vars=False</em><big>)</big><a class="headerlink" href="#gluon.contrib.markdown.markdown2.markdown_path" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="gluon.contrib.markdown.markdown2.random">
+<tt class="descclassname">gluon.contrib.markdown.markdown2.</tt><tt class="descname">random</tt><big>(</big><big>)</big><a class="headerlink" href="#gluon.contrib.markdown.markdown2.random" title="Permalink to this definition">¶</a></dt>
+<dd>random() -&gt; x in the interval [0, 1).</dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../index.html">
+              <img class="logo" src="../_static/logo_colored_small.png" alt="Logo"/>
+            </a></p>
+            <h3><a href="../index.html">Table Of Contents</a></h3>
+            <ul>
+<li><a class="reference external" href="">Markdown Documentation</a><ul>
+<li><a class="reference external" href="#module-gluon.contrib.markdown">The <tt class="docutils literal"><span class="pre">markdown</span></tt> Package</a></li>
+<li><a class="reference external" href="#module-gluon.contrib.markdown.markdown2">The <tt class="docutils literal"><span class="pre">markdown2</span></tt> Module</a></li>
+</ul>
+</li>
+</ul>
+
+            <h4>Previous topic</h4>
+            <p class="topless"><a href="gluon.contrib.gateways.html"
+                                  title="previous chapter">Gateways Documentation</a></p>
+            <h4>Next topic</h4>
+            <p class="topless"><a href="gluon.contrib.memcache.html"
+                                  title="next chapter">Memcache Documentation</a></p>
+            <h3>This Page</h3>
+            <ul class="this-page-menu">
+              <li><a href="../_sources/gluon/gluon.contrib.markdown.txt"
+                     rel="nofollow">Show Source</a></li>
+            </ul>
+          <div id="searchbox" style="display: none">
+            <h3>Quick search</h3>
+              <form class="search" action="../search.html" method="get">
+                <input type="text" name="q" size="18" />
+                <input type="submit" value="Go" />
+                <input type="hidden" name="check_keywords" value="yes" />
+                <input type="hidden" name="area" value="default" />
+              </form>
+              <p class="searchtip" style="font-size: 90%">
+              Enter search terms or a module, class or function name.
+              </p>
+          </div>
+          <script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../modindex.html" title="Global Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="gluon.contrib.memcache.html" title="Memcache Documentation"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="gluon.contrib.gateways.html" title="Gateways Documentation"
+             >previous</a> |</li>
+        <li><a href="../index.html">Web2Py v1.64.4 documentation</a> &raquo;</li>
+          <li><a href="../modules.html" >Web2Py Modules</a> &raquo;</li>
+          <li><a href="gluon.html" >Gluon Package</a> &raquo;</li>
+          <li><a href="gluon.contrib.html" >Contrib Documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+      &copy; Copyright 2009, The web2py developers.
+      Last updated on Jun 30, 2009.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 0.6.1.
+    </div>
+  </body>
+</html>

@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="ascii"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+          "DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>web2py.gluon.serializers</title>
+  <link rel="stylesheet" href="epydoc.css" type="text/css" />
+  <script type="text/javascript" src="epydoc.js"></script>
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="#204080"
+      alink="#204080">
+<!-- ==================== NAVIGATION BAR ==================== -->
+<table class="navbar" border="0" width="100%" cellpadding="0"
+       bgcolor="#a0c0ff" cellspacing="0">
+  <tr valign="middle">
+  <!-- Home link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="web2py.gluon-module.html">Home</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Tree link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="module-tree.html">Trees</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Index link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="identifier-index.html">Indices</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Help link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Project homepage -->
+      <th class="navbar" align="right" width="100%">
+        <table border="0" cellpadding="0" cellspacing="0">
+          <tr><th class="navbar" align="center"
+            ><a class="navbar" target="_top" href="http://www.web2py.com">web2py Web Framework</a></th>
+          </tr></table></th>
+  </tr>
+</table>
+<table width="100%" cellpadding="0" cellspacing="0">
+  <tr valign="top">
+    <td width="100%">
+      <span class="breadcrumbs">
+        Package&nbsp;web2py ::
+        <a href="web2py.gluon-module.html">Package&nbsp;gluon</a> ::
+        Module&nbsp;serializers
+      </span>
+    </td>
+    <td>
+      <table cellpadding="0" cellspacing="0">
+        <!-- hide/show private -->
+        <tr><td align="right"><span class="options">[<a href="javascript:void(0);" class="privatelink"
+    onclick="toggle_private();">hide&nbsp;private</a>]</span></td></tr>
+        <tr><td align="right"><span class="options"
+            >[<a href="frames.html" target="_top">frames</a
+            >]&nbsp;|&nbsp;<a href="web2py.gluon.serializers-pysrc.html"
+            target="_top">no&nbsp;frames</a>]</span></td></tr>
+      </table>
+    </td>
+  </tr>
+</table>
+<h1 class="epydoc">Source Code for <a href="web2py.gluon.serializers-module.html">Module web2py.gluon.serializers</a></h1>
+<pre class="py-src">
+<a name="L1"></a><tt class="py-lineno"> 1</tt>  <tt class="py-line"><tt class="py-docstring">"""</tt> </tt>
+<a name="L2"></a><tt class="py-lineno"> 2</tt>  <tt class="py-line"><tt class="py-docstring">This file is part of web2py Web Framework (Copyrighted, 2007-2010).</tt> </tt>
+<a name="L3"></a><tt class="py-lineno"> 3</tt>  <tt class="py-line"><tt class="py-docstring">Developed by Massimo Di Pierro &lt;mdipierro@cs.depaul.edu&gt;.</tt> </tt>
+<a name="L4"></a><tt class="py-lineno"> 4</tt>  <tt class="py-line"><tt class="py-docstring">License: GPL v2</tt> </tt>
+<a name="L5"></a><tt class="py-lineno"> 5</tt>  <tt class="py-line"><tt class="py-docstring">"""</tt> </tt>
+<a name="L6"></a><tt class="py-lineno"> 6</tt>  <tt class="py-line"><tt class="py-keyword">import</tt> <tt class="py-name">datetime</tt> </tt>
+<a name="L7"></a><tt class="py-lineno"> 7</tt>  <tt class="py-line"><tt class="py-keyword">from</tt> <tt id="link-0" class="py-name" targets="Module web2py.gluon.storage=web2py.gluon.storage-module.html"><a title="web2py.gluon.storage" class="py-name" href="#" onclick="return doclink('link-0', 'storage', 'link-0');">storage</a></tt> <tt class="py-keyword">import</tt> <tt id="link-1" class="py-name" targets="Class web2py.gluon.storage.Storage=web2py.gluon.storage.Storage-class.html"><a title="web2py.gluon.storage.Storage" class="py-name" href="#" onclick="return doclink('link-1', 'Storage', 'link-1');">Storage</a></tt> </tt>
+<a name="L8"></a><tt class="py-lineno"> 8</tt>  <tt class="py-line"><tt class="py-keyword">from</tt> <tt id="link-2" class="py-name" targets="Module web2py.gluon.html=web2py.gluon.html-module.html"><a title="web2py.gluon.html" class="py-name" href="#" onclick="return doclink('link-2', 'html', 'link-2');">html</a></tt> <tt class="py-keyword">import</tt> <tt class="py-op">*</tt> </tt>
+<a name="L9"></a><tt class="py-lineno"> 9</tt>  <tt class="py-line"><tt class="py-keyword">import</tt> <tt class="py-name">contrib</tt><tt class="py-op">.</tt><tt class="py-name">simplejson</tt> <tt class="py-keyword">as</tt> <tt class="py-name">simplejson</tt> </tt>
+<a name="L10"></a><tt class="py-lineno">10</tt>  <tt class="py-line"><tt class="py-keyword">import</tt> <tt class="py-name">contrib</tt><tt class="py-op">.</tt><tt class="py-name">rss2</tt> <tt class="py-keyword">as</tt> <tt class="py-name">rss2</tt> </tt>
+<a name="L11"></a><tt class="py-lineno">11</tt>  <tt class="py-line"> </tt>
+<a name="L12"></a><tt class="py-lineno">12</tt>  <tt class="py-line"> </tt>
+<a name="xml_rec"></a><div id="xml_rec-def"><a name="L13"></a><tt class="py-lineno">13</tt> <a class="py-toggle" href="#" id="xml_rec-toggle" onclick="return toggle('xml_rec');">-</a><tt class="py-line"><tt class="py-keyword">def</tt> <a class="py-def-name" href="web2py.gluon.serializers-module.html#xml_rec">xml_rec</a><tt class="py-op">(</tt><tt class="py-param">value</tt><tt class="py-op">,</tt> <tt class="py-param">key</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="xml_rec-collapsed" style="display:none;" pad="++" indent="++++"></div><div id="xml_rec-expanded"><a name="L14"></a><tt class="py-lineno">14</tt>  <tt class="py-line">    <tt class="py-keyword">if</tt> <tt class="py-name">isinstance</tt><tt class="py-op">(</tt><tt class="py-name">value</tt><tt class="py-op">,</tt> <tt class="py-op">(</tt><tt class="py-name">dict</tt><tt class="py-op">,</tt> <tt id="link-3" class="py-name"><a title="web2py.gluon.storage.Storage" class="py-name" href="#" onclick="return doclink('link-3', 'Storage', 'link-1');">Storage</a></tt><tt class="py-op">)</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+<a name="L15"></a><tt class="py-lineno">15</tt>  <tt class="py-line">        <tt class="py-keyword">return</tt> <tt id="link-4" class="py-name" targets="Variable web2py.gluon.html.TAG=web2py.gluon.html-module.html#TAG,Variable web2py.gluon.serializers.TAG=web2py.gluon.serializers-module.html#TAG,Variable web2py.gluon.sqlhtml.TAG=web2py.gluon.sqlhtml-module.html#TAG,Variable web2py.gluon.tools.TAG=web2py.gluon.tools-module.html#TAG"><a title="web2py.gluon.html.TAG
+web2py.gluon.serializers.TAG
+web2py.gluon.sqlhtml.TAG
+web2py.gluon.tools.TAG" class="py-name" href="#" onclick="return doclink('link-4', 'TAG', 'link-4');">TAG</a></tt><tt class="py-op">[</tt><tt class="py-name">key</tt><tt class="py-op">]</tt><tt class="py-op">(</tt><tt class="py-op">*</tt><tt class="py-op">[</tt><tt id="link-5" class="py-name"><a title="web2py.gluon.html.TAG
+web2py.gluon.serializers.TAG
+web2py.gluon.sqlhtml.TAG
+web2py.gluon.tools.TAG" class="py-name" href="#" onclick="return doclink('link-5', 'TAG', 'link-4');">TAG</a></tt><tt class="py-op">[</tt><tt class="py-name">k</tt><tt class="py-op">]</tt><tt class="py-op">(</tt><tt id="link-6" class="py-name" targets="Function web2py.gluon.serializers.xml_rec()=web2py.gluon.serializers-module.html#xml_rec"><a title="web2py.gluon.serializers.xml_rec" class="py-name" href="#" onclick="return doclink('link-6', 'xml_rec', 'link-6');">xml_rec</a></tt><tt class="py-op">(</tt><tt class="py-name">v</tt><tt class="py-op">,</tt> <tt class="py-string">''</tt><tt class="py-op">)</tt><tt class="py-op">)</tt> <tt class="py-keyword">for</tt> <tt class="py-name">k</tt><tt class="py-op">,</tt> <tt class="py-name">v</tt> <tt class="py-keyword">in</tt> <tt class="py-name">value</tt><tt class="py-op">.</tt><tt id="link-7" class="py-name" targets="Method web2py.gluon.rocket.Headers.items()=web2py.gluon.rocket.Headers-class.html#items"><a title="web2py.gluon.rocket.Headers.items" class="py-name" href="#" onclick="return doclink('link-7', 'items', 'link-7');">items</a></tt><tt class="py-op">(</tt><tt class="py-op">)</tt><tt class="py-op">]</tt><tt class="py-op">)</tt> </tt>
+<a name="L16"></a><tt class="py-lineno">16</tt>  <tt class="py-line">    <tt class="py-keyword">elif</tt> <tt class="py-name">isinstance</tt><tt class="py-op">(</tt><tt class="py-name">value</tt><tt class="py-op">,</tt> <tt class="py-name">list</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+<a name="L17"></a><tt class="py-lineno">17</tt>  <tt class="py-line">        <tt class="py-keyword">return</tt> <tt id="link-8" class="py-name"><a title="web2py.gluon.html.TAG
+web2py.gluon.serializers.TAG
+web2py.gluon.sqlhtml.TAG
+web2py.gluon.tools.TAG" class="py-name" href="#" onclick="return doclink('link-8', 'TAG', 'link-4');">TAG</a></tt><tt class="py-op">[</tt><tt class="py-name">key</tt><tt class="py-op">]</tt><tt class="py-op">(</tt><tt class="py-op">*</tt><tt class="py-op">[</tt><tt id="link-9" class="py-name"><a title="web2py.gluon.html.TAG
+web2py.gluon.serializers.TAG
+web2py.gluon.sqlhtml.TAG
+web2py.gluon.tools.TAG" class="py-name" href="#" onclick="return doclink('link-9', 'TAG', 'link-4');">TAG</a></tt><tt class="py-op">.</tt><tt class="py-name">item</tt><tt class="py-op">(</tt><tt id="link-10" class="py-name"><a title="web2py.gluon.serializers.xml_rec" class="py-name" href="#" onclick="return doclink('link-10', 'xml_rec', 'link-6');">xml_rec</a></tt><tt class="py-op">(</tt><tt class="py-name">item</tt><tt class="py-op">,</tt> <tt class="py-string">''</tt><tt class="py-op">)</tt><tt class="py-op">)</tt> <tt class="py-keyword">for</tt> <tt class="py-name">item</tt> <tt class="py-keyword">in</tt> <tt class="py-name">value</tt><tt class="py-op">]</tt><tt class="py-op">)</tt> </tt>
+<a name="L18"></a><tt class="py-lineno">18</tt>  <tt class="py-line">    <tt class="py-keyword">elif</tt> <tt class="py-name">value</tt> <tt class="py-op">==</tt> <tt class="py-name">None</tt><tt class="py-op">:</tt> </tt>
+<a name="L19"></a><tt class="py-lineno">19</tt>  <tt class="py-line">        <tt class="py-keyword">return</tt> <tt class="py-string">'None'</tt> </tt>
+<a name="L20"></a><tt class="py-lineno">20</tt>  <tt class="py-line">    <tt class="py-keyword">else</tt><tt class="py-op">:</tt> </tt>
+<a name="L21"></a><tt class="py-lineno">21</tt>  <tt class="py-line">        <tt class="py-keyword">return</tt> <tt class="py-name">str</tt><tt class="py-op">(</tt><tt class="py-name">value</tt><tt class="py-op">)</tt> </tt>
+</div><a name="L22"></a><tt class="py-lineno">22</tt>  <tt class="py-line"> </tt>
+<a name="L23"></a><tt class="py-lineno">23</tt>  <tt class="py-line"> </tt>
+<a name="xml"></a><div id="xml-def"><a name="L24"></a><tt class="py-lineno">24</tt> <a class="py-toggle" href="#" id="xml-toggle" onclick="return toggle('xml');">-</a><tt class="py-line"><tt class="py-keyword">def</tt> <a class="py-def-name" href="web2py.gluon.serializers-module.html#xml">xml</a><tt class="py-op">(</tt><tt class="py-param">value</tt><tt class="py-op">,</tt> <tt class="py-param">encoding</tt><tt class="py-op">=</tt><tt class="py-string">'UTF-8'</tt><tt class="py-op">,</tt> <tt class="py-param">key</tt><tt class="py-op">=</tt><tt class="py-string">'document'</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="xml-collapsed" style="display:none;" pad="++" indent="++++"></div><div id="xml-expanded"><a name="L25"></a><tt class="py-lineno">25</tt>  <tt class="py-line">    <tt class="py-keyword">return</tt> <tt class="py-op">(</tt><tt class="py-string">'&lt;?xml version="1.0" encoding="%s"?&gt;'</tt> <tt class="py-op">%</tt> <tt class="py-name">encoding</tt><tt class="py-op">)</tt> <tt class="py-op">+</tt> <tt class="py-name">str</tt><tt class="py-op">(</tt><tt id="link-11" class="py-name"><a title="web2py.gluon.serializers.xml_rec" class="py-name" href="#" onclick="return doclink('link-11', 'xml_rec', 'link-6');">xml_rec</a></tt><tt class="py-op">(</tt><tt class="py-name">value</tt><tt class="py-op">,</tt><tt class="py-name">key</tt><tt class="py-op">)</tt><tt class="py-op">)</tt> </tt>
+</div><a name="L26"></a><tt class="py-lineno">26</tt>  <tt class="py-line"> </tt>
+<a name="L27"></a><tt class="py-lineno">27</tt>  <tt class="py-line"> </tt>
+<a name="json"></a><div id="json-def"><a name="L28"></a><tt class="py-lineno">28</tt> <a class="py-toggle" href="#" id="json-toggle" onclick="return toggle('json');">-</a><tt class="py-line"><tt class="py-keyword">def</tt> <a class="py-def-name" href="web2py.gluon.serializers-module.html#json">json</a><tt class="py-op">(</tt><tt class="py-param">value</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="json-collapsed" style="display:none;" pad="++" indent="++++"></div><div id="json-expanded"><a name="L29"></a><tt class="py-lineno">29</tt>  <tt class="py-line">    <tt class="py-keyword">return</tt> <tt class="py-name">simplejson</tt><tt class="py-op">.</tt><tt class="py-name">dumps</tt><tt class="py-op">(</tt><tt class="py-name">value</tt><tt class="py-op">)</tt> </tt>
+</div><a name="L30"></a><tt class="py-lineno">30</tt>  <tt class="py-line"> </tt>
+<a name="L31"></a><tt class="py-lineno">31</tt>  <tt class="py-line"> </tt>
+<a name="csv"></a><div id="csv-def"><a name="L32"></a><tt class="py-lineno">32</tt> <a class="py-toggle" href="#" id="csv-toggle" onclick="return toggle('csv');">-</a><tt class="py-line"><tt class="py-keyword">def</tt> <a class="py-def-name" href="web2py.gluon.serializers-module.html#csv">csv</a><tt class="py-op">(</tt><tt class="py-param">value</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="csv-collapsed" style="display:none;" pad="++" indent="++++"></div><div id="csv-expanded"><a name="L33"></a><tt class="py-lineno">33</tt>  <tt class="py-line">    <tt class="py-keyword">return</tt> <tt class="py-string">''</tt> </tt>
+</div><a name="L34"></a><tt class="py-lineno">34</tt>  <tt class="py-line"> </tt>
+<a name="L35"></a><tt class="py-lineno">35</tt>  <tt class="py-line"> </tt>
+<a name="rss"></a><div id="rss-def"><a name="L36"></a><tt class="py-lineno">36</tt> <a class="py-toggle" href="#" id="rss-toggle" onclick="return toggle('rss');">-</a><tt class="py-line"><tt class="py-keyword">def</tt> <a class="py-def-name" href="web2py.gluon.serializers-module.html#rss">rss</a><tt class="py-op">(</tt><tt class="py-param">feed</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="rss-collapsed" style="display:none;" pad="++" indent="++++"></div><div id="rss-expanded"><a name="L37"></a><tt class="py-lineno">37</tt>  <tt class="py-line">    <tt class="py-keyword">if</tt> <tt class="py-keyword">not</tt> <tt class="py-string">'entries'</tt> <tt class="py-keyword">in</tt> <tt class="py-name">feed</tt> <tt class="py-keyword">and</tt> <tt class="py-string">'items'</tt> <tt class="py-keyword">in</tt> <tt class="py-name">feed</tt><tt class="py-op">:</tt> </tt>
+<a name="L38"></a><tt class="py-lineno">38</tt>  <tt class="py-line">        <tt class="py-name">feed</tt><tt class="py-op">[</tt><tt class="py-string">'entries'</tt><tt class="py-op">]</tt> <tt class="py-op">=</tt> <tt class="py-name">feed</tt><tt class="py-op">[</tt><tt class="py-string">'items'</tt><tt class="py-op">]</tt> </tt>
+<a name="L39"></a><tt class="py-lineno">39</tt>  <tt class="py-line">    <tt class="py-name">now</tt><tt class="py-op">=</tt><tt class="py-name">datetime</tt><tt class="py-op">.</tt><tt class="py-name">datetime</tt><tt class="py-op">.</tt><tt class="py-name">now</tt><tt class="py-op">(</tt><tt class="py-op">)</tt> </tt>
+<a name="L40"></a><tt class="py-lineno">40</tt>  <tt class="py-line">    <tt id="link-12" class="py-name" targets="Function web2py.gluon.serializers.rss()=web2py.gluon.serializers-module.html#rss,Method web2py.gluon.tools.Service.rss()=web2py.gluon.tools.Service-class.html#rss"><a title="web2py.gluon.serializers.rss
+web2py.gluon.tools.Service.rss" class="py-name" href="#" onclick="return doclink('link-12', 'rss', 'link-12');">rss</a></tt> <tt class="py-op">=</tt> <tt class="py-name">rss2</tt><tt class="py-op">.</tt><tt class="py-name">RSS2</tt><tt class="py-op">(</tt><tt class="py-name">title</tt> <tt class="py-op">=</tt> <tt class="py-name">feed</tt><tt class="py-op">[</tt><tt class="py-string">'title'</tt><tt class="py-op">]</tt><tt class="py-op">,</tt> </tt>
+<a name="L41"></a><tt class="py-lineno">41</tt>  <tt class="py-line">                    <tt class="py-name">link</tt> <tt class="py-op">=</tt> <tt class="py-name">feed</tt><tt class="py-op">[</tt><tt class="py-string">'link'</tt><tt class="py-op">]</tt><tt class="py-op">,</tt> </tt>
+<a name="L42"></a><tt class="py-lineno">42</tt>  <tt class="py-line">                    <tt class="py-name">description</tt> <tt class="py-op">=</tt> <tt class="py-name">feed</tt><tt class="py-op">[</tt><tt class="py-string">'description'</tt><tt class="py-op">]</tt><tt class="py-op">,</tt> </tt>
+<a name="L43"></a><tt class="py-lineno">43</tt>  <tt class="py-line">                    <tt class="py-name">lastBuildDate</tt> <tt class="py-op">=</tt> <tt class="py-name">feed</tt><tt class="py-op">.</tt><tt id="link-13" class="py-name" targets="Method web2py.gluon.rocket.Headers.get()=web2py.gluon.rocket.Headers-class.html#get"><a title="web2py.gluon.rocket.Headers.get" class="py-name" href="#" onclick="return doclink('link-13', 'get', 'link-13');">get</a></tt><tt class="py-op">(</tt><tt class="py-string">'created_on'</tt><tt class="py-op">,</tt> <tt class="py-name">now</tt><tt class="py-op">)</tt><tt class="py-op">,</tt> </tt>
+<a name="L44"></a><tt class="py-lineno">44</tt>  <tt class="py-line">                    <tt id="link-14" class="py-name"><a title="web2py.gluon.rocket.Headers.items" class="py-name" href="#" onclick="return doclink('link-14', 'items', 'link-7');">items</a></tt> <tt class="py-op">=</tt> <tt class="py-op">[</tt><tt class="py-name">rss2</tt><tt class="py-op">.</tt><tt class="py-name">RSSItem</tt><tt class="py-op">(</tt>\ </tt>
+<a name="L45"></a><tt class="py-lineno">45</tt>  <tt class="py-line">                                        <tt class="py-name">title</tt><tt class="py-op">=</tt><tt class="py-name">entry</tt><tt class="py-op">[</tt><tt class="py-string">'title'</tt><tt class="py-op">]</tt><tt class="py-op">,</tt> </tt>
+<a name="L46"></a><tt class="py-lineno">46</tt>  <tt class="py-line">                                        <tt class="py-name">link</tt><tt class="py-op">=</tt><tt class="py-name">entry</tt><tt class="py-op">[</tt><tt class="py-string">'link'</tt><tt class="py-op">]</tt><tt class="py-op">,</tt> </tt>
+<a name="L47"></a><tt class="py-lineno">47</tt>  <tt class="py-line">                                        <tt class="py-name">description</tt><tt class="py-op">=</tt><tt class="py-name">entry</tt><tt class="py-op">[</tt><tt class="py-string">'description'</tt><tt class="py-op">]</tt><tt class="py-op">,</tt> </tt>
+<a name="L48"></a><tt class="py-lineno">48</tt>  <tt class="py-line">                                        <tt class="py-name">pubDate</tt><tt class="py-op">=</tt><tt class="py-name">entry</tt><tt class="py-op">.</tt><tt id="link-15" class="py-name"><a title="web2py.gluon.rocket.Headers.get" class="py-name" href="#" onclick="return doclink('link-15', 'get', 'link-13');">get</a></tt><tt class="py-op">(</tt><tt class="py-string">'created_on'</tt><tt class="py-op">,</tt> <tt class="py-name">now</tt><tt class="py-op">)</tt> </tt>
+<a name="L49"></a><tt class="py-lineno">49</tt>  <tt class="py-line">                                        <tt class="py-op">)</tt>\ </tt>
+<a name="L50"></a><tt class="py-lineno">50</tt>  <tt class="py-line">                                    <tt class="py-keyword">for</tt> <tt class="py-name">entry</tt> <tt class="py-keyword">in</tt> <tt class="py-name">feed</tt><tt class="py-op">[</tt><tt class="py-string">'entries'</tt><tt class="py-op">]</tt> </tt>
+<a name="L51"></a><tt class="py-lineno">51</tt>  <tt class="py-line">                                    <tt class="py-op">]</tt> </tt>
+<a name="L52"></a><tt class="py-lineno">52</tt>  <tt class="py-line">                    <tt class="py-op">)</tt> </tt>
+<a name="L53"></a><tt class="py-lineno">53</tt>  <tt class="py-line">    <tt class="py-keyword">return</tt> <tt class="py-name">rss2</tt><tt class="py-op">.</tt><tt class="py-name">dumps</tt><tt class="py-op">(</tt><tt id="link-16" class="py-name"><a title="web2py.gluon.serializers.rss
+web2py.gluon.tools.Service.rss" class="py-name" href="#" onclick="return doclink('link-16', 'rss', 'link-12');">rss</a></tt><tt class="py-op">)</tt> </tt>
+</div><a name="L54"></a><tt class="py-lineno">54</tt>  <tt class="py-line"> </tt><script type="text/javascript">
+<!--
+expandto(location.href);
+// -->
+</script>
+</pre>
+<br />
+<!-- ==================== NAVIGATION BAR ==================== -->
+<table class="navbar" border="0" width="100%" cellpadding="0"
+       bgcolor="#a0c0ff" cellspacing="0">
+  <tr valign="middle">
+  <!-- Home link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="web2py.gluon-module.html">Home</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Tree link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="module-tree.html">Trees</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Index link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="identifier-index.html">Indices</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Help link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Project homepage -->
+      <th class="navbar" align="right" width="100%">
+        <table border="0" cellpadding="0" cellspacing="0">
+          <tr><th class="navbar" align="center"
+            ><a class="navbar" target="_top" href="http://www.web2py.com">web2py Web Framework</a></th>
+          </tr></table></th>
+  </tr>
+</table>
+<table border="0" cellpadding="0" cellspacing="0" width="100%%">
+  <tr>
+    <td align="left" class="footer">
+    Generated by Epydoc 3.0beta1 on Thu Jul 22 23:56:19 2010
+    </td>
+    <td align="right" class="footer">
+      <a href="http://epydoc.sourceforge.net">http://epydoc.sourceforge.net</a>
+    </td>
+  </tr>
+</table>
+
+<script type="text/javascript">
+  <!--
+  // Private objects are initially displayed (because if
+  // javascript is turned off then we want them to be
+  // visible); but by default, we want to hide them.  So hide
+  // them unless we have a cookie that says to show them.
+  checkCookie()
+  // -->
+</script>
+  
+</body>
+</html>

@@ -1,0 +1,38 @@
+<html><body><h1>Markmin markup language</h1><h2>What?</h2><p>This is a new markup language that we call markmin, it is implemented in the <code class="">render</code> function in the <code class="">markmin.py</code> module.</p><h2>Why?</h2><p>We wanted a markup language with the following requirements:</p><ul><li>less than 100 lines of functional code</li><li>easy to read</li><li>secure</li><li>support table, ul, ol, code</li><li>support html5 video and audio elements</li><li>can align images and resize them</li><li>can specify class for tables and code elements</li><li>can add anchors anywhere</li><li>does not use _ for markup (since it creates odd behavior)</li><li>automatically links urls</li><li>fast</li></ul><p>(results depend on text but in average for text ~100K markmin is 30% faster than markdown, for text ~10K it is 10x faster)</p><h2>Where</h2><p><a href="http://web2py.googlecode.com/hg/gluon/contrib/markmin.py">download</a></p><h2>Usage</h2><pre><code class="python">
+&gt;&gt;&gt; from markmin import render
+&gt;&gt;&gt; render('hello **world**')
+'&lt;p&gt;hello &lt;b&gt;world&lt;/b&gt;&lt;/p&gt;'
+
+</code></pre><h2>Examples</h2><h3>Bold, italic, code and links</h3><table class=""><tr><td><b>SOURCE</b>                </td><td><b>OUTPUT</b></td></tr><tr><td><code class="">**bold**</code>              </td><td><b>bold</b></td></tr><tr><td><code class="">''italic''</code>            </td><td><i>italic</i></td></tr><tr><td><code class="">``verbatim``</code>      </td><td><code class="">verbatim</code></td></tr><tr><td><code class="">http://google.com</code>     </td><td><a href="http://google.com">http://google.com</a></td></tr><tr><td><code class="">[[click me #myanchor]]</code></td><td><a href="#myanchor">click me</a></td></tr></table>
+<h3>More on links</h3><p>The format is always <code class="">[[title link]]</code>. Notice you can nest bold, italic and code inside the link title.</p><h3>Anchors <span id="myanchor"><span></h3><p>You can place an anchor anywhere in the text using the syntax <code class="">[[name]]</code> where <i>name</i> is the name of the anchor.
+You can then link the anchor with <a href="#myanchor">link</a>, i.e. <code class="">[[link #myanchor]]</code>.</p><h3>Images</h3><p><img src="http://www.google.it/images/srpr/nav_logo13.png" alt="some image" align="right" width="200px" />
+This paragraph has an image aligned to the right with a width of 200px. Its is placed using the code
+<code class="">[[some image http://www.google.it/images/srpr/nav_logo13.png right 200px]]</code>.</p><h3>Unordered Lists</h3><pre><code class="">
+- Dog
+- Cat
+- Mouse
+</code></pre><p>is rendered as</p><ul><li>Dog</li><li>Cat</li><li>Mouse</li></ul><p>Two new lines between items break the list in two lists.</p><h3>Ordered Lists</h3><pre><code class="">
++ Dog
++ Cat
++ Mouse
+</code></pre><p>is rendered as</p><ol><li>Dog</li><li>Cat</li><li>Mouse</li></ol><h3>Tables</h3><p>Something like this
+<pre><code class="">
+---------
+0 | 0 | X
+0 | X | 0
+X | 0 | 0
+-----:abc
+</code></pre>
+is a table and is rendered as
+<table class="abc"><tr><td>0</td><td>0</td><td>X</td></tr><tr><td>0</td><td>X</td><td>0</td></tr><tr><td>X</td><td>0</td><td>0</td></tr></table>Four or more dashes delimit the table and | separates the columns.
+The <code class="">:abc</code> at the end sets the class for the table and it is optional.</p><h3>Blockquote</h3><p>A table with a single cell is rendered as a blockquote:</p><blockquote class="">Hello world</blockquote>
+<h3>Code, <code class="">&lt;code&gt;</code>, escaping and extra stuff</h3><pre><code class="python">
+def test():
+    return "this is Python code"
+</code></pre><p>Optionally a ` inside a <code class="">``...``</code> block can be inserted escaped with !`!.
+The <code class="">:python</code> after the markup is also optional. If present, by default, it is used to set the class of the &lt;code&gt; block.
+The behavior can be overridden by passing an argument <code class="">extra</code> to the <code class="">render</code> function. For example:</p><code class="python">&gt;&gt;&gt; render("``aaa``:custom",extra=dict(custom=lambda text: 'x'+text+'x'))</code><p>generates</p><code class="python">'xaaax'</code><p>(the <code class="">``...``:custom</code> block is rendered by the <code class="">custom=lambda</code> function passed to <code class="">render</code>).</p><h3>Html5 support</h3><p>Markmin also supports the &lt;video&gt; and &lt;audio&gt; html5 tags using the notation:
+<pre><code class="">
+[[title link video]]
+[[title link audio]]
+</code></pre></p><h3>Caveats</h3><p><code class="">&lt;ul/&gt;</code>, <code class="">&lt;ol/&gt;</code>, <code class="">&lt;code/&gt;</code>, <code class="">&lt;table/&gt;</code>, <code class="">&lt;blockquote/&gt;</code>, <code class="">&lt;h1/&gt;</code>, ..., <code class="">&lt;h6/&gt;</code> do not have <code class="">&lt;p&gt;...&lt;/p&gt;</code> around them.</p></body></html>

@@ -1,0 +1,284 @@
+<?xml version="1.0" encoding="ascii"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+          "DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>web2py.gluon.storage</title>
+  <link rel="stylesheet" href="epydoc.css" type="text/css" />
+  <script type="text/javascript" src="epydoc.js"></script>
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="#204080"
+      alink="#204080">
+<!-- ==================== NAVIGATION BAR ==================== -->
+<table class="navbar" border="0" width="100%" cellpadding="0"
+       bgcolor="#a0c0ff" cellspacing="0">
+  <tr valign="middle">
+  <!-- Home link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="web2py.gluon-module.html">Home</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Tree link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="module-tree.html">Trees</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Index link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="identifier-index.html">Indices</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Help link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Project homepage -->
+      <th class="navbar" align="right" width="100%">
+        <table border="0" cellpadding="0" cellspacing="0">
+          <tr><th class="navbar" align="center"
+            ><a class="navbar" target="_top" href="http://www.web2py.com">web2py Web Framework</a></th>
+          </tr></table></th>
+  </tr>
+</table>
+<table width="100%" cellpadding="0" cellspacing="0">
+  <tr valign="top">
+    <td width="100%">
+      <span class="breadcrumbs">
+        Package&nbsp;web2py ::
+        <a href="web2py.gluon-module.html">Package&nbsp;gluon</a> ::
+        Module&nbsp;storage
+      </span>
+    </td>
+    <td>
+      <table cellpadding="0" cellspacing="0">
+        <!-- hide/show private -->
+        <tr><td align="right"><span class="options">[<a href="javascript:void(0);" class="privatelink"
+    onclick="toggle_private();">hide&nbsp;private</a>]</span></td></tr>
+        <tr><td align="right"><span class="options"
+            >[<a href="frames.html" target="_top">frames</a
+            >]&nbsp;|&nbsp;<a href="web2py.gluon.storage-pysrc.html"
+            target="_top">no&nbsp;frames</a>]</span></td></tr>
+      </table>
+    </td>
+  </tr>
+</table>
+<h1 class="epydoc">Source Code for <a href="web2py.gluon.storage-module.html">Module web2py.gluon.storage</a></h1>
+<pre class="py-src">
+<a name="L1"></a><tt class="py-lineno">  1</tt>  <tt class="py-line"><tt class="py-comment">#!/usr/bin/env python</tt> </tt>
+<a name="L2"></a><tt class="py-lineno">  2</tt>  <tt class="py-line"><tt class="py-comment"></tt><tt class="py-comment"># -*- coding: utf-8 -*-</tt> </tt>
+<a name="L3"></a><tt class="py-lineno">  3</tt>  <tt class="py-line"><tt class="py-comment"></tt> </tt>
+<a name="L4"></a><tt class="py-lineno">  4</tt>  <tt class="py-line"><tt class="py-docstring">"""</tt> </tt>
+<a name="L5"></a><tt class="py-lineno">  5</tt>  <tt class="py-line"><tt class="py-docstring">This file is part of web2py Web Framework (Copyrighted, 2007-2010).</tt> </tt>
+<a name="L6"></a><tt class="py-lineno">  6</tt>  <tt class="py-line"><tt class="py-docstring">Developed by Massimo Di Pierro &lt;mdipierro@cs.depaul.edu&gt;.</tt> </tt>
+<a name="L7"></a><tt class="py-lineno">  7</tt>  <tt class="py-line"><tt class="py-docstring">License: GPL v2</tt> </tt>
+<a name="L8"></a><tt class="py-lineno">  8</tt>  <tt class="py-line"><tt class="py-docstring"></tt> </tt>
+<a name="L9"></a><tt class="py-lineno">  9</tt>  <tt class="py-line"><tt class="py-docstring">Provides:</tt> </tt>
+<a name="L10"></a><tt class="py-lineno"> 10</tt>  <tt class="py-line"><tt class="py-docstring"></tt> </tt>
+<a name="L11"></a><tt class="py-lineno"> 11</tt>  <tt class="py-line"><tt class="py-docstring">- List; like list but returns None instead of IndexOutOfBounds</tt> </tt>
+<a name="L12"></a><tt class="py-lineno"> 12</tt>  <tt class="py-line"><tt class="py-docstring">- Storage; like dictionary allowing also for `obj.foo` for `obj['foo']`</tt> </tt>
+<a name="L13"></a><tt class="py-lineno"> 13</tt>  <tt class="py-line"><tt class="py-docstring">"""</tt> </tt>
+<a name="L14"></a><tt class="py-lineno"> 14</tt>  <tt class="py-line"> </tt>
+<a name="L15"></a><tt class="py-lineno"> 15</tt>  <tt class="py-line"><tt class="py-keyword">import</tt> <tt class="py-name">cPickle</tt> </tt>
+<a name="L16"></a><tt class="py-lineno"> 16</tt>  <tt class="py-line"><tt class="py-keyword">import</tt> <tt id="link-0" class="py-name" targets="Module web2py.gluon.portalocker=web2py.gluon.portalocker-module.html"><a title="web2py.gluon.portalocker" class="py-name" href="#" onclick="return doclink('link-0', 'portalocker', 'link-0');">portalocker</a></tt> </tt>
+<a name="L17"></a><tt class="py-lineno"> 17</tt>  <tt class="py-line"> </tt>
+<a name="L18"></a><tt class="py-lineno"> 18</tt>  <tt class="py-line"><tt class="py-name">__all__</tt> <tt class="py-op">=</tt> <tt class="py-op">[</tt><tt class="py-string">'List'</tt><tt class="py-op">,</tt> <tt class="py-string">'Storage'</tt><tt class="py-op">,</tt> <tt class="py-string">'Settings'</tt><tt class="py-op">,</tt> <tt class="py-string">'Messages'</tt><tt class="py-op">,</tt> </tt>
+<a name="L19"></a><tt class="py-lineno"> 19</tt>  <tt class="py-line">           <tt class="py-string">'StorageList'</tt><tt class="py-op">,</tt> <tt class="py-string">'load_storage'</tt><tt class="py-op">,</tt> <tt class="py-string">'save_storage'</tt><tt class="py-op">]</tt> </tt>
+<a name="L20"></a><tt class="py-lineno"> 20</tt>  <tt class="py-line"> </tt>
+<a name="L21"></a><tt class="py-lineno"> 21</tt>  <tt class="py-line"> </tt>
+<a name="List"></a><div id="List-def"><a name="L22"></a><tt class="py-lineno"> 22</tt> <a class="py-toggle" href="#" id="List-toggle" onclick="return toggle('List');">-</a><tt class="py-line"><tt class="py-keyword">class</tt> <a class="py-def-name" href="web2py.gluon.storage.List-class.html">List</a><tt class="py-op">(</tt><tt class="py-base-class">list</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="List-collapsed" style="display:none;" pad="+++" indent="++++"></div><div id="List-expanded"><a name="L23"></a><tt class="py-lineno"> 23</tt>  <tt class="py-line">    <tt class="py-docstring">"""</tt> </tt>
+<a name="L24"></a><tt class="py-lineno"> 24</tt>  <tt class="py-line"><tt class="py-docstring">    Like a regular python list but a[i] if i is out of bounds return None</tt> </tt>
+<a name="L25"></a><tt class="py-lineno"> 25</tt>  <tt class="py-line"><tt class="py-docstring">    instead of IndexOutOfBounds</tt> </tt>
+<a name="L26"></a><tt class="py-lineno"> 26</tt>  <tt class="py-line"><tt class="py-docstring">    """</tt> </tt>
+<a name="L27"></a><tt class="py-lineno"> 27</tt>  <tt class="py-line"> </tt>
+<a name="List.__call__"></a><div id="List.__call__-def"><a name="L28"></a><tt class="py-lineno"> 28</tt> <a class="py-toggle" href="#" id="List.__call__-toggle" onclick="return toggle('List.__call__');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="web2py.gluon.storage.List-class.html#__call__">__call__</a><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">,</tt> <tt class="py-param">i</tt><tt class="py-op">,</tt> <tt class="py-param">default</tt><tt class="py-op">=</tt><tt class="py-name">None</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="List.__call__-collapsed" style="display:none;" pad="+++" indent="++++++++"></div><div id="List.__call__-expanded"><a name="L29"></a><tt class="py-lineno"> 29</tt>  <tt class="py-line">        <tt class="py-keyword">if</tt> <tt class="py-number">0</tt><tt class="py-op">&lt;=</tt><tt class="py-name">i</tt><tt class="py-op">&lt;</tt><tt id="link-1" class="py-name" targets="Method web2py.gluon.dal.Field.len()=web2py.gluon.dal.Field-class.html#len,Method web2py.gluon.sql.Expression.len()=web2py.gluon.sql.Expression-class.html#len"><a title="web2py.gluon.dal.Field.len
+web2py.gluon.sql.Expression.len" class="py-name" href="#" onclick="return doclink('link-1', 'len', 'link-1');">len</a></tt><tt class="py-op">(</tt><tt class="py-name">self</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+<a name="L30"></a><tt class="py-lineno"> 30</tt>  <tt class="py-line">            <tt class="py-keyword">return</tt> <tt class="py-name">self</tt><tt class="py-op">[</tt><tt class="py-name">i</tt><tt class="py-op">]</tt> </tt>
+<a name="L31"></a><tt class="py-lineno"> 31</tt>  <tt class="py-line">        <tt class="py-keyword">else</tt><tt class="py-op">:</tt> </tt>
+<a name="L32"></a><tt class="py-lineno"> 32</tt>  <tt class="py-line">            <tt class="py-keyword">return</tt> <tt class="py-name">default</tt> </tt>
+</div></div><a name="L33"></a><tt class="py-lineno"> 33</tt>  <tt class="py-line"> </tt>
+<a name="L34"></a><tt class="py-lineno"> 34</tt>  <tt class="py-line"> </tt>
+<a name="Storage"></a><div id="Storage-def"><a name="L35"></a><tt class="py-lineno"> 35</tt> <a class="py-toggle" href="#" id="Storage-toggle" onclick="return toggle('Storage');">-</a><tt class="py-line"><tt class="py-keyword">class</tt> <a class="py-def-name" href="web2py.gluon.storage.Storage-class.html">Storage</a><tt class="py-op">(</tt><tt class="py-base-class">dict</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="Storage-collapsed" style="display:none;" pad="+++" indent="++++"></div><div id="Storage-expanded"><a name="L36"></a><tt class="py-lineno"> 36</tt>  <tt class="py-line"> </tt>
+<a name="L37"></a><tt class="py-lineno"> 37</tt>  <tt class="py-line">    <tt class="py-docstring">"""</tt> </tt>
+<a name="L38"></a><tt class="py-lineno"> 38</tt>  <tt class="py-line"><tt class="py-docstring">    A Storage object is like a dictionary except `obj.foo` can be used</tt> </tt>
+<a name="L39"></a><tt class="py-lineno"> 39</tt>  <tt class="py-line"><tt class="py-docstring">    in addition to `obj['foo']`.</tt> </tt>
+<a name="L40"></a><tt class="py-lineno"> 40</tt>  <tt class="py-line"><tt class="py-docstring"></tt> </tt>
+<a name="L41"></a><tt class="py-lineno"> 41</tt>  <tt class="py-line"><tt class="py-docstring">        &gt;&gt;&gt; o = Storage(a=1)</tt> </tt>
+<a name="L42"></a><tt class="py-lineno"> 42</tt>  <tt class="py-line"><tt class="py-docstring">        &gt;&gt;&gt; print o.a</tt> </tt>
+<a name="L43"></a><tt class="py-lineno"> 43</tt>  <tt class="py-line"><tt class="py-docstring">        1</tt> </tt>
+<a name="L44"></a><tt class="py-lineno"> 44</tt>  <tt class="py-line"><tt class="py-docstring"></tt> </tt>
+<a name="L45"></a><tt class="py-lineno"> 45</tt>  <tt class="py-line"><tt class="py-docstring">        &gt;&gt;&gt; o['a']</tt> </tt>
+<a name="L46"></a><tt class="py-lineno"> 46</tt>  <tt class="py-line"><tt class="py-docstring">        1</tt> </tt>
+<a name="L47"></a><tt class="py-lineno"> 47</tt>  <tt class="py-line"><tt class="py-docstring"></tt> </tt>
+<a name="L48"></a><tt class="py-lineno"> 48</tt>  <tt class="py-line"><tt class="py-docstring">        &gt;&gt;&gt; o.a = 2</tt> </tt>
+<a name="L49"></a><tt class="py-lineno"> 49</tt>  <tt class="py-line"><tt class="py-docstring">        &gt;&gt;&gt; print o['a']</tt> </tt>
+<a name="L50"></a><tt class="py-lineno"> 50</tt>  <tt class="py-line"><tt class="py-docstring">        2</tt> </tt>
+<a name="L51"></a><tt class="py-lineno"> 51</tt>  <tt class="py-line"><tt class="py-docstring"></tt> </tt>
+<a name="L52"></a><tt class="py-lineno"> 52</tt>  <tt class="py-line"><tt class="py-docstring">        &gt;&gt;&gt; del o.a</tt> </tt>
+<a name="L53"></a><tt class="py-lineno"> 53</tt>  <tt class="py-line"><tt class="py-docstring">        &gt;&gt;&gt; print o.a</tt> </tt>
+<a name="L54"></a><tt class="py-lineno"> 54</tt>  <tt class="py-line"><tt class="py-docstring">        None</tt> </tt>
+<a name="L55"></a><tt class="py-lineno"> 55</tt>  <tt class="py-line"><tt class="py-docstring"></tt> </tt>
+<a name="L56"></a><tt class="py-lineno"> 56</tt>  <tt class="py-line"><tt class="py-docstring">    """</tt> </tt>
+<a name="L57"></a><tt class="py-lineno"> 57</tt>  <tt class="py-line"> </tt>
+<a name="Storage.__getattr__"></a><div id="Storage.__getattr__-def"><a name="L58"></a><tt class="py-lineno"> 58</tt> <a class="py-toggle" href="#" id="Storage.__getattr__-toggle" onclick="return toggle('Storage.__getattr__');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="web2py.gluon.storage.Storage-class.html#__getattr__">__getattr__</a><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">,</tt> <tt class="py-param">key</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="Storage.__getattr__-collapsed" style="display:none;" pad="+++" indent="++++++++"></div><div id="Storage.__getattr__-expanded"><a name="L59"></a><tt class="py-lineno"> 59</tt>  <tt class="py-line">        <tt class="py-keyword">if</tt> <tt class="py-name">key</tt> <tt class="py-keyword">in</tt> <tt class="py-name">self</tt><tt class="py-op">:</tt> </tt>
+<a name="L60"></a><tt class="py-lineno"> 60</tt>  <tt class="py-line">            <tt class="py-keyword">return</tt> <tt class="py-name">self</tt><tt class="py-op">[</tt><tt class="py-name">key</tt><tt class="py-op">]</tt> </tt>
+<a name="L61"></a><tt class="py-lineno"> 61</tt>  <tt class="py-line">        <tt class="py-keyword">else</tt><tt class="py-op">:</tt> </tt>
+<a name="L62"></a><tt class="py-lineno"> 62</tt>  <tt class="py-line">            <tt class="py-keyword">return</tt> <tt class="py-name">None</tt> </tt>
+</div><a name="L63"></a><tt class="py-lineno"> 63</tt>  <tt class="py-line"> </tt>
+<a name="Storage.__setattr__"></a><div id="Storage.__setattr__-def"><a name="L64"></a><tt class="py-lineno"> 64</tt> <a class="py-toggle" href="#" id="Storage.__setattr__-toggle" onclick="return toggle('Storage.__setattr__');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="web2py.gluon.storage.Storage-class.html#__setattr__">__setattr__</a><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">,</tt> <tt class="py-param">key</tt><tt class="py-op">,</tt> <tt class="py-param">value</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="Storage.__setattr__-collapsed" style="display:none;" pad="+++" indent="++++++++"></div><div id="Storage.__setattr__-expanded"><a name="L65"></a><tt class="py-lineno"> 65</tt>  <tt class="py-line">        <tt class="py-name">self</tt><tt class="py-op">[</tt><tt class="py-name">key</tt><tt class="py-op">]</tt> <tt class="py-op">=</tt> <tt class="py-name">value</tt> </tt>
+</div><a name="L66"></a><tt class="py-lineno"> 66</tt>  <tt class="py-line"> </tt>
+<a name="Storage.__delattr__"></a><div id="Storage.__delattr__-def"><a name="L67"></a><tt class="py-lineno"> 67</tt> <a class="py-toggle" href="#" id="Storage.__delattr__-toggle" onclick="return toggle('Storage.__delattr__');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="web2py.gluon.storage.Storage-class.html#__delattr__">__delattr__</a><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">,</tt> <tt class="py-param">key</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="Storage.__delattr__-collapsed" style="display:none;" pad="+++" indent="++++++++"></div><div id="Storage.__delattr__-expanded"><a name="L68"></a><tt class="py-lineno"> 68</tt>  <tt class="py-line">        <tt class="py-keyword">if</tt> <tt class="py-name">key</tt> <tt class="py-keyword">in</tt> <tt class="py-name">self</tt><tt class="py-op">:</tt> </tt>
+<a name="L69"></a><tt class="py-lineno"> 69</tt>  <tt class="py-line">            <tt class="py-keyword">del</tt> <tt class="py-name">self</tt><tt class="py-op">[</tt><tt class="py-name">key</tt><tt class="py-op">]</tt> </tt>
+<a name="L70"></a><tt class="py-lineno"> 70</tt>  <tt class="py-line">        <tt class="py-keyword">else</tt><tt class="py-op">:</tt> </tt>
+<a name="L71"></a><tt class="py-lineno"> 71</tt>  <tt class="py-line">            <tt class="py-keyword">raise</tt> <tt class="py-name">AttributeError</tt><tt class="py-op">,</tt> <tt class="py-string">"missing key=%s"</tt> <tt class="py-op">%</tt> <tt class="py-name">key</tt> </tt>
+</div><a name="L72"></a><tt class="py-lineno"> 72</tt>  <tt class="py-line"> </tt>
+<a name="Storage.__repr__"></a><div id="Storage.__repr__-def"><a name="L73"></a><tt class="py-lineno"> 73</tt> <a class="py-toggle" href="#" id="Storage.__repr__-toggle" onclick="return toggle('Storage.__repr__');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="web2py.gluon.storage.Storage-class.html#__repr__">__repr__</a><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="Storage.__repr__-collapsed" style="display:none;" pad="+++" indent="++++++++"></div><div id="Storage.__repr__-expanded"><a name="L74"></a><tt class="py-lineno"> 74</tt>  <tt class="py-line">        <tt class="py-keyword">return</tt> <tt class="py-string">'&lt;Storage '</tt> <tt class="py-op">+</tt> <tt class="py-name">dict</tt><tt class="py-op">.</tt><tt id="link-2" class="py-name" targets="Method web2py.gluon.dal.DAL.__repr__()=web2py.gluon.dal.DAL-class.html#__repr__,Method web2py.gluon.dal.Row.__repr__()=web2py.gluon.dal.Row-class.html#__repr__,Method web2py.gluon.dal.Table.__repr__()=web2py.gluon.dal.Table-class.html#__repr__,Method web2py.gluon.rocket.Headers.__repr__()=web2py.gluon.rocket.Headers-class.html#__repr__,Method web2py.gluon.sql.KeyedTable.__repr__()=web2py.gluon.sql.KeyedTable-class.html#__repr__,Method web2py.gluon.sql.Row.__repr__()=web2py.gluon.sql.Row-class.html#__repr__,Method web2py.gluon.sql.SQLDB.__repr__()=web2py.gluon.sql.SQLDB-class.html#__repr__,Method web2py.gluon.sql.Table.__repr__()=web2py.gluon.sql.Table-class.html#__repr__,Method web2py.gluon.storage.Storage.__repr__()=web2py.gluon.storage.Storage-class.html#__repr__,Method web2py.gluon.template2.BlockNode.__repr__()=web2py.gluon.template2.BlockNode-class.html#__repr__,Method web2py.gluon.template2.SuperNode.__repr__()=web2py.gluon.template2.SuperNode-class.html#__repr__,Method web2py.gluon.template_new.BlockNode.__repr__()=web2py.gluon.template_new.BlockNode-class.html#__repr__,Method web2py.gluon.template_new.SuperNode.__repr__()=web2py.gluon.template_new.SuperNode-class.html#__repr__"><a title="web2py.gluon.dal.DAL.__repr__
+web2py.gluon.dal.Row.__repr__
+web2py.gluon.dal.Table.__repr__
+web2py.gluon.rocket.Headers.__repr__
+web2py.gluon.sql.KeyedTable.__repr__
+web2py.gluon.sql.Row.__repr__
+web2py.gluon.sql.SQLDB.__repr__
+web2py.gluon.sql.Table.__repr__
+web2py.gluon.storage.Storage.__repr__
+web2py.gluon.template2.BlockNode.__repr__
+web2py.gluon.template2.SuperNode.__repr__
+web2py.gluon.template_new.BlockNode.__repr__
+web2py.gluon.template_new.SuperNode.__repr__" class="py-name" href="#" onclick="return doclink('link-2', '__repr__', 'link-2');">__repr__</a></tt><tt class="py-op">(</tt><tt class="py-name">self</tt><tt class="py-op">)</tt> <tt class="py-op">+</tt> <tt class="py-string">'&gt;'</tt> </tt>
+</div><a name="L75"></a><tt class="py-lineno"> 75</tt>  <tt class="py-line"> </tt>
+<a name="Storage.__getstate__"></a><div id="Storage.__getstate__-def"><a name="L76"></a><tt class="py-lineno"> 76</tt> <a class="py-toggle" href="#" id="Storage.__getstate__-toggle" onclick="return toggle('Storage.__getstate__');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="web2py.gluon.storage.Storage-class.html#__getstate__">__getstate__</a><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="Storage.__getstate__-collapsed" style="display:none;" pad="+++" indent="++++++++"></div><div id="Storage.__getstate__-expanded"><a name="L77"></a><tt class="py-lineno"> 77</tt>  <tt class="py-line">        <tt class="py-keyword">return</tt> <tt class="py-name">dict</tt><tt class="py-op">(</tt><tt class="py-name">self</tt><tt class="py-op">)</tt> </tt>
+</div><a name="L78"></a><tt class="py-lineno"> 78</tt>  <tt class="py-line"> </tt>
+<a name="Storage.__setstate__"></a><div id="Storage.__setstate__-def"><a name="L79"></a><tt class="py-lineno"> 79</tt> <a class="py-toggle" href="#" id="Storage.__setstate__-toggle" onclick="return toggle('Storage.__setstate__');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="web2py.gluon.storage.Storage-class.html#__setstate__">__setstate__</a><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">,</tt> <tt class="py-param">value</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="Storage.__setstate__-collapsed" style="display:none;" pad="+++" indent="++++++++"></div><div id="Storage.__setstate__-expanded"><a name="L80"></a><tt class="py-lineno"> 80</tt>  <tt class="py-line">        <tt class="py-keyword">for</tt> <tt class="py-op">(</tt><tt class="py-name">k</tt><tt class="py-op">,</tt> <tt class="py-name">v</tt><tt class="py-op">)</tt> <tt class="py-keyword">in</tt> <tt class="py-name">value</tt><tt class="py-op">.</tt><tt id="link-3" class="py-name" targets="Method web2py.gluon.rocket.Headers.items()=web2py.gluon.rocket.Headers-class.html#items"><a title="web2py.gluon.rocket.Headers.items" class="py-name" href="#" onclick="return doclink('link-3', 'items', 'link-3');">items</a></tt><tt class="py-op">(</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+<a name="L81"></a><tt class="py-lineno"> 81</tt>  <tt class="py-line">            <tt class="py-name">self</tt><tt class="py-op">[</tt><tt class="py-name">k</tt><tt class="py-op">]</tt> <tt class="py-op">=</tt> <tt class="py-name">v</tt> </tt>
+</div></div><a name="L82"></a><tt class="py-lineno"> 82</tt>  <tt class="py-line"> </tt>
+<a name="StorageList"></a><div id="StorageList-def"><a name="L83"></a><tt class="py-lineno"> 83</tt> <a class="py-toggle" href="#" id="StorageList-toggle" onclick="return toggle('StorageList');">-</a><tt class="py-line"><tt class="py-keyword">class</tt> <a class="py-def-name" href="web2py.gluon.storage.StorageList-class.html">StorageList</a><tt class="py-op">(</tt><tt class="py-base-class">Storage</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="StorageList-collapsed" style="display:none;" pad="+++" indent="++++"></div><div id="StorageList-expanded"><a name="L84"></a><tt class="py-lineno"> 84</tt>  <tt class="py-line">    <tt class="py-docstring">"""</tt> </tt>
+<a name="L85"></a><tt class="py-lineno"> 85</tt>  <tt class="py-line"><tt class="py-docstring">    like Storage but missing elements default to [] instead of None</tt> </tt>
+<a name="L86"></a><tt class="py-lineno"> 86</tt>  <tt class="py-line"><tt class="py-docstring">    """</tt> </tt>
+<a name="StorageList.__getattr__"></a><div id="StorageList.__getattr__-def"><a name="L87"></a><tt class="py-lineno"> 87</tt> <a class="py-toggle" href="#" id="StorageList.__getattr__-toggle" onclick="return toggle('StorageList.__getattr__');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="web2py.gluon.storage.StorageList-class.html#__getattr__">__getattr__</a><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">,</tt> <tt class="py-param">key</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="StorageList.__getattr__-collapsed" style="display:none;" pad="+++" indent="++++++++"></div><div id="StorageList.__getattr__-expanded"><a name="L88"></a><tt class="py-lineno"> 88</tt>  <tt class="py-line">        <tt class="py-keyword">if</tt> <tt class="py-name">key</tt> <tt class="py-keyword">in</tt> <tt class="py-name">self</tt><tt class="py-op">:</tt> </tt>
+<a name="L89"></a><tt class="py-lineno"> 89</tt>  <tt class="py-line">            <tt class="py-keyword">return</tt> <tt class="py-name">self</tt><tt class="py-op">[</tt><tt class="py-name">key</tt><tt class="py-op">]</tt> </tt>
+<a name="L90"></a><tt class="py-lineno"> 90</tt>  <tt class="py-line">        <tt class="py-keyword">else</tt><tt class="py-op">:</tt> </tt>
+<a name="L91"></a><tt class="py-lineno"> 91</tt>  <tt class="py-line">            <tt class="py-name">self</tt><tt class="py-op">[</tt><tt class="py-name">key</tt><tt class="py-op">]</tt><tt class="py-op">=</tt><tt class="py-op">[</tt><tt class="py-op">]</tt> </tt>
+<a name="L92"></a><tt class="py-lineno"> 92</tt>  <tt class="py-line">            <tt class="py-keyword">return</tt> <tt class="py-name">self</tt><tt class="py-op">[</tt><tt class="py-name">key</tt><tt class="py-op">]</tt> </tt>
+</div></div><a name="L93"></a><tt class="py-lineno"> 93</tt>  <tt class="py-line"> </tt>
+<a name="load_storage"></a><div id="load_storage-def"><a name="L94"></a><tt class="py-lineno"> 94</tt> <a class="py-toggle" href="#" id="load_storage-toggle" onclick="return toggle('load_storage');">-</a><tt class="py-line"><tt class="py-keyword">def</tt> <a class="py-def-name" href="web2py.gluon.storage-module.html#load_storage">load_storage</a><tt class="py-op">(</tt><tt class="py-param">filename</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="load_storage-collapsed" style="display:none;" pad="+++" indent="++++"></div><div id="load_storage-expanded"><a name="L95"></a><tt class="py-lineno"> 95</tt>  <tt class="py-line">    <tt class="py-name">fp</tt> <tt class="py-op">=</tt> <tt class="py-name">open</tt><tt class="py-op">(</tt><tt class="py-name">filename</tt><tt class="py-op">,</tt> <tt class="py-string">'rb'</tt><tt class="py-op">)</tt> </tt>
+<a name="L96"></a><tt class="py-lineno"> 96</tt>  <tt class="py-line">    <tt id="link-4" class="py-name"><a title="web2py.gluon.portalocker" class="py-name" href="#" onclick="return doclink('link-4', 'portalocker', 'link-0');">portalocker</a></tt><tt class="py-op">.</tt><tt id="link-5" class="py-name" targets="Function web2py.gluon.portalocker.lock()=web2py.gluon.portalocker-module.html#lock"><a title="web2py.gluon.portalocker.lock" class="py-name" href="#" onclick="return doclink('link-5', 'lock', 'link-5');">lock</a></tt><tt class="py-op">(</tt><tt class="py-name">fp</tt><tt class="py-op">,</tt> <tt id="link-6" class="py-name"><a title="web2py.gluon.portalocker" class="py-name" href="#" onclick="return doclink('link-6', 'portalocker', 'link-0');">portalocker</a></tt><tt class="py-op">.</tt><tt id="link-7" class="py-name" targets="Variable web2py.gluon.portalocker.LOCK_EX=web2py.gluon.portalocker-module.html#LOCK_EX"><a title="web2py.gluon.portalocker.LOCK_EX" class="py-name" href="#" onclick="return doclink('link-7', 'LOCK_EX', 'link-7');">LOCK_EX</a></tt><tt class="py-op">)</tt> </tt>
+<a name="L97"></a><tt class="py-lineno"> 97</tt>  <tt class="py-line">    <tt id="link-8" class="py-name" targets="Module web2py.gluon.storage=web2py.gluon.storage-module.html"><a title="web2py.gluon.storage" class="py-name" href="#" onclick="return doclink('link-8', 'storage', 'link-8');">storage</a></tt> <tt class="py-op">=</tt> <tt class="py-name">cPickle</tt><tt class="py-op">.</tt><tt id="link-9" class="py-name" targets="Method web2py.gluon.restricted.RestrictedError.load()=web2py.gluon.restricted.RestrictedError-class.html#load,Method web2py.gluon.restricted.TicketStorage.load()=web2py.gluon.restricted.TicketStorage-class.html#load,Function web2py.gluon.rewrite.load()=web2py.gluon.rewrite-module.html#load"><a title="web2py.gluon.restricted.RestrictedError.load
+web2py.gluon.restricted.TicketStorage.load
+web2py.gluon.rewrite.load" class="py-name" href="#" onclick="return doclink('link-9', 'load', 'link-9');">load</a></tt><tt class="py-op">(</tt><tt class="py-name">fp</tt><tt class="py-op">)</tt> </tt>
+<a name="L98"></a><tt class="py-lineno"> 98</tt>  <tt class="py-line">    <tt id="link-10" class="py-name"><a title="web2py.gluon.portalocker" class="py-name" href="#" onclick="return doclink('link-10', 'portalocker', 'link-0');">portalocker</a></tt><tt class="py-op">.</tt><tt id="link-11" class="py-name" targets="Function web2py.gluon.portalocker.unlock()=web2py.gluon.portalocker-module.html#unlock"><a title="web2py.gluon.portalocker.unlock" class="py-name" href="#" onclick="return doclink('link-11', 'unlock', 'link-11');">unlock</a></tt><tt class="py-op">(</tt><tt class="py-name">fp</tt><tt class="py-op">)</tt> </tt>
+<a name="L99"></a><tt class="py-lineno"> 99</tt>  <tt class="py-line">    <tt class="py-name">fp</tt><tt class="py-op">.</tt><tt id="link-12" class="py-name" targets="Method web2py.gluon.rocket.Connection.close()=web2py.gluon.rocket.Connection-class.html#close,Method web2py.gluon.wsgiserver.HTTPConnection.close()=web2py.gluon.wsgiserver.HTTPConnection-class.html#close,Method web2py.gluon.wsgiserver.KnownLengthRFile.close()=web2py.gluon.wsgiserver.KnownLengthRFile-class.html#close,Method web2py.gluon.wsgiserver.SSLConnection.close()=web2py.gluon.wsgiserver.SSLConnection-class.html#close,Method web2py.gluon.wsgiserver.SizeCheckWrapper.close()=web2py.gluon.wsgiserver.SizeCheckWrapper-class.html#close"><a title="web2py.gluon.rocket.Connection.close
+web2py.gluon.wsgiserver.HTTPConnection.close
+web2py.gluon.wsgiserver.KnownLengthRFile.close
+web2py.gluon.wsgiserver.SSLConnection.close
+web2py.gluon.wsgiserver.SizeCheckWrapper.close" class="py-name" href="#" onclick="return doclink('link-12', 'close', 'link-12');">close</a></tt><tt class="py-op">(</tt><tt class="py-op">)</tt> </tt>
+<a name="L100"></a><tt class="py-lineno">100</tt>  <tt class="py-line">    <tt class="py-keyword">return</tt> <tt id="link-13" class="py-name" targets="Class web2py.gluon.storage.Storage=web2py.gluon.storage.Storage-class.html"><a title="web2py.gluon.storage.Storage" class="py-name" href="#" onclick="return doclink('link-13', 'Storage', 'link-13');">Storage</a></tt><tt class="py-op">(</tt><tt id="link-14" class="py-name"><a title="web2py.gluon.storage" class="py-name" href="#" onclick="return doclink('link-14', 'storage', 'link-8');">storage</a></tt><tt class="py-op">)</tt> </tt>
+</div><a name="L101"></a><tt class="py-lineno">101</tt>  <tt class="py-line"> </tt>
+<a name="L102"></a><tt class="py-lineno">102</tt>  <tt class="py-line"> </tt>
+<a name="save_storage"></a><div id="save_storage-def"><a name="L103"></a><tt class="py-lineno">103</tt> <a class="py-toggle" href="#" id="save_storage-toggle" onclick="return toggle('save_storage');">-</a><tt class="py-line"><tt class="py-keyword">def</tt> <a class="py-def-name" href="web2py.gluon.storage-module.html#save_storage">save_storage</a><tt class="py-op">(</tt><tt class="py-param">storage</tt><tt class="py-op">,</tt> <tt class="py-param">filename</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="save_storage-collapsed" style="display:none;" pad="+++" indent="++++"></div><div id="save_storage-expanded"><a name="L104"></a><tt class="py-lineno">104</tt>  <tt class="py-line">    <tt class="py-name">fp</tt> <tt class="py-op">=</tt> <tt class="py-name">open</tt><tt class="py-op">(</tt><tt class="py-name">filename</tt><tt class="py-op">,</tt> <tt class="py-string">'wb'</tt><tt class="py-op">)</tt> </tt>
+<a name="L105"></a><tt class="py-lineno">105</tt>  <tt class="py-line">    <tt id="link-15" class="py-name"><a title="web2py.gluon.portalocker" class="py-name" href="#" onclick="return doclink('link-15', 'portalocker', 'link-0');">portalocker</a></tt><tt class="py-op">.</tt><tt id="link-16" class="py-name"><a title="web2py.gluon.portalocker.lock" class="py-name" href="#" onclick="return doclink('link-16', 'lock', 'link-5');">lock</a></tt><tt class="py-op">(</tt><tt class="py-name">fp</tt><tt class="py-op">,</tt> <tt id="link-17" class="py-name"><a title="web2py.gluon.portalocker" class="py-name" href="#" onclick="return doclink('link-17', 'portalocker', 'link-0');">portalocker</a></tt><tt class="py-op">.</tt><tt id="link-18" class="py-name"><a title="web2py.gluon.portalocker.LOCK_EX" class="py-name" href="#" onclick="return doclink('link-18', 'LOCK_EX', 'link-7');">LOCK_EX</a></tt><tt class="py-op">)</tt> </tt>
+<a name="L106"></a><tt class="py-lineno">106</tt>  <tt class="py-line">    <tt class="py-name">cPickle</tt><tt class="py-op">.</tt><tt class="py-name">dump</tt><tt class="py-op">(</tt><tt class="py-name">dict</tt><tt class="py-op">(</tt><tt id="link-19" class="py-name"><a title="web2py.gluon.storage" class="py-name" href="#" onclick="return doclink('link-19', 'storage', 'link-8');">storage</a></tt><tt class="py-op">)</tt><tt class="py-op">,</tt> <tt class="py-name">fp</tt><tt class="py-op">)</tt> </tt>
+<a name="L107"></a><tt class="py-lineno">107</tt>  <tt class="py-line">    <tt id="link-20" class="py-name"><a title="web2py.gluon.portalocker" class="py-name" href="#" onclick="return doclink('link-20', 'portalocker', 'link-0');">portalocker</a></tt><tt class="py-op">.</tt><tt id="link-21" class="py-name"><a title="web2py.gluon.portalocker.unlock" class="py-name" href="#" onclick="return doclink('link-21', 'unlock', 'link-11');">unlock</a></tt><tt class="py-op">(</tt><tt class="py-name">fp</tt><tt class="py-op">)</tt> </tt>
+<a name="L108"></a><tt class="py-lineno">108</tt>  <tt class="py-line">    <tt class="py-name">fp</tt><tt class="py-op">.</tt><tt id="link-22" class="py-name"><a title="web2py.gluon.rocket.Connection.close
+web2py.gluon.wsgiserver.HTTPConnection.close
+web2py.gluon.wsgiserver.KnownLengthRFile.close
+web2py.gluon.wsgiserver.SSLConnection.close
+web2py.gluon.wsgiserver.SizeCheckWrapper.close" class="py-name" href="#" onclick="return doclink('link-22', 'close', 'link-12');">close</a></tt><tt class="py-op">(</tt><tt class="py-op">)</tt> </tt>
+</div><a name="L109"></a><tt class="py-lineno">109</tt>  <tt class="py-line"> </tt>
+<a name="L110"></a><tt class="py-lineno">110</tt>  <tt class="py-line"> </tt>
+<a name="Settings"></a><div id="Settings-def"><a name="L111"></a><tt class="py-lineno">111</tt> <a class="py-toggle" href="#" id="Settings-toggle" onclick="return toggle('Settings');">-</a><tt class="py-line"><tt class="py-keyword">class</tt> <a class="py-def-name" href="web2py.gluon.storage.Settings-class.html">Settings</a><tt class="py-op">(</tt><tt class="py-base-class">Storage</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="Settings-collapsed" style="display:none;" pad="+++" indent="++++"></div><div id="Settings-expanded"><a name="L112"></a><tt class="py-lineno">112</tt>  <tt class="py-line"> </tt>
+<a name="Settings.__setattr__"></a><div id="Settings.__setattr__-def"><a name="L113"></a><tt class="py-lineno">113</tt> <a class="py-toggle" href="#" id="Settings.__setattr__-toggle" onclick="return toggle('Settings.__setattr__');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="web2py.gluon.storage.Settings-class.html#__setattr__">__setattr__</a><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">,</tt> <tt class="py-param">key</tt><tt class="py-op">,</tt> <tt class="py-param">value</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="Settings.__setattr__-collapsed" style="display:none;" pad="+++" indent="++++++++"></div><div id="Settings.__setattr__-expanded"><a name="L114"></a><tt class="py-lineno">114</tt>  <tt class="py-line">        <tt class="py-keyword">if</tt> <tt class="py-name">key</tt> <tt class="py-op">!=</tt> <tt class="py-string">'lock_keys'</tt> <tt class="py-keyword">and</tt> <tt class="py-name">self</tt><tt class="py-op">.</tt><tt id="link-23" class="py-name" targets="Method web2py.gluon.rocket.Headers.get()=web2py.gluon.rocket.Headers-class.html#get"><a title="web2py.gluon.rocket.Headers.get" class="py-name" href="#" onclick="return doclink('link-23', 'get', 'link-23');">get</a></tt><tt class="py-op">(</tt><tt class="py-string">'lock_keys'</tt><tt class="py-op">,</tt> <tt class="py-name">None</tt><tt class="py-op">)</tt>\ </tt>
+<a name="L115"></a><tt class="py-lineno">115</tt>  <tt class="py-line">             <tt class="py-keyword">and</tt> <tt class="py-keyword">not</tt> <tt class="py-name">key</tt> <tt class="py-keyword">in</tt> <tt class="py-name">self</tt><tt class="py-op">:</tt> </tt>
+<a name="L116"></a><tt class="py-lineno">116</tt>  <tt class="py-line">            <tt class="py-keyword">raise</tt> <tt class="py-name">SyntaxError</tt><tt class="py-op">,</tt> <tt class="py-string">'setting key \'%s\' does not exist'</tt> <tt class="py-op">%</tt> <tt class="py-name">key</tt> </tt>
+<a name="L117"></a><tt class="py-lineno">117</tt>  <tt class="py-line">        <tt class="py-keyword">if</tt> <tt class="py-name">key</tt> <tt class="py-op">!=</tt> <tt class="py-string">'lock_values'</tt> <tt class="py-keyword">and</tt> <tt class="py-name">self</tt><tt class="py-op">.</tt><tt id="link-24" class="py-name"><a title="web2py.gluon.rocket.Headers.get" class="py-name" href="#" onclick="return doclink('link-24', 'get', 'link-23');">get</a></tt><tt class="py-op">(</tt><tt class="py-string">'lock_values'</tt><tt class="py-op">,</tt> <tt class="py-name">None</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+<a name="L118"></a><tt class="py-lineno">118</tt>  <tt class="py-line">            <tt class="py-keyword">raise</tt> <tt class="py-name">SyntaxError</tt><tt class="py-op">,</tt> <tt class="py-string">'setting value cannot be changed: %s'</tt> <tt class="py-op">%</tt> <tt class="py-name">key</tt> </tt>
+<a name="L119"></a><tt class="py-lineno">119</tt>  <tt class="py-line">        <tt class="py-name">self</tt><tt class="py-op">[</tt><tt class="py-name">key</tt><tt class="py-op">]</tt> <tt class="py-op">=</tt> <tt class="py-name">value</tt> </tt>
+</div></div><a name="L120"></a><tt class="py-lineno">120</tt>  <tt class="py-line"> </tt>
+<a name="L121"></a><tt class="py-lineno">121</tt>  <tt class="py-line"> </tt>
+<a name="Messages"></a><div id="Messages-def"><a name="L122"></a><tt class="py-lineno">122</tt> <a class="py-toggle" href="#" id="Messages-toggle" onclick="return toggle('Messages');">-</a><tt class="py-line"><tt class="py-keyword">class</tt> <a class="py-def-name" href="web2py.gluon.storage.Messages-class.html">Messages</a><tt class="py-op">(</tt><tt class="py-base-class">Storage</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="Messages-collapsed" style="display:none;" pad="+++" indent="++++"></div><div id="Messages-expanded"><a name="L123"></a><tt class="py-lineno">123</tt>  <tt class="py-line"> </tt>
+<a name="Messages.__init__"></a><div id="Messages.__init__-def"><a name="L124"></a><tt class="py-lineno">124</tt> <a class="py-toggle" href="#" id="Messages.__init__-toggle" onclick="return toggle('Messages.__init__');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="web2py.gluon.storage.Messages-class.html#__init__">__init__</a><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">,</tt> <tt class="py-param">T</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="Messages.__init__-collapsed" style="display:none;" pad="+++" indent="++++++++"></div><div id="Messages.__init__-expanded"><a name="L125"></a><tt class="py-lineno">125</tt>  <tt class="py-line">        <tt class="py-name">self</tt><tt class="py-op">[</tt><tt class="py-string">'T'</tt><tt class="py-op">]</tt> <tt class="py-op">=</tt> <tt class="py-name">T</tt> </tt>
+</div><a name="L126"></a><tt class="py-lineno">126</tt>  <tt class="py-line"> </tt>
+<a name="Messages.__setattr__"></a><div id="Messages.__setattr__-def"><a name="L127"></a><tt class="py-lineno">127</tt> <a class="py-toggle" href="#" id="Messages.__setattr__-toggle" onclick="return toggle('Messages.__setattr__');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="web2py.gluon.storage.Messages-class.html#__setattr__">__setattr__</a><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">,</tt> <tt class="py-param">key</tt><tt class="py-op">,</tt> <tt class="py-param">value</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="Messages.__setattr__-collapsed" style="display:none;" pad="+++" indent="++++++++"></div><div id="Messages.__setattr__-expanded"><a name="L128"></a><tt class="py-lineno">128</tt>  <tt class="py-line">        <tt class="py-keyword">if</tt> <tt class="py-name">key</tt> <tt class="py-op">!=</tt> <tt class="py-string">'lock_keys'</tt> <tt class="py-keyword">and</tt> <tt class="py-name">self</tt><tt class="py-op">.</tt><tt id="link-25" class="py-name"><a title="web2py.gluon.rocket.Headers.get" class="py-name" href="#" onclick="return doclink('link-25', 'get', 'link-23');">get</a></tt><tt class="py-op">(</tt><tt class="py-string">'lock_keys'</tt><tt class="py-op">,</tt> <tt class="py-name">None</tt><tt class="py-op">)</tt>\ </tt>
+<a name="L129"></a><tt class="py-lineno">129</tt>  <tt class="py-line">             <tt class="py-keyword">and</tt> <tt class="py-keyword">not</tt> <tt class="py-name">key</tt> <tt class="py-keyword">in</tt> <tt class="py-name">self</tt><tt class="py-op">:</tt> </tt>
+<a name="L130"></a><tt class="py-lineno">130</tt>  <tt class="py-line">            <tt class="py-keyword">raise</tt> <tt class="py-name">SyntaxError</tt><tt class="py-op">,</tt> <tt class="py-string">'setting key \'%s\' does not exist'</tt> <tt class="py-op">%</tt> <tt class="py-name">key</tt> </tt>
+<a name="L131"></a><tt class="py-lineno">131</tt>  <tt class="py-line">        <tt class="py-keyword">if</tt> <tt class="py-name">key</tt> <tt class="py-op">!=</tt> <tt class="py-string">'lock_values'</tt> <tt class="py-keyword">and</tt> <tt class="py-name">self</tt><tt class="py-op">.</tt><tt id="link-26" class="py-name"><a title="web2py.gluon.rocket.Headers.get" class="py-name" href="#" onclick="return doclink('link-26', 'get', 'link-23');">get</a></tt><tt class="py-op">(</tt><tt class="py-string">'lock_values'</tt><tt class="py-op">,</tt> <tt class="py-name">None</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+<a name="L132"></a><tt class="py-lineno">132</tt>  <tt class="py-line">            <tt class="py-keyword">raise</tt> <tt class="py-name">SyntaxError</tt><tt class="py-op">,</tt> <tt class="py-string">'setting value cannot be changed: %s'</tt> <tt class="py-op">%</tt> <tt class="py-name">key</tt> </tt>
+<a name="L133"></a><tt class="py-lineno">133</tt>  <tt class="py-line">        <tt class="py-name">self</tt><tt class="py-op">[</tt><tt class="py-name">key</tt><tt class="py-op">]</tt> <tt class="py-op">=</tt> <tt class="py-name">value</tt> </tt>
+</div><a name="L134"></a><tt class="py-lineno">134</tt>  <tt class="py-line"> </tt>
+<a name="Messages.__getattr__"></a><div id="Messages.__getattr__-def"><a name="L135"></a><tt class="py-lineno">135</tt> <a class="py-toggle" href="#" id="Messages.__getattr__-toggle" onclick="return toggle('Messages.__getattr__');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="web2py.gluon.storage.Messages-class.html#__getattr__">__getattr__</a><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">,</tt> <tt class="py-param">key</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="Messages.__getattr__-collapsed" style="display:none;" pad="+++" indent="++++++++"></div><div id="Messages.__getattr__-expanded"><a name="L136"></a><tt class="py-lineno">136</tt>  <tt class="py-line">        <tt class="py-name">value</tt> <tt class="py-op">=</tt> <tt class="py-name">self</tt><tt class="py-op">[</tt><tt class="py-name">key</tt><tt class="py-op">]</tt> </tt>
+<a name="L137"></a><tt class="py-lineno">137</tt>  <tt class="py-line">        <tt class="py-keyword">if</tt> <tt class="py-name">isinstance</tt><tt class="py-op">(</tt><tt class="py-name">value</tt><tt class="py-op">,</tt> <tt class="py-name">str</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+<a name="L138"></a><tt class="py-lineno">138</tt>  <tt class="py-line">            <tt class="py-keyword">return</tt> <tt class="py-name">str</tt><tt class="py-op">(</tt><tt class="py-name">self</tt><tt class="py-op">[</tt><tt class="py-string">'T'</tt><tt class="py-op">]</tt><tt class="py-op">(</tt><tt class="py-name">value</tt><tt class="py-op">)</tt><tt class="py-op">)</tt> </tt>
+<a name="L139"></a><tt class="py-lineno">139</tt>  <tt class="py-line">        <tt class="py-keyword">return</tt> <tt class="py-name">value</tt> </tt>
+</div></div><a name="L140"></a><tt class="py-lineno">140</tt>  <tt class="py-line"> </tt><script type="text/javascript">
+<!--
+expandto(location.href);
+// -->
+</script>
+</pre>
+<br />
+<!-- ==================== NAVIGATION BAR ==================== -->
+<table class="navbar" border="0" width="100%" cellpadding="0"
+       bgcolor="#a0c0ff" cellspacing="0">
+  <tr valign="middle">
+  <!-- Home link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="web2py.gluon-module.html">Home</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Tree link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="module-tree.html">Trees</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Index link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="identifier-index.html">Indices</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Help link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Project homepage -->
+      <th class="navbar" align="right" width="100%">
+        <table border="0" cellpadding="0" cellspacing="0">
+          <tr><th class="navbar" align="center"
+            ><a class="navbar" target="_top" href="http://www.web2py.com">web2py Web Framework</a></th>
+          </tr></table></th>
+  </tr>
+</table>
+<table border="0" cellpadding="0" cellspacing="0" width="100%%">
+  <tr>
+    <td align="left" class="footer">
+    Generated by Epydoc 3.0beta1 on Thu Jul 22 23:56:17 2010
+    </td>
+    <td align="right" class="footer">
+      <a href="http://epydoc.sourceforge.net">http://epydoc.sourceforge.net</a>
+    </td>
+  </tr>
+</table>
+
+<script type="text/javascript">
+  <!--
+  // Private objects are initially displayed (because if
+  // javascript is turned off then we want them to be
+  // visible); but by default, we want to hide them.  So hide
+  // them unless we have a cookie that says to show them.
+  checkCookie()
+  // -->
+</script>
+  
+</body>
+</html>

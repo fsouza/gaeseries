@@ -1,0 +1,131 @@
+{{extend 'layout.html'}}
+{{import os}}
+
+<h1>web2py<sup style="font-size:0.5em;">TM</sup> Main Features</h1>
+
+<ul>
+<li>Model-View-Controller design (similar to Ruby-on-Rails/Django/Pylons/Turbogears).</li>
+<li>No installation required. download and click on runme (.py, .app, or .exe)</li>
+<li>Very easy to use (no need to type shell commands!).</li>
+<li>Full web based application development, deployment and administration.
+</li>
+<li>Multiple concurrent applications each with its own folders, sessions, static files, error logs, etc.</li>
+<li>Built-in internationalization. Example:
+{{=CODE("""T("hello world")""")}}
+<li>Ticketing system for reporting and logging errors (and make sure code is never exposed to users).</li>
+<li>View/Template language with full Python support but with no indentation requirements. Example: 
+{{=CODE("{"+"{extend 'layout.html'}"+"}\n{"+"{for i in range(10):}"+"}hello{"+"{pass}"+"}")}}
+</li>
+<li>Database Abstraction Layer for interfacing the database in Python without SQL. Works with SQLite3, PostgreSQL, MySQL, MSSQL, FireBird, Oracle, DB2, Informix, Ingres and Google App Engine. It can do joins, orderby, groupby and limitby. Example:
+{{=CODE("""db.define_table('users',Field('name'))
+db().select(db.users.name)""")}}
+</li>
+<li>A database administrative interface to browse, insert, edit, update and delete records. It also allows import/export in csv.</li>
+<li>Helpers for building HTML (including FORMs, SQLFORMs and SQLTABLEs). Example:
+{{=CODE("""form=SQLFORM(db.users)""")}}</li>
+<li>FORMs and SQLFORMs perform validation of input. Example:
+{{=CODE("""if form.accepts(response.vars,session):
+response.flash='record inserted'""")}}</li>
+<li>Supports database migrations (for all supported databases)</li>
+<li>Designed for security. URLs are validated, forms are validated, template variables are escaped, SQL is escaped, no client side storage (other than session cookie) and it never exposes application code. FORMs enforce navigation and prevent double submission.</li>
+<li>A powerful and granular cache system can cache in ram/disk/memcache a single function, a database select, a controller or an entire page.
+<li>Does not require any third party library. Only Python 2.5 or 2.6 standard libraries.</li>
+<li>Runs on Google App Engine</li>
+<li>Includes libraries to read and parse RSS, CSV, JSON and to write RTF.
+<li>Applications can be compiled and distributed without source code</li>
+<li>WGSI compliant.</li>
+</ul>
+
+<h2>Top 10 security issues according to <a href="http://www.owasp.org/">OWASP</a> and what web2py does about them</h2><br/>
+
+<table>
+<tr>
+<td><a href="http://www.owasp.org/index.php/Top_10_2007-A1" title="Top 10 2007-A1">A1 - Cross Site Scripting (XSS)</a>
+</td><td>XSS flaws occur whenever an application takes user supplied data and sends it to a web browser without first validating or encoding that content. XSS allows attackers to execute script in the victim's browser which can hijack user sessions, deface web sites, possibly introduce worms, etc.
+  </td></tr><tr><td></td><td>
+<b>web2py, by default, escapes all variables rendered in the view, thus preventing XSS.</b>
+</td></tr>
+
+<tr><td colspan=2><hr></td></tr>
+
+<tr>
+<td><a href="http://www.owasp.org/index.php/Top_10_2007-A2" title="Top 10 2007-A2">A2 - Injection Flaws</a>
+</td><td>Injection flaws, particularly SQL injection, are common in web applications. Injection occurs when user-supplied data is sent to an interpreter as part of a command or query. The attacker's hostile data tricks the interpreter into executing unintended commands or changing data.
+  </td></tr><tr><td></td><td>
+<b>web2py includes an Object Relation Mapper that makes SQL injection impossible.</b>
+</td></tr>
+
+<tr><td colspan=2><hr></td></tr>
+
+<tr>
+<td><a href="http://www.owasp.org/index.php/Top_10_2007-A3" title="Top 10 2007-A3">A3 - Malicious File Execution</a>
+</td><td>Code vulnerable to remote file inclusion (RFI) allows attackers to include hostile code and data, resulting in devastating attacks, such as total server compromise. Malicious file execution attacks affect PHP, XML and any framework which accepts filenames or files from users.
+  </td></tr><tr><td></td><td>
+<b>web2py allows only exposed controllers to be executed and thus prohibits malicious file execution.</b>
+</td></tr>
+
+<tr><td colspan=2><hr></td></tr>
+
+<tr>
+<td><a href="http://www.owasp.org/index.php/Top_10_2007-A4" title="Top 10 2007-A4">A4 - Insecure Direct Object Reference</a>
+</td><td>A direct object reference occurs when a developer exposes a reference to an internal implementation object, such as a file, directory, database record, or key, as a URL or form parameter. Attackers can manipulate those references to access other objects without authorization.
+  </td></tr><tr><td></td><td>
+<b>web2py does not exposes any internal object, moreover web2py validates all URLs thus preventing directory traversal attacks.</b>
+</td></tr>
+
+<tr><td colspan=2><hr></td></tr>
+
+<tr>
+<td><a href="http://www.owasp.org/index.php/Top_10_2007-A5" title="Top 10 2007-A5">A5 - Cross Site Request Forgery (CSRF)</a>
+</td><td>A CSRF attack forces a logged-on victim's browser to send a pre-authenticated request to a vulnerable web application, which then forces the victim's browser to perform a hostile action to the benefit of the attacker. CSRF can be as powerful as the web application that it attacks.
+    </td></tr><tr><td></td><td>
+<b>web2py only uses session cookies and prevents double submission of forms.</b>
+</td></tr>
+
+<tr><td colspan=2><hr></td></tr>
+
+<tr>
+<td><a href="http://www.owasp.org/index.php/Top_10_2007-A6" title="Top 10 2007-A6">A6 - Information Leakage and Improper Error Handling</a>
+</td><td>Applications can unintentionally leak information about their configuration, internal workings, or violate privacy through a variety of application problems. Attackers use this weakness to steal sensitive data, or conduct more serious attacks.
+      </td></tr><tr><td></td><td>
+<b>web2py is the only framework to provide a built-in ticketing system. No error can result in code being exposed to users. All errors are logged and a ticket is issued to the user to allow error tracking.</b>
+</td></tr>
+
+<tr><td colspan=2><hr></td></tr>
+
+<tr>
+<td><a href="http://www.owasp.org/index.php/Top_10_2007-A7" title="Top 10 2007-A7">A7 - Broken Authentication and Session Management</a>
+</td><td>Account credentials and session tokens are often not properly protected. Attackers compromise passwords, keys, or authentication tokens to assume other users' identities.
+      </td></tr><tr><td></td><td>
+<b>web2py has a built-in mechanism for session management and uses a cookie to store the session id.</b>
+</td></tr>
+
+<tr><td colspan=2><hr></td></tr>
+
+<tr>
+<td><a href="http://www.owasp.org/index.php/Top_10_2007-A8" title="Top 10 2007-A8">A8 - Insecure Cryptographic Storage</a>
+</td><td>Web applications rarely use cryptographic functions properly to protect data and credentials. Attackers use weakly protected data to conduct identity theft and other crimes, such as credit card fraud.
+      </td></tr><tr><td></td><td>
+<b>web2py, by default, uses the md5 algorithms to hash passwords. Other algorithms such as the HMAC are also available.</b>
+</td></tr>
+
+<tr><td colspan=2><hr></td></tr>
+
+<tr>
+<td><a href="http://www.owasp.org/index.php/Top_10_2007-A9" title="Top 10 2007-A9">A9 - Insecure Communications</a>
+</td><td>Applications frequently fail to encrypt network traffic when it is necessary to protect sensitive communications.
+</td></tr><tr><td></td><td>
+<b>web2py works with Apache and mod_ssl to provide strong encryption of communications.</b>
+</td></tr>
+
+<tr><td colspan=2><hr></td></tr>
+
+<tr>
+<td><a href="http://www.owasp.org/index.php/Top_10_2007-A10" title="Top 10 2007-A10">A10 - Failure to Restrict URL Access</a>
+</td><td>Frequently, an application only protects sensitive functionality by preventing the display of links or URLs to unauthorized users. Attackers can use this weakness to access and perform unauthorized operations by accessing those URLs directly.
+  </td></tr><tr><td></td><td>
+<b>In web2py URLs are mapped into function calls. web2py provides a mechanism for declaring which functions are public and which require authentication/authorization.</b>
+
+</td></tr></table>
+
+

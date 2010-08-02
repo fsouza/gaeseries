@@ -1,0 +1,8 @@
+{{extend 'layout.html'}}
+{{from gluon.contrib.markdown import WIKI}}
+{{import os}}
+
+<h1>web2py License Agreement</h1>
+
+{{=WIKI(open(os.path.join(request.env.web2py_path,'LICENSE'),'r').read())}}
+

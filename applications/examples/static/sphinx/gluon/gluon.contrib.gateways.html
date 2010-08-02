@@ -1,0 +1,163 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Gateways Documentation &mdash; Web2Py v1.64.4 documentation</title>
+    <link rel="stylesheet" href="../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '1.64.4',
+        COLLAPSE_MODINDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="top" title="Web2Py v1.64.4 documentation" href="../index.html" />
+    <link rel="up" title="Contrib Documentation" href="gluon.contrib.html" />
+    <link rel="next" title="Markdown Documentation" href="gluon.contrib.markdown.html" />
+    <link rel="prev" title="Pyrtf Documentation" href="gluon.contrib.pyrtf.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../modindex.html" title="Global Module Index"
+             accesskey="M">modules</a> |</li>
+        <li class="right" >
+          <a href="gluon.contrib.markdown.html" title="Markdown Documentation"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="gluon.contrib.pyrtf.html" title="Pyrtf Documentation"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../index.html">Web2Py v1.64.4 documentation</a> &raquo;</li>
+          <li><a href="../modules.html" >Web2Py Modules</a> &raquo;</li>
+          <li><a href="gluon.html" >Gluon Package</a> &raquo;</li>
+          <li><a href="gluon.contrib.html" accesskey="U">Contrib Documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="gateways-documentation">
+<h1>Gateways Documentation<a class="headerlink" href="#gateways-documentation" title="Permalink to this headline">¶</a></h1>
+<p>This page contains the Gateways Package documentation.</p>
+<div class="section" id="module-gluon.contrib.gateways.fcgi">
+<h2>The <tt class="xref docutils literal"><span class="pre">fcgi</span></tt> Module<a class="headerlink" href="#module-gluon.contrib.gateways.fcgi" title="Permalink to this headline">¶</a></h2>
+<p>fcgi - a FastCGI/WSGI gateway.</p>
+<p>For more information about FastCGI, see &lt;<a class="reference external" href="http://www.fastcgi.com/">http://www.fastcgi.com/</a>&gt;.</p>
+<p>For more information about the Web Server Gateway Interface, see
+&lt;<a class="reference external" href="http://www.python.org/peps/pep-0333.html">http://www.python.org/peps/pep-0333.html</a>&gt;.</p>
+<p>Example usage:</p>
+<blockquote>
+#!/usr/bin/env python
+from myapplication import app # Assume app is your WSGI application object
+from fcgi import WSGIServer
+WSGIServer(app).run()</blockquote>
+<p>See the documentation for WSGIServer/Server for more information.</p>
+<p>On most platforms, fcgi will fallback to regular CGI behavior if run in a
+non-FastCGI context. If you want to force CGI behavior, set the environment
+variable FCGI_FORCE_CGI to &#8220;Y&#8221; or &#8220;y&#8221;.</p>
+<dl class="class">
+<dt id="gluon.contrib.gateways.fcgi.WSGIServer">
+<em class="property">
+class </em><tt class="descclassname">gluon.contrib.gateways.fcgi.</tt><tt class="descname">WSGIServer</tt><big>(</big><em>application</em>, <em>environ=None</em>, <em>umask=None</em>, <em>multithreaded=True</em>, <em>**kw</em><big>)</big><a class="headerlink" href="#gluon.contrib.gateways.fcgi.WSGIServer" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref docutils literal"><span class="pre">gluon.contrib.gateways.fcgi.Server</span></tt></p>
+<p>FastCGI server that supports the Web Server Gateway Interface. See
+&lt;<a class="reference external" href="http://www.python.org/peps/pep-0333.html">http://www.python.org/peps/pep-0333.html</a>&gt;.</p>
+<dl class="method">
+<dt id="gluon.contrib.gateways.fcgi.WSGIServer.handler">
+<tt class="descname">handler</tt><big>(</big><em>req</em><big>)</big><a class="headerlink" href="#gluon.contrib.gateways.fcgi.WSGIServer.handler" title="Permalink to this definition">¶</a></dt>
+<dd>Special handler for WSGI.</dd></dl>
+
+</dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../index.html">
+              <img class="logo" src="../_static/logo_colored_small.png" alt="Logo"/>
+            </a></p>
+            <h3><a href="../index.html">Table Of Contents</a></h3>
+            <ul>
+<li><a class="reference external" href="">Gateways Documentation</a><ul>
+<li><a class="reference external" href="#module-gluon.contrib.gateways.fcgi">The <tt class="docutils literal"><span class="pre">fcgi</span></tt> Module</a></li>
+</ul>
+</li>
+</ul>
+
+            <h4>Previous topic</h4>
+            <p class="topless"><a href="gluon.contrib.pyrtf.html"
+                                  title="previous chapter">Pyrtf Documentation</a></p>
+            <h4>Next topic</h4>
+            <p class="topless"><a href="gluon.contrib.markdown.html"
+                                  title="next chapter">Markdown Documentation</a></p>
+            <h3>This Page</h3>
+            <ul class="this-page-menu">
+              <li><a href="../_sources/gluon/gluon.contrib.gateways.txt"
+                     rel="nofollow">Show Source</a></li>
+            </ul>
+          <div id="searchbox" style="display: none">
+            <h3>Quick search</h3>
+              <form class="search" action="../search.html" method="get">
+                <input type="text" name="q" size="18" />
+                <input type="submit" value="Go" />
+                <input type="hidden" name="check_keywords" value="yes" />
+                <input type="hidden" name="area" value="default" />
+              </form>
+              <p class="searchtip" style="font-size: 90%">
+              Enter search terms or a module, class or function name.
+              </p>
+          </div>
+          <script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../modindex.html" title="Global Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="gluon.contrib.markdown.html" title="Markdown Documentation"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="gluon.contrib.pyrtf.html" title="Pyrtf Documentation"
+             >previous</a> |</li>
+        <li><a href="../index.html">Web2Py v1.64.4 documentation</a> &raquo;</li>
+          <li><a href="../modules.html" >Web2Py Modules</a> &raquo;</li>
+          <li><a href="gluon.html" >Gluon Package</a> &raquo;</li>
+          <li><a href="gluon.contrib.html" >Contrib Documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+      &copy; Copyright 2009, The web2py developers.
+      Last updated on Jun 30, 2009.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 0.6.1.
+    </div>
+  </body>
+</html>

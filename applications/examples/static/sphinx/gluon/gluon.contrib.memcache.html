@@ -1,0 +1,571 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Memcache Documentation &mdash; Web2Py v1.64.4 documentation</title>
+    <link rel="stylesheet" href="../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '1.64.4',
+        COLLAPSE_MODINDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="top" title="Web2Py v1.64.4 documentation" href="../index.html" />
+    <link rel="up" title="Contrib Documentation" href="gluon.contrib.html" />
+    <link rel="next" title="Simplejson Documentation" href="gluon.contrib.simplejson.html" />
+    <link rel="prev" title="Markdown Documentation" href="gluon.contrib.markdown.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../modindex.html" title="Global Module Index"
+             accesskey="M">modules</a> |</li>
+        <li class="right" >
+          <a href="gluon.contrib.simplejson.html" title="Simplejson Documentation"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="gluon.contrib.markdown.html" title="Markdown Documentation"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../index.html">Web2Py v1.64.4 documentation</a> &raquo;</li>
+          <li><a href="../modules.html" >Web2Py Modules</a> &raquo;</li>
+          <li><a href="gluon.html" >Gluon Package</a> &raquo;</li>
+          <li><a href="gluon.contrib.html" accesskey="U">Contrib Documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="memcache-documentation">
+<h1>Memcache Documentation<a class="headerlink" href="#memcache-documentation" title="Permalink to this headline">¶</a></h1>
+<p>This page contains the Memcache Package documentation.</p>
+<div class="section" id="module-gluon.contrib.memcache.memcache">
+<h2>The <tt class="xref docutils literal"><span class="pre">memcache</span></tt> Module<a class="headerlink" href="#module-gluon.contrib.memcache.memcache" title="Permalink to this headline">¶</a></h2>
+<p>client module for memcached (memory cache daemon)</p>
+<div class="section" id="overview">
+<h3>Overview<a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h3>
+<p>See U{the MemCached homepage&lt;<a class="reference external" href="http://www.danga.com/memcached">http://www.danga.com/memcached</a>&gt;} for more about memcached.</p>
+</div>
+<div class="section" id="usage-summary">
+<h3>Usage summary<a class="headerlink" href="#usage-summary" title="Permalink to this headline">¶</a></h3>
+<p>This should give you a feel for how this module operates:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">memcache</span>
+<span class="n">mc</span> <span class="o">=</span> <span class="n">memcache</span><span class="o">.</span><span class="n">Client</span><span class="p">([</span><span class="s">&#39;127.0.0.1:11211&#39;</span><span class="p">],</span> <span class="n">debug</span><span class="o">=</span><span class="mf">0</span><span class="p">)</span>
+
+<span class="n">mc</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="s">&quot;some_key&quot;</span><span class="p">,</span> <span class="s">&quot;Some value&quot;</span><span class="p">)</span>
+<span class="n">value</span> <span class="o">=</span> <span class="n">mc</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&quot;some_key&quot;</span><span class="p">)</span>
+
+<span class="n">mc</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="s">&quot;another_key&quot;</span><span class="p">,</span> <span class="mf">3</span><span class="p">)</span>
+<span class="n">mc</span><span class="o">.</span><span class="n">delete</span><span class="p">(</span><span class="s">&quot;another_key&quot;</span><span class="p">)</span>
+
+<span class="n">mc</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="s">&quot;key&quot;</span><span class="p">,</span> <span class="s">&quot;1&quot;</span><span class="p">)</span>   <span class="c"># note that the key used for incr/decr must be a string.</span>
+<span class="n">mc</span><span class="o">.</span><span class="n">incr</span><span class="p">(</span><span class="s">&quot;key&quot;</span><span class="p">)</span>
+<span class="n">mc</span><span class="o">.</span><span class="n">decr</span><span class="p">(</span><span class="s">&quot;key&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>The standard way to use memcache with a database is like this:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">key</span> <span class="o">=</span> <span class="n">derive_key</span><span class="p">(</span><span class="n">obj</span><span class="p">)</span>
+<span class="n">obj</span> <span class="o">=</span> <span class="n">mc</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
+<span class="k">if</span> <span class="ow">not</span> <span class="n">obj</span><span class="p">:</span>
+    <span class="n">obj</span> <span class="o">=</span> <span class="n">backend_api</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="o">...</span><span class="p">)</span>
+    <span class="n">mc</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">obj</span><span class="p">)</span>
+
+<span class="c"># we now have obj, and future passes through this code</span>
+<span class="c"># will use the object from the cache.</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="detailed-documentation">
+<h3>Detailed Documentation<a class="headerlink" href="#detailed-documentation" title="Permalink to this headline">¶</a></h3>
+<p>More detailed documentation is available in the L{Client} class.</p>
+<dl class="class">
+<dt id="gluon.contrib.memcache.memcache.Client">
+<em class="property">
+class </em><tt class="descclassname">gluon.contrib.memcache.memcache.</tt><tt class="descname">Client</tt><big>(</big><em>servers</em>, <em>debug=0</em>, <em>pickleProtocol=0</em>, <em>pickler=&lt;built-in function Pickler&gt;</em>, <em>unpickler=&lt;built-in function Unpickler&gt;</em>, <em>pload=None</em>, <em>pid=None</em><big>)</big><a class="headerlink" href="#gluon.contrib.memcache.memcache.Client" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref docutils literal"><span class="pre">thread._local</span></tt></p>
+<p>Object representing a pool of memcache servers.</p>
+<p>See L{memcache} for an overview.</p>
+<dl class="docutils">
+<dt>In all cases where a key is used, the key can be either:</dt>
+<dd><ol class="first arabic simple">
+<li>A simple hashable type (string, integer, etc.).</li>
+</ol>
+<div class="system-message">
+<p class="system-message-title">System Message: WARNING/2 (<tt class="docutils">/Users/mdipierro/web2py/gluon/contrib/memcache/memcache.py:docstring of gluon.contrib.memcache.memcache.Client</tt>, line 9)</p>
+Enumerated list ends without a blank line; unexpected unindent.</div>
+<p class="last">2. A tuple of C{(hashvalue, key)}.  This is useful if you want to avoid
+making this module calculate a hash value.  You may prefer, for
+example, to keep all of a given user&#8217;s objects on the same memcache
+server, so you could use the user&#8217;s unique id as the hash value.</p>
+</dd>
+</dl>
+<p>&#64;group Setup: __init__, set_servers, forget_dead_hosts, disconnect_all, debuglog
+&#64;group Insertion: set, add, replace, set_multi
+&#64;group Retrieval: get, get_multi
+&#64;group Integers: incr, decr
+&#64;group Removal: delete, delete_multi
+&#64;sort: __init__, set_servers, forget_dead_hosts, disconnect_all, debuglog,           set, set_multi, add, replace, get, get_multi, incr, decr, delete, delete_multi</p>
+<dl class="exception">
+<dt id="gluon.contrib.memcache.memcache.Client.MemcachedKeyCharacterError">
+<em class="property">
+exception </em><tt class="descname">MemcachedKeyCharacterError</tt><a class="headerlink" href="#gluon.contrib.memcache.memcache.Client.MemcachedKeyCharacterError" title="Permalink to this definition">¶</a></dt>
+<dd>Bases: <tt class="xref docutils literal"><span class="pre">gluon.contrib.memcache.memcache.MemcachedKeyError</span></tt></dd></dl>
+
+<dl class="exception">
+<dt id="gluon.contrib.memcache.memcache.Client.MemcachedKeyError">
+<em class="property">
+exception </em><tt class="descclassname">Client.</tt><tt class="descname">MemcachedKeyError</tt><a class="headerlink" href="#gluon.contrib.memcache.memcache.Client.MemcachedKeyError" title="Permalink to this definition">¶</a></dt>
+<dd>Bases: <a title="(in Python v2.7)" class="reference external" href="http://docs.python.org/dev/library/exceptions.html#exceptions.Exception"><tt class="xref docutils literal"><span class="pre">exceptions.Exception</span></tt></a></dd></dl>
+
+<dl class="exception">
+<dt id="gluon.contrib.memcache.memcache.Client.MemcachedKeyLengthError">
+<em class="property">
+exception </em><tt class="descclassname">Client.</tt><tt class="descname">MemcachedKeyLengthError</tt><a class="headerlink" href="#gluon.contrib.memcache.memcache.Client.MemcachedKeyLengthError" title="Permalink to this definition">¶</a></dt>
+<dd>Bases: <tt class="xref docutils literal"><span class="pre">gluon.contrib.memcache.memcache.MemcachedKeyError</span></tt></dd></dl>
+
+<dl class="exception">
+<dt id="gluon.contrib.memcache.memcache.Client.MemcachedKeyNoneError">
+<em class="property">
+exception </em><tt class="descclassname">Client.</tt><tt class="descname">MemcachedKeyNoneError</tt><a class="headerlink" href="#gluon.contrib.memcache.memcache.Client.MemcachedKeyNoneError" title="Permalink to this definition">¶</a></dt>
+<dd>Bases: <tt class="xref docutils literal"><span class="pre">gluon.contrib.memcache.memcache.MemcachedKeyError</span></tt></dd></dl>
+
+<dl class="exception">
+<dt id="gluon.contrib.memcache.memcache.Client.MemcachedKeyTypeError">
+<em class="property">
+exception </em><tt class="descclassname">Client.</tt><tt class="descname">MemcachedKeyTypeError</tt><a class="headerlink" href="#gluon.contrib.memcache.memcache.Client.MemcachedKeyTypeError" title="Permalink to this definition">¶</a></dt>
+<dd>Bases: <tt class="xref docutils literal"><span class="pre">gluon.contrib.memcache.memcache.MemcachedKeyError</span></tt></dd></dl>
+
+<dl class="exception">
+<dt id="gluon.contrib.memcache.memcache.Client.MemcachedStringEncodingError">
+<em class="property">
+exception </em><tt class="descclassname">Client.</tt><tt class="descname">MemcachedStringEncodingError</tt><a class="headerlink" href="#gluon.contrib.memcache.memcache.Client.MemcachedStringEncodingError" title="Permalink to this definition">¶</a></dt>
+<dd>Bases: <a title="(in Python v2.7)" class="reference external" href="http://docs.python.org/dev/library/exceptions.html#exceptions.Exception"><tt class="xref docutils literal"><span class="pre">exceptions.Exception</span></tt></a></dd></dl>
+
+<dl class="method">
+<dt id="gluon.contrib.memcache.memcache.Client.add">
+<tt class="descclassname">Client.</tt><tt class="descname">add</tt><big>(</big><em>key</em>, <em>val</em>, <em>time=0</em>, <em>min_compress_len=0</em><big>)</big><a class="headerlink" href="#gluon.contrib.memcache.memcache.Client.add" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add new key with value.</p>
+<p>Like L{set}, but only stores in memcache if the key doesn&#8217;t already exist.</p>
+<p>&#64;return: Nonzero on success.
+&#64;rtype: int</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="gluon.contrib.memcache.memcache.Client.append">
+<tt class="descclassname">Client.</tt><tt class="descname">append</tt><big>(</big><em>key</em>, <em>val</em>, <em>time=0</em>, <em>min_compress_len=0</em><big>)</big><a class="headerlink" href="#gluon.contrib.memcache.memcache.Client.append" title="Permalink to this definition">¶</a></dt>
+<dd><p>Append the value to the end of the existing key&#8217;s value.</p>
+<p>Only stores in memcache if key already exists.
+Also see L{prepend}.</p>
+<p>&#64;return: Nonzero on success.
+&#64;rtype: int</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="gluon.contrib.memcache.memcache.Client.debuglog">
+<tt class="descclassname">Client.</tt><tt class="descname">debuglog</tt><big>(</big><em>str</em><big>)</big><a class="headerlink" href="#gluon.contrib.memcache.memcache.Client.debuglog" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="gluon.contrib.memcache.memcache.Client.decr">
+<tt class="descclassname">Client.</tt><tt class="descname">decr</tt><big>(</big><em>key</em>, <em>delta=1</em><big>)</big><a class="headerlink" href="#gluon.contrib.memcache.memcache.Client.decr" title="Permalink to this definition">¶</a></dt>
+<dd><p>Like L{incr}, but decrements.  Unlike L{incr}, underflow is checked and
+new values are capped at 0.  If server value is 1, a decrement of 2
+returns 0, not -1.</p>
+<p>&#64;param delta: Integer amount to decrement by (should be zero or greater).
+&#64;return: New value after decrementing.
+&#64;rtype: int</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="gluon.contrib.memcache.memcache.Client.delete">
+<tt class="descclassname">Client.</tt><tt class="descname">delete</tt><big>(</big><em>key</em>, <em>time=0</em><big>)</big><a class="headerlink" href="#gluon.contrib.memcache.memcache.Client.delete" title="Permalink to this definition">¶</a></dt>
+<dd><p>Deletes a key from the memcache.</p>
+<p>&#64;return: Nonzero on success.
+&#64;param time: number of seconds any subsequent set / update commands should fail. Defaults to 0 for no delay.
+&#64;rtype: int</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="gluon.contrib.memcache.memcache.Client.delete_multi">
+<tt class="descclassname">Client.</tt><tt class="descname">delete_multi</tt><big>(</big><em>keys</em>, <em>time=0</em>, <em>key_prefix=''</em><big>)</big><a class="headerlink" href="#gluon.contrib.memcache.memcache.Client.delete_multi" title="Permalink to this definition">¶</a></dt>
+<dd><p>Delete multiple keys in the memcache doing just one query.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">notset_keys</span> <span class="o">=</span> <span class="n">mc</span><span class="o">.</span><span class="n">set_multi</span><span class="p">({</span><span class="s">&#39;key1&#39;</span> <span class="p">:</span> <span class="s">&#39;val1&#39;</span><span class="p">,</span> <span class="s">&#39;key2&#39;</span> <span class="p">:</span> <span class="s">&#39;val2&#39;</span><span class="p">})</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">mc</span><span class="o">.</span><span class="n">get_multi</span><span class="p">([</span><span class="s">&#39;key1&#39;</span><span class="p">,</span> <span class="s">&#39;key2&#39;</span><span class="p">])</span> <span class="o">==</span> <span class="p">{</span><span class="s">&#39;key1&#39;</span> <span class="p">:</span> <span class="s">&#39;val1&#39;</span><span class="p">,</span> <span class="s">&#39;key2&#39;</span> <span class="p">:</span> <span class="s">&#39;val2&#39;</span><span class="p">}</span>
+<span class="go">1</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">mc</span><span class="o">.</span><span class="n">delete_multi</span><span class="p">([</span><span class="s">&#39;key1&#39;</span><span class="p">,</span> <span class="s">&#39;key2&#39;</span><span class="p">])</span>
+<span class="go">1</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">mc</span><span class="o">.</span><span class="n">get_multi</span><span class="p">([</span><span class="s">&#39;key1&#39;</span><span class="p">,</span> <span class="s">&#39;key2&#39;</span><span class="p">])</span> <span class="o">==</span> <span class="p">{}</span>
+<span class="go">1</span>
+</pre></div>
+</div>
+<p>This method is recommended over iterated regular L{delete}s as it reduces total latency, since
+your app doesn&#8217;t have to wait for each round-trip of L{delete} before sending
+the next one.</p>
+<p>&#64;param keys: An iterable of keys to clear
+&#64;param time: number of seconds any subsequent set / update commands should fail. Defaults to 0 for no delay.
+&#64;param key_prefix:  Optional string to prepend to each key when sending to memcache.</p>
+<div class="system-message">
+<p class="system-message-title">System Message: ERROR/3 (<tt class="docutils">/Users/mdipierro/web2py/gluon/contrib/memcache/memcache.py:docstring of gluon.contrib.memcache.memcache</tt>, line 17)</p>
+Unexpected indentation.</div>
+<blockquote>
+See docs for L{get_multi} and L{set_multi}.</blockquote>
+<p>&#64;return: 1 if no failure in communication with any memcacheds.
+&#64;rtype: int</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="gluon.contrib.memcache.memcache.Client.disconnect_all">
+<tt class="descclassname">Client.</tt><tt class="descname">disconnect_all</tt><big>(</big><big>)</big><a class="headerlink" href="#gluon.contrib.memcache.memcache.Client.disconnect_all" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="gluon.contrib.memcache.memcache.Client.flush_all">
+<tt class="descclassname">Client.</tt><tt class="descname">flush_all</tt><big>(</big><big>)</big><a class="headerlink" href="#gluon.contrib.memcache.memcache.Client.flush_all" title="Permalink to this definition">¶</a></dt>
+<dd>Expire all data currently in the memcache servers.</dd></dl>
+
+<dl class="method">
+<dt id="gluon.contrib.memcache.memcache.Client.forget_dead_hosts">
+<tt class="descclassname">Client.</tt><tt class="descname">forget_dead_hosts</tt><big>(</big><big>)</big><a class="headerlink" href="#gluon.contrib.memcache.memcache.Client.forget_dead_hosts" title="Permalink to this definition">¶</a></dt>
+<dd>Reset every host in the pool to an &#8220;alive&#8221; state.</dd></dl>
+
+<dl class="method">
+<dt id="gluon.contrib.memcache.memcache.Client.get">
+<tt class="descclassname">Client.</tt><tt class="descname">get</tt><big>(</big><em>key</em><big>)</big><a class="headerlink" href="#gluon.contrib.memcache.memcache.Client.get" title="Permalink to this definition">¶</a></dt>
+<dd><p>Retrieves a key from the memcache.</p>
+<p>&#64;return: The value or None.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="gluon.contrib.memcache.memcache.Client.get_multi">
+<tt class="descclassname">Client.</tt><tt class="descname">get_multi</tt><big>(</big><em>keys</em>, <em>key_prefix=''</em><big>)</big><a class="headerlink" href="#gluon.contrib.memcache.memcache.Client.get_multi" title="Permalink to this definition">¶</a></dt>
+<dd><p>Retrieves multiple keys from the memcache doing just one query.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">success</span> <span class="o">=</span> <span class="n">mc</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="s">&quot;foo&quot;</span><span class="p">,</span> <span class="s">&quot;bar&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">success</span> <span class="o">=</span> <span class="n">mc</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="s">&quot;baz&quot;</span><span class="p">,</span> <span class="mf">42</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">mc</span><span class="o">.</span><span class="n">get_multi</span><span class="p">([</span><span class="s">&quot;foo&quot;</span><span class="p">,</span> <span class="s">&quot;baz&quot;</span><span class="p">,</span> <span class="s">&quot;foobar&quot;</span><span class="p">])</span> <span class="o">==</span> <span class="p">{</span><span class="s">&quot;foo&quot;</span><span class="p">:</span> <span class="s">&quot;bar&quot;</span><span class="p">,</span> <span class="s">&quot;baz&quot;</span><span class="p">:</span> <span class="mf">42</span><span class="p">}</span>
+<span class="go">1</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">mc</span><span class="o">.</span><span class="n">set_multi</span><span class="p">({</span><span class="s">&#39;k1&#39;</span> <span class="p">:</span> <span class="mf">1</span><span class="p">,</span> <span class="s">&#39;k2&#39;</span> <span class="p">:</span> <span class="mf">2</span><span class="p">},</span> <span class="n">key_prefix</span><span class="o">=</span><span class="s">&#39;pfx_&#39;</span><span class="p">)</span> <span class="o">==</span> <span class="p">[]</span>
+<span class="go">1</span>
+</pre></div>
+</div>
+<p>This looks up keys &#8216;pfx_k1&#8217;, &#8216;pfx_k2&#8217;, ... . Returned dict will just have unprefixed keys &#8216;k1&#8217;, &#8216;k2&#8217;.
+&gt;&gt;&gt; mc.get_multi([&#8216;k1&#8217;, &#8216;k2&#8217;, &#8216;nonexist&#8217;], key_prefix=&#8217;<a href="#id1"><span class="problematic" id="id2">pfx_</span></a>&#8216;) == {&#8216;k1&#8217; : 1, &#8216;k2&#8217; : 2}
+1</p>
+<p>get_mult [ and L{set_multi} ] can take str()-ables like ints / longs as keys too. Such as your db pri key fields.
+They&#8217;re rotored through str() before being passed off to memcache, with or without the use of a key_prefix.
+In this mode, the key_prefix could be a table name, and the key itself a db primary key number.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">mc</span><span class="o">.</span><span class="n">set_multi</span><span class="p">({</span><span class="mf">42</span><span class="p">:</span> <span class="s">&#39;douglass adams&#39;</span><span class="p">,</span> <span class="mf">46</span> <span class="p">:</span> <span class="s">&#39;and 2 just ahead of me&#39;</span><span class="p">},</span> <span class="n">key_prefix</span><span class="o">=</span><span class="s">&#39;numkeys_&#39;</span><span class="p">)</span> <span class="o">==</span> <span class="p">[]</span>
+<span class="go">1</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">mc</span><span class="o">.</span><span class="n">get_multi</span><span class="p">([</span><span class="mf">46</span><span class="p">,</span> <span class="mf">42</span><span class="p">],</span> <span class="n">key_prefix</span><span class="o">=</span><span class="s">&#39;numkeys_&#39;</span><span class="p">)</span> <span class="o">==</span> <span class="p">{</span><span class="mf">42</span><span class="p">:</span> <span class="s">&#39;douglass adams&#39;</span><span class="p">,</span> <span class="mf">46</span> <span class="p">:</span> <span class="s">&#39;and 2 just ahead of me&#39;</span><span class="p">}</span>
+<span class="go">1</span>
+</pre></div>
+</div>
+<p>This method is recommended over regular L{get} as it lowers the number of
+total packets flying around your network, reducing total latency, since
+your app doesn&#8217;t have to wait for each round-trip of L{get} before sending
+the next one.</p>
+<p>See also L{set_multi}.</p>
+<p>&#64;param keys: An array of keys.
+&#64;param key_prefix: A string to prefix each key when we communicate with memcache.</p>
+<div class="system-message">
+<p class="system-message-title">System Message: ERROR/3 (<tt class="docutils">/Users/mdipierro/web2py/gluon/contrib/memcache/memcache.py:docstring of gluon.contrib.memcache.memcache</tt>, line 31)</p>
+Unexpected indentation.</div>
+<blockquote>
+Facilitates pseudo-namespaces within memcache. Returned dictionary keys will not have this prefix.</blockquote>
+<div class="system-message">
+<p class="system-message-title">System Message: WARNING/2 (<tt class="docutils">/Users/mdipierro/web2py/gluon/contrib/memcache/memcache.py:docstring of gluon.contrib.memcache.memcache.Client.get_multi</tt>, line 35)</p>
+Block quote ends without a blank line; unexpected unindent.</div>
+<p>&#64;return:  A dictionary of key/value pairs that were available. If key_prefix was provided, the keys in the retured dictionary will not have it present.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="gluon.contrib.memcache.memcache.Client.get_slabs">
+<tt class="descclassname">Client.</tt><tt class="descname">get_slabs</tt><big>(</big><big>)</big><a class="headerlink" href="#gluon.contrib.memcache.memcache.Client.get_slabs" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="gluon.contrib.memcache.memcache.Client.get_stats">
+<tt class="descclassname">Client.</tt><tt class="descname">get_stats</tt><big>(</big><big>)</big><a class="headerlink" href="#gluon.contrib.memcache.memcache.Client.get_stats" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get statistics from each of the servers.</p>
+<dl class="docutils">
+<dt>&#64;return: A list of tuples ( server_identifier, stats_dictionary ).</dt>
+<dd>The dictionary contains a number of name/value pairs specifying
+the name of the status field and the string value associated with
+it.  The values are not converted from strings.</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="gluon.contrib.memcache.memcache.Client.incr">
+<tt class="descclassname">Client.</tt><tt class="descname">incr</tt><big>(</big><em>key</em>, <em>delta=1</em><big>)</big><a class="headerlink" href="#gluon.contrib.memcache.memcache.Client.incr" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sends a command to the server to atomically increment the value for C{key} by
+C{delta}, or by 1 if C{delta} is unspecified.  Returns None if C{key} doesn&#8217;t
+exist on server, otherwise it returns the new value after incrementing.</p>
+<p>Note that the value for C{key} must already exist in the memcache, and it
+must be the string representation of an integer.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">mc</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="s">&quot;counter&quot;</span><span class="p">,</span> <span class="s">&quot;20&quot;</span><span class="p">)</span>  <span class="c"># returns 1, indicating success</span>
+<span class="go">1</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">mc</span><span class="o">.</span><span class="n">incr</span><span class="p">(</span><span class="s">&quot;counter&quot;</span><span class="p">)</span>
+<span class="go">21</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">mc</span><span class="o">.</span><span class="n">incr</span><span class="p">(</span><span class="s">&quot;counter&quot;</span><span class="p">)</span>
+<span class="go">22</span>
+</pre></div>
+</div>
+<p>Overflow on server is not checked.  Be aware of values approaching
+2**32.  See L{decr}.</p>
+<p>&#64;param delta: Integer amount to increment by (should be zero or greater).
+&#64;return: New value after incrementing.
+&#64;rtype: int</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="gluon.contrib.memcache.memcache.Client.prepend">
+<tt class="descclassname">Client.</tt><tt class="descname">prepend</tt><big>(</big><em>key</em>, <em>val</em>, <em>time=0</em>, <em>min_compress_len=0</em><big>)</big><a class="headerlink" href="#gluon.contrib.memcache.memcache.Client.prepend" title="Permalink to this definition">¶</a></dt>
+<dd><p>Prepend the value to the beginning of the existing key&#8217;s value.</p>
+<p>Only stores in memcache if key already exists.
+Also see L{append}.</p>
+<p>&#64;return: Nonzero on success.
+&#64;rtype: int</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="gluon.contrib.memcache.memcache.Client.replace">
+<tt class="descclassname">Client.</tt><tt class="descname">replace</tt><big>(</big><em>key</em>, <em>val</em>, <em>time=0</em>, <em>min_compress_len=0</em><big>)</big><a class="headerlink" href="#gluon.contrib.memcache.memcache.Client.replace" title="Permalink to this definition">¶</a></dt>
+<dd><p>Replace existing key with value.</p>
+<p>Like L{set}, but only stores in memcache if the key already exists.
+The opposite of L{add}.</p>
+<p>&#64;return: Nonzero on success.
+&#64;rtype: int</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="gluon.contrib.memcache.memcache.Client.set">
+<tt class="descclassname">Client.</tt><tt class="descname">set</tt><big>(</big><em>key</em>, <em>val</em>, <em>time=0</em>, <em>min_compress_len=0</em><big>)</big><a class="headerlink" href="#gluon.contrib.memcache.memcache.Client.set" title="Permalink to this definition">¶</a></dt>
+<dd><p>Unconditionally sets a key to a given value in the memcache.</p>
+<p>The C{key} can optionally be an tuple, with the first element
+being the server hash value and the second being the key.
+If you want to avoid making this module calculate a hash value.
+You may prefer, for example, to keep all of a given user&#8217;s objects
+on the same memcache server, so you could use the user&#8217;s unique
+id as the hash value.</p>
+<p>&#64;return: Nonzero on success.
+&#64;rtype: int
+&#64;param time: Tells memcached the time which this value should expire, either
+as a delta number of seconds, or an absolute unix time-since-the-epoch
+value. See the memcached protocol docs section &#8220;Storage Commands&#8221;
+for more info on &lt;exptime&gt;. We default to 0 == cache forever.
+&#64;param min_compress_len: The threshold length to kick in auto-compression
+of the value using the zlib.compress() routine. If the value being cached is
+a string, then the length of the string is measured, else if the value is an
+object, then the length of the pickle result is measured. If the resulting
+attempt at compression yeilds a larger string than the input, then it is
+discarded. For backwards compatability, this parameter defaults to 0,
+indicating don&#8217;t ever try to compress.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="gluon.contrib.memcache.memcache.Client.set_multi">
+<tt class="descclassname">Client.</tt><tt class="descname">set_multi</tt><big>(</big><em>mapping</em>, <em>time=0</em>, <em>key_prefix=''</em>, <em>min_compress_len=0</em><big>)</big><a class="headerlink" href="#gluon.contrib.memcache.memcache.Client.set_multi" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets multiple keys in the memcache doing just one query.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">notset_keys</span> <span class="o">=</span> <span class="n">mc</span><span class="o">.</span><span class="n">set_multi</span><span class="p">({</span><span class="s">&#39;key1&#39;</span> <span class="p">:</span> <span class="s">&#39;val1&#39;</span><span class="p">,</span> <span class="s">&#39;key2&#39;</span> <span class="p">:</span> <span class="s">&#39;val2&#39;</span><span class="p">})</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">mc</span><span class="o">.</span><span class="n">get_multi</span><span class="p">([</span><span class="s">&#39;key1&#39;</span><span class="p">,</span> <span class="s">&#39;key2&#39;</span><span class="p">])</span> <span class="o">==</span> <span class="p">{</span><span class="s">&#39;key1&#39;</span> <span class="p">:</span> <span class="s">&#39;val1&#39;</span><span class="p">,</span> <span class="s">&#39;key2&#39;</span> <span class="p">:</span> <span class="s">&#39;val2&#39;</span><span class="p">}</span>
+<span class="go">1</span>
+</pre></div>
+</div>
+<p>This method is recommended over regular L{set} as it lowers the number of
+total packets flying around your network, reducing total latency, since
+your app doesn&#8217;t have to wait for each round-trip of L{set} before sending
+the next one.</p>
+<p>&#64;param mapping: A dict of key/value pairs to set.
+&#64;param time: Tells memcached the time which this value should expire, either
+as a delta number of seconds, or an absolute unix time-since-the-epoch
+value. See the memcached protocol docs section &#8220;Storage Commands&#8221;
+for more info on &lt;exptime&gt;. We default to 0 == cache forever.
+&#64;param key_prefix:  Optional string to prepend to each key when sending to memcache. Allows you to efficiently stuff these keys into a pseudo-namespace in memcache:</p>
+<div class="system-message">
+<p class="system-message-title">System Message: ERROR/3 (<tt class="docutils">/Users/mdipierro/web2py/gluon/contrib/memcache/memcache.py:docstring of gluon.contrib.memcache.memcache</tt>, line 17)</p>
+Unexpected indentation.</div>
+<blockquote>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">notset_keys</span> <span class="o">=</span> <span class="n">mc</span><span class="o">.</span><span class="n">set_multi</span><span class="p">({</span><span class="s">&#39;key1&#39;</span> <span class="p">:</span> <span class="s">&#39;val1&#39;</span><span class="p">,</span> <span class="s">&#39;key2&#39;</span> <span class="p">:</span> <span class="s">&#39;val2&#39;</span><span class="p">},</span> <span class="n">key_prefix</span><span class="o">=</span><span class="s">&#39;subspace_&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">len</span><span class="p">(</span><span class="n">notset_keys</span><span class="p">)</span> <span class="o">==</span> <span class="mf">0</span>
+<span class="go">True</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">mc</span><span class="o">.</span><span class="n">get_multi</span><span class="p">([</span><span class="s">&#39;subspace_key1&#39;</span><span class="p">,</span> <span class="s">&#39;subspace_key2&#39;</span><span class="p">])</span> <span class="o">==</span> <span class="p">{</span><span class="s">&#39;subspace_key1&#39;</span> <span class="p">:</span> <span class="s">&#39;val1&#39;</span><span class="p">,</span> <span class="s">&#39;subspace_key2&#39;</span> <span class="p">:</span> <span class="s">&#39;val2&#39;</span><span class="p">}</span>
+<span class="go">True</span>
+</pre></div>
+</div>
+<p>Causes key &#8216;subspace_key1&#8217; and &#8216;subspace_key2&#8217; to be set. Useful in conjunction with a higher-level layer which applies namespaces to data in memcache.
+In this case, the return result would be the list of notset original keys, prefix not applied.</p>
+</blockquote>
+<p>&#64;param min_compress_len: The threshold length to kick in auto-compression
+of the value using the zlib.compress() routine. If the value being cached is
+a string, then the length of the string is measured, else if the value is an
+object, then the length of the pickle result is measured. If the resulting
+attempt at compression yeilds a larger string than the input, then it is
+discarded. For backwards compatability, this parameter defaults to 0,
+indicating don&#8217;t ever try to compress.
+&#64;return: List of keys which failed to be stored [ memcache out of memory, etc. ].
+&#64;rtype: list</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="gluon.contrib.memcache.memcache.Client.set_servers">
+<tt class="descclassname">Client.</tt><tt class="descname">set_servers</tt><big>(</big><em>servers</em><big>)</big><a class="headerlink" href="#gluon.contrib.memcache.memcache.Client.set_servers" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the pool of servers used by this client.</p>
+<p>&#64;param servers: an array of servers.
+Servers can be passed in two forms:</p>
+<div class="system-message">
+<p class="system-message-title">System Message: ERROR/3 (<tt class="docutils">/Users/mdipierro/web2py/gluon/contrib/memcache/memcache.py:docstring of gluon.contrib.memcache.memcache</tt>, line 4)</p>
+Unexpected indentation.</div>
+<blockquote>
+<ol class="arabic simple">
+<li>Strings of the form C{&#8220;host:port&#8221;}, which implies a default weight of 1.</li>
+</ol>
+<div class="system-message">
+<p class="system-message-title">System Message: WARNING/2 (<tt class="docutils">/Users/mdipierro/web2py/gluon/contrib/memcache/memcache.py:docstring of gluon.contrib.memcache.memcache.Client.set_servers</tt>, line 8)</p>
+Enumerated list ends without a blank line; unexpected unindent.</div>
+<p>2. Tuples of the form C{(&#8220;host:port&#8221;, weight)}, where C{weight} is
+an integer weight value.</p>
+</blockquote>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="function">
+<dt id="gluon.contrib.memcache.memcache.check_key">
+<tt class="descclassname">gluon.contrib.memcache.memcache.</tt><tt class="descname">check_key</tt><big>(</big><em>key</em>, <em>key_extra_len=0</em><big>)</big><a class="headerlink" href="#gluon.contrib.memcache.memcache.check_key" title="Permalink to this definition">¶</a></dt>
+<dd>Checks sanity of key.  Fails if:
+Key length is &gt; SERVER_MAX_KEY_LENGTH (Raises MemcachedKeyLength).
+Contains control characters  (Raises MemcachedKeyCharacterError).
+Is not a string (Raises MemcachedStringEncodingError)
+Is an unicode string (Raises MemcachedStringEncodingError)
+Is not a string (Raises MemcachedKeyError)
+Is None (Raises MemcachedKeyError)</dd></dl>
+
+</div>
+</div>
+<div class="section" id="module-gluon.contrib.memcache">
+<h2>The <tt class="xref docutils literal"><span class="pre">memcache</span></tt> Package<a class="headerlink" href="#module-gluon.contrib.memcache" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="gluon.contrib.memcache.MemcacheClient">
+<em class="property">
+class </em><tt class="descclassname">gluon.contrib.memcache.</tt><tt class="descname">MemcacheClient</tt><big>(</big><em>request</em>, <em>servers</em>, <em>debug=0</em>, <em>pickleProtocol=0</em>, <em>pickler=&lt;built-in function Pickler&gt;</em>, <em>unpickler=&lt;built-in function Unpickler&gt;</em>, <em>pload=None</em>, <em>pid=None</em><big>)</big><a class="headerlink" href="#gluon.contrib.memcache.MemcacheClient" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a title="gluon.contrib.memcache.memcache.Client" class="reference internal" href="#gluon.contrib.memcache.memcache.Client"><tt class="xref docutils literal"><span class="pre">gluon.contrib.memcache.memcache.Client</span></tt></a></p>
+<dl class="method">
+<dt id="gluon.contrib.memcache.MemcacheClient.delete">
+<tt class="descname">delete</tt><big>(</big><em>key</em><big>)</big><a class="headerlink" href="#gluon.contrib.memcache.MemcacheClient.delete" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="gluon.contrib.memcache.MemcacheClient.get">
+<tt class="descname">get</tt><big>(</big><em>key</em><big>)</big><a class="headerlink" href="#gluon.contrib.memcache.MemcacheClient.get" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="gluon.contrib.memcache.MemcacheClient.increment">
+<tt class="descname">increment</tt><big>(</big><em>key</em>, <em>value=1</em>, <em>time_expire=300</em><big>)</big><a class="headerlink" href="#gluon.contrib.memcache.MemcacheClient.increment" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="gluon.contrib.memcache.MemcacheClient.set">
+<tt class="descname">set</tt><big>(</big><em>key</em>, <em>value</em>, <em>time_expire=300</em><big>)</big><a class="headerlink" href="#gluon.contrib.memcache.MemcacheClient.set" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../index.html">
+              <img class="logo" src="../_static/logo_colored_small.png" alt="Logo"/>
+            </a></p>
+            <h3><a href="../index.html">Table Of Contents</a></h3>
+            <ul>
+<li><a class="reference external" href="">Memcache Documentation</a><ul>
+<li><a class="reference external" href="#module-gluon.contrib.memcache.memcache">The <tt class="docutils literal"><span class="pre">memcache</span></tt> Module</a><ul>
+<li><a class="reference external" href="#overview">Overview</a></li>
+<li><a class="reference external" href="#usage-summary">Usage summary</a></li>
+<li><a class="reference external" href="#detailed-documentation">Detailed Documentation</a></li>
+</ul>
+</li>
+<li><a class="reference external" href="#module-gluon.contrib.memcache">The <tt class="docutils literal"><span class="pre">memcache</span></tt> Package</a></li>
+</ul>
+</li>
+</ul>
+
+            <h4>Previous topic</h4>
+            <p class="topless"><a href="gluon.contrib.markdown.html"
+                                  title="previous chapter">Markdown Documentation</a></p>
+            <h4>Next topic</h4>
+            <p class="topless"><a href="gluon.contrib.simplejson.html"
+                                  title="next chapter">Simplejson Documentation</a></p>
+            <h3>This Page</h3>
+            <ul class="this-page-menu">
+              <li><a href="../_sources/gluon/gluon.contrib.memcache.txt"
+                     rel="nofollow">Show Source</a></li>
+            </ul>
+          <div id="searchbox" style="display: none">
+            <h3>Quick search</h3>
+              <form class="search" action="../search.html" method="get">
+                <input type="text" name="q" size="18" />
+                <input type="submit" value="Go" />
+                <input type="hidden" name="check_keywords" value="yes" />
+                <input type="hidden" name="area" value="default" />
+              </form>
+              <p class="searchtip" style="font-size: 90%">
+              Enter search terms or a module, class or function name.
+              </p>
+          </div>
+          <script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../modindex.html" title="Global Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="gluon.contrib.simplejson.html" title="Simplejson Documentation"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="gluon.contrib.markdown.html" title="Markdown Documentation"
+             >previous</a> |</li>
+        <li><a href="../index.html">Web2Py v1.64.4 documentation</a> &raquo;</li>
+          <li><a href="../modules.html" >Web2Py Modules</a> &raquo;</li>
+          <li><a href="gluon.html" >Gluon Package</a> &raquo;</li>
+          <li><a href="gluon.contrib.html" >Contrib Documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+      &copy; Copyright 2009, The web2py developers.
+      Last updated on Jun 30, 2009.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 0.6.1.
+    </div>
+  </body>
+</html>

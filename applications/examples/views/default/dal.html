@@ -1,0 +1,167 @@
+{{extend 'layout.html'}}
+{{import os}}
+
+<h1>web2py<sup style="font-size:0.5em;">TM</sup> Database Abstraction Layer (DAL)</h1>
+
+<h2>Examples</h2>
+<h3>define_table, insert, count, delete, update</h3>
+{{=CODE("""
+db = DAL(‘postgres://user:password@hostname/db’, pool_size=10)
+db.define_table(‘person’,Field(’name’,’string’))
+id= db.person.insert(name=’max’)
+query=(db.person.id==id)
+db(query).count()
+db(query).delete()
+db(query).update(name=’Max’)
+rows = db(query).select(orderby=db.person.name)
+for row in rows: print row.name
+""".strip(),language='web2py',link=URL(r=request,c='global',f='vars'))}}
+
+<h3>Examples of uri strings for DAL</h3>
+<ul>
+<li>sqlite://test.db</li>
+<li>mysql://user:password@localhost/database</li>
+<li>postgres://user:password@localhost/database</li>
+<li>mssql://user:password@host/database</li>
+<li>firebird://user:password@server:3050/database</li>
+<li>oracle://user/password@database</li>
+</ul>
+
+<h3>Valid field Types</h3>
+<ul>
+<li>Field(name, 'string')</li>
+<li>Field(name, 'text')</li>
+<li>Field(name, 'password')</li>
+<li>Field(name, 'blob')</li>
+<li>Field(name, 'upload')</li>
+<li>Field(name, 'boolean')</li>
+<li>Field(name, 'integer')</li>
+<li>Field(name, 'double')</li>
+<li>Field(name, 'time')</li>
+<li>Field(name, 'date')</li>
+<li>Field(name, 'datetime')</li>
+<li>Field(name, db.referenced_table) # reference field</li>
+</ul>
+
+<h3>Valid Field Attribute</h3>
+<ul>
+<li>length (only for string type, defaults to 32)</li>
+<li>default (defaults to None)</li>
+<li>required (defaults to False)</li>
+<li>notnull (defaults to False)</li>
+<li>unique (defaults to False)</li>
+<li>requires (<a href="{{=URL(r=request,f='api')}}">validator or list of validators</a>,
+for forms)</li>
+<li>comment (for forms)</li>
+<li>widget (for forms)</li>
+<li>represent (for forms)</li>
+<li>readable (for forms)</li>
+<li>writable (for forms)</li>
+<li>update (default value if the record is updated)</li>
+<li>uploadfield (for upload fields)</li>
+<li>authorize (for upload fields, function to be used if data can be downloaded, see authentication)</li>
+<li>autodelete (for upload fields, if set to true linked uploaded images are removed upon deletion of the record)</li><li>label (for forms)</li>
+</ul>
+
+<h3>On Migrations</h3>
+Changing the list of fields or field types in a model, triggers an automatic migration, i.e. web2py generates SQL to alter the table accordingly. If the table does not exist it is created. Migration actions are logged in the file sql.log accessible via the admin/design interface.
+Migration can be turned off on a per-table basis by passing migrate=False to define_table.
+
+<h3>Select Attributes</h3>
+
+{{=CODE("rows = db(query).select(*fields, orderby=..., left=..., groupby=..., having=..., limitby=..., cache=...)")}}
+
+<h3>Shortcuts</h3>
+{{=CODE("""
+db['person']                   ### db.person
+db.person['name']              ### db.person.name
+db['person']['name']           ### db.person.name
+db.person[0]=dict(name='Max')  ### insert
+db.person[id]=dict(name='Max') ### update by db.person.id
+print db.person[id]            ### select by db.person.id
+del db.person[id]              ### delete by db.person.id
+""".strip(),language='web2py',link=URL(r=request,c='global',f='vars'))}}
+
+<h3>Truncate and Drop a table</h3>
+{{=CODE("""
+db.person.truncate()
+db.person.drop()""".strip(),language='web2py',link=URL(r=request,c='global',f='vars'))}}
+
+<h3>Reference Fields Inner joins</h3>
+{{=CODE("""
+db.define_table(‘dog’,Field(’name’))
+db.define_table(‘friendship’, Field(’person’,db.person), Field(‘dog’,db.dog))
+db.friendship.insert(person=id, dog=db.dog.insert(name=’Snoopy’))
+friends=(db.person.id==db.friendship.person)&(db.dog.id==db.friendship.dog)
+rows = db(friends).select(db.person.name, db.dog.name)
+for row in rows: print row.person.name, ’is friend of’, row.dog.name""".strip(),language='web2py',link=URL(r=request,c='global',f='vars'))}}
+
+<h3>Left Outer Joins</h3>
+{{=CODE("""
+query=(db.person.id>0)
+friends=(db.person.id==db.friendship.person)&(db.dog.id==db.friendship.dog)
+rows = db(query).select(db.person.name, db.dog.name, left=db.dog.on(friends))
+for row in rows: print row.person.name, ’is friend of’, row.dog.name or ‘nobody’""".strip(),language='web2py',link=URL(r=request,c='global',f='vars'))}}
+
+<h3>Complex queries</h3>
+{{=CODE("""
+query = (db.person.id==1)|((db.person.id==2)&(db.person.name==’Max’))
+query = (db.person.id==db.friendship.person)&(db.dog.id==db.friendship.dog)
+query = db.person.name.lower().like(‘m%’)
+query = db.person.id.belongs(('max','Max','MAX'))
+query = db.person.birth.year()+1==2008
+rows = db(query).select()""".strip(),language='web2py',link=URL(r=request,c='global',f='vars'))}}
+
+<h3>Nested selects</h3>
+{{=CODE("""
+query = db.person.id.belongs(db()._select(db.friendship.person)""".strip(),language='web2py',link=URL(r=request,c='global',f='vars'))}}
+
+<h3>Aggregates</h3>
+{{=CODE("""
+rows=db(friends).select(db.person.name,db.dog.id.count(),groupby=db.dog.id)""".strip(),language='web2py',link=URL(r=request,c='global',f='vars'))}}
+
+Aggregate functions db.table.field.count(), .max(), .min(), sum().
+
+<h3>Aliases</h3>
+
+{{=CODE("""
+person=db.person
+friendship=db.friendship
+puppy=db.dog.with_alias('puppy')
+query=(puppy.id==friendhip.dog)&(friendship.person==person.id)
+rows=db().select(person.name,puppy.name,left=puppy.on(query))
+""".strip(),language='web2py',link=URL(r=request,c='global',f='vars'))}}
+
+
+<h3>Caching</h3>
+{{=CODE("""
+rows=db().select(db.person.ALL,cache=(cache.ram,3600))
+""".strip(),language='web2py',link=URL(r=request,c='global',f='vars'))}}
+
+cache=(model,cache_timeout) where model can be cache.ram, cache.disk, cache.memcache or user defined caching model, cache_timeout is in seconds.
+
+<h3>CSV Input</h3>
+
+{{=CODE("db.person.import_from_csv_file(open(filename,’rb’))")}}
+
+<h3>CSV Output</h3>
+
+{{=CODE("str(rows)")}}
+
+<h3>HTML output</h3>
+
+{{=CODE("print rows.xml()")}}
+
+<h3>Set field validators</h3>
+{{=CODE("""
+db.person.name.requires=IS_NOT_IN_DB(db,db.person.name)
+db.friendship.person.requires=IS_IN_DB(db,db.person.id,’%(name)s’)""".strip(),language='web2py',link=URL(r=request,c='global',f='vars'))}}
+
+<h3>Generate and process a form from a model</h3>
+{{=CODE("""
+form = SQLFORM(db.friendship)
+if form.accepts(request.vars, session): response.flash=’record inserted’
+elif form.errors: response.flash=’form errors’""".strip(),language='web2py',link=URL(r=request,c='global',f='vars'))}}
+The form can then be displayed in a view with: 
+{{=CODE("{"+"{=form}"+"}",language='html')}}
+

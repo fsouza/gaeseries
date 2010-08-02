@@ -1,0 +1,137 @@
+{{extend 'layout.html'}}
+
+<h1>web2py<sup style="font-size:0.5em;">TM</sup> Enterprise Web Framework</h1>
+
+
+<p style="text-align:justify;">
+  Free and open source full-stack enterprise framework for agile development of fast, scalable, 
+  <a href="{{=URL(r=request,f='security')}}">
+    secure
+  </a>
+  and portable database-driven web-based applications. Written and programmable in
+  <a href="http://www.python.org">
+    Python
+  </a>
+  .
+  <br/>
+  <a href="{{=URL(r=request,f='download')}}">
+    {{=request.env.web2py_version}}
+  </a>
+  Created by
+  <a href="http://mycti.cti.depaul.edu/people/facultyInfo_mycti.asp?id=343">
+    Massimo Di Pierro
+  </a>
+  . &copy; 2007-2010.
+</p>
+
+<center>
+<a href="http://web2py.com/book"><img src="{{=URL(r=request,c='static',f='online_book_cover.jpg')}}"/></a>
+</center>
+
+<div style="text-align:justify; margin-top: 20px">
+<b>Created by a community of professionals</b> and University professors in Computer Science and Software Engineering.<hr />
+<b>Always backward compatible</b>. We have not broken backward compatibility since version 1.0 in 2007, and we pledge not to break it in the future. <hr />
+<b>Easy to run</b>. It requires no installation and no configuration.<hr />
+<b>Includes</b> <a href="http://launchpad.net/rocket"> a SSL-enabled and streaming-capable web server</a>, <a href="http://www.sqlite.org/">a relational database</a>, <a href="{{=URL('demo_admin','default','index')}}">a web-based integrated development environment and web-based management interface</a>, <a href="{{=URL(r=request,f='dal')}}">a Database Abstraction Layer</a> that writes SQL for you in real time, <a href="{{=URL(r=request,f='examples')}}">internationalization support</a>, <a href="{{=URL(r=request,f='tools',anchor='authentication')}}">multiple authentication methods</a>, <a href="{{=URL(r=request,f='tools',anchor='authorization')}}">role based access control</a>, <a href="{{=URL('demo_admin','default','errors',args='demo_app')}}">an error logging and ticketing system</a>, <a href="{{=URL(r=request,f='examples',anchor='cache_examples')}}">multiple caching methods for scalability</a>, <a href="http://www.jquery.com">the jQuery library</a> for <a href="{{=URL(r=request,f='examples',anchor='ajax_examples')}}">AJAX</a> and <a href="http://docs.jquery.com/Effects">effects</a>.<hr />
+<b>Runs on</b>
+<a href="{{=URL(r=request,f='download')}}">Windows</a>, <a href="{{=URL(r=request,f='download')}}">Mac</a>, <a href="{{=URL(r=request,f='download')}}">Unix/Linux</a>, <a href="http://code.google.com/appengine/">Google App Engine</a>, <a href="http://aws.amazon.com/ec2/">Amazon EC2</a>, and almost any web hosting via <a href="http://www.python.org">Python 2.4/2.5/2.6</a>, or <a href="http://java.com">Java</a> with <a href="http://sourceforge.net/projects/jython/">Jython</a>.<hr />
+<b>Runs with</b>
+<a href="http://www.apache.org">Apache</a>, <a href="http://www.lighttpd.net">Lighttpd</a>, <a href="http://www.cherokee-project.com/">Cherokee</a> and almost any other web server via <a href="http://en.wikipedia.org/wiki/Common_Gateway_Interface">CGI</a>, <a href="http://en.wikipedia.org/wiki/FastCGI">FastCGI</a>, <a href="http://en.wikipedia.org/wiki/Web_Server_Gateway_Interface">WSGI</a>, <a href="http://httpd.apache.org/docs/2.0/mod/mod_proxy.html">mod_proxy</a>, and/or <a href="http://en.wikipedia.org/wiki/Mod_python">mod_python</a>. It can embed third party <a href="http://web2py.com/examples/static/wsgi.jpg">WSGI apps and middleware</a>.<hr />
+<b>Talks to</b> 
+    <a href="http://www.sqlite.org/">SQLite</a>,
+    <a href="http://www.postgresql.org/">PostgreSQL</a>,
+    <a href="http://www.mysql.com/">MySQL</a>,
+    <a href="http://www.microsoft.com/sqlserver">MSSQL</a>,
+    <a href="http://www.firebirdsql.org/">FireBird</a>,
+    <a href="http://www.oracle.com/">Oracle</a>,
+    <a href="http://www-01.ibm.com/software/data/db2/">IBM DB2</a>,
+    <a href="http://www-01.ibm.com/software/data/informix/">Informix</a>,
+    <a href="http://www.ingres.com/">Ingres</a>, and 
+    <a href="http://code.google.com/appengine/">Google App Engine</a>.
+<hr />
+<b>Secure</b>
+It prevents the <a href="http://www.owasp.org/index.php/OWASP_Top_Ten_Project">most common types of vulnerabilities</a> including <a href="http://en.wikipedia.org/wiki/Cross-site_scripting">Cross Site Scripting</a>, <a href="http://en.wikipedia.org/wiki/SQL_injection">Injection Flaws</a>, and <a href="http://www.owasp.org/index.php/Top_10_2007-A3">Malicious File Execution</a>.<hr />
+
+<b>Enforces good Software Engineering practices</b> 
+(<a href="http://en.wikipedia.org/wiki/Model-view-controller">Model-View-Controller design</a>, <a href="http://en.wikipedia.org/wiki/Validate">Server-side form validation</a>, <a href="http://en.wikipedia.org/wiki/Postback">postbacks</a>)
+that make the code more readable, scalable, and maintainable.<hr />
+<b>Speaks multiple protocols</b>
+<a href="{{=URL(r=request,f='examples#form_examples')}}">HTML/XML</a>,
+<a href="{{=URL(r=request,f='examples#example_rss')}}">ATOM</a>,
+<a href="{{=URL(r=request,f='examples#example_rss')}}">RSS</a>,
+<a href="{{=URL(r=request,f='examples#example_rtf')}}">RTF</a>,
+<a href="{{=URL(r=request,f='examples#example_json')}}">JSON</a>,
+<a href="{{=URL(r=request,f='examples#example_wiki')}}">AJAX</a>,
+<a href="{{=URL(r=request,f='examples#xmlrpc_examples')}}">XML-RPC</a>,
+<a href="{{=URL(r=request,f='dal#csv')}}">CSV</a>, 
+<a href="http://en.wikipedia.org/wiki/REST">REST</a>,
+<a href="{{=URL(r=request,f='examples#example_wiki')}}">WIKI</a>,
+<a href="http://pyamf.org/">Flash/AMF</a>, and
+<a href="http://web2py.com/semantic">Linked Data (RDF)</a>.
+<hr />
+<b>Available under</b> the GPL2 License with an exception for easier commercialization of applications.</div>
+
+
+</div>
+<div class="sidebar">
+  User Groups:<br/>
+  <a href="http://groups.google.com/group/web2py">English</a>
+  <a href="http://groups.google.com/group/web2py-users-brazil">Brazil</a>
+  <a href="http://groups.google.com/group/web2py-usuarios">Spanish</a>
+<br/>
+<a href="http://wiki.web2py.com">
+  web2py Wiki
+</a>
+<br />
+<a href="http://www.web2pyslices.com/main/default/index">
+  web2pyslices
+</a>
+<br />
+<a href="http://web2py.uservoice.com">
+  uservoice
+</a>
+<br />
+<a href="{{=URL(r=request,f='examples')}}">
+  Quick Examples
+</a>
+<br/>
+<br/>
+<object type="application/x-shockwave-flash" width="150" height="100" data="http://www.vimeo.com/moogaloop.swf?clip_id=875433&amp;server=www.vimeo.com&amp;fullscreen=1&amp;show_title=1&amp;show_byline=1&amp;show_portrait=0&amp;color=">
+  <param name="quality" value="best" />
+  <param name="allowfullscreen" value="true" />
+  <param name="scale" value="showAll" />
+  <param name="movie" value="http://www.vimeo.com/moogaloop.swf?clip_id=875433&amp;server=www.vimeo.com&amp;fullscreen=1&amp;show_title=1&amp;show_byline=1&amp;show_portrait=0&amp;color="/>
+</object>
+<a href="http://www.vimeo.com/videos/search:web2py">
+  video tutorials
+</a>
+<br/>
+<br/>
+<a href="http://web2py.com/demo_admin">
+  <img src="{{=URL(r=request,c='static',f='demo.png')}}" width="150px"/>
+</a>
+<br/>
+<a href="http://web2py.com/demo_admin">
+  interactive demo
+</a>
+<br/>
+<br/>
+<a href="http://web2py.com/appliances">
+  <img src="{{=URL(r=request,c='static',f='kpax.png')}}" width="150px"/>
+</a>
+<br/>
+<a href="http://web2py.com/appliances">
+  free appliances
+</a>
+<br/>
+<br/>
+<a href="http://www3.clustrmaps.com/counter/maps.php?url=http://mdp.cti.depaul.edu" id="clustrMapsLink">
+  <img width="150px" src="http://www3.clustrmaps.com/counter/index2.php?url=http://mdp.cti.depaul.edu" style="border:0px;" alt="Locations of visitors to this page" title="Locations of visitors to this page" id="clustrMapsImg" onerror="this.onerror=null; this.src='http://www2.clustrmaps.com/images/clustrmaps-back-soon.jpg'; document.getElementById('clustrMapsLink').href='http://www2.clustrmaps.com'" />
+</a>
+<br/>
+<br/>
+<center>
+<object width="125" height="125"><param name="movie" value="http://widget.chipin.com/widget/id/3fd524816850020c"></param><param name="allowScriptAccess" value="always"></param><param name="wmode" value="transparent"></param><param name="color_scheme" value="red"></param><embed src="http://widget.chipin.com/widget/id/3fd524816850020c" flashVars="color_scheme=red" type="application/x-shockwave-flash" allowScriptAccess="always" wmode="transparent" width="125" height="125"></embed></object>
+</center>
+<br/>
+

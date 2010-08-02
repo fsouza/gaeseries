@@ -1,0 +1,291 @@
+{{extend 'layout.html'}} {{import os}}
+
+<h1>web2py<sup style="font-size:0.5em;">TM</sup> Tools</h1>
+
+<p>Since version 1.56 web2py includes tools for <a href="#authentication">authentication</a>, <a href="#authorization">authorization</a>, <a href="#crud">CRUD</a>, <a href="#services">web services</a>, and <a href="#fetch">more</a>. They are implemented so that they do not require JOINs and work on Google App Engine as well. </p>
+
+<h2 id="authentication">Authentication</h2>
+
+<p>The basic authentication tool is the <b>Auth</b> class. It provides methods that can be used as controller actions to register users (with optional <a href="http://recaptcha.net/" target=_blank>Recaptcha</a> support), log them in and out, allow email verification, password change, password reset and retrieval, editing user profile.</p>
+
+<p>These functionalities can then be used as the basis for <a href="{{URL(r=request,c='default',f='#authorization')}}">authorization</a>.</p>
+
+<p>The Auth calls can be extended, personalized, and replaced by other authentication mechanisms which expose a similar interface.</p>
+
+<p>To use authentication, write something like this in a model file:</p>
+
+{{=CODE("""
+from gluon.tools import Mail, Auth, Recaptcha
+
+mail = Mail()
+## specify your SMTP server
+mail.settings.server = 'smtp.yourdomain.com:25'
+## specify your email address
+mail.settings.sender = 'you@yourdomain.com'
+## optional: specify the username and password for SMTP
+mail.settings.login = 'username@password'
+
+## instantiate the Auth class (or your derived class)
+auth = Auth(globals(), db)
+## ask it to create all necessary tables
+auth.define_tables()
+## optional: require email verification for registration
+# auth.settings.mailer = mail
+## optional: if you require captcha verification for registration
+# auth.settings.captcha = Recaptcha(request,public_key='RECAPTCHA_PUBLIC_KEY',private_key='RECAPTCHA_PRIVATE_KEY')
+""".strip(),language='web2py',link=URL(r=request,c='global',f='vars'))}}
+
+<p>In your controller (for example in <b>default.py</b>) expose the <b>auth</b> object (for example via a <b>user</b> action):
+
+{{=CODE("""
+def user():
+    return dict(form = auth())
+""".strip(),language='web2py',link=URL(r=request,c='global',f='vars'))}}
+
+<p>The above action will expose the following URLs</p>
+<ul>
+<li>http://locahost:8000/application/default/user/register</li>
+<li>http://locahost:8000/application/default/user/login</li>
+<li>http://locahost:8000/application/default/user/logout</li>
+<li>http://locahost:8000/application/default/user/verify_email</li>
+<li>http://locahost:8000/application/default/user/profile</li>
+<li>http://locahost:8000/application/default/user/change_password</li>
+<li>http://locahost:8000/application/default/user/retrieve_password</li>
+<li>http://locahost:8000/application/default/user/groups</li>
+</ul>
+
+<p>The groups page shows a list of roles and description for the groups the logged-in user is a member of (see <a href="#authorization">authorization</a>).</p>
+
+<p>You can check if a user is logged in via <b>auth.is_logged_in()</b>. If a user is logged in its record information can be found in <b>auth.user</b>. By default a user is stored in a table called "auth_user" and has the following columns: first_name, last_name, email, password. Password is stored encrypted (md5 hashed or stronger). You can change the table name, define your own table with more fields, require additional validators. </p>
+
+<p>All authentication events are logged in a table called "auth_event".</p> 
+
+<h3>Custom Authentication</h3>
+
+<p>You can customize the auth object by changing its settings anf messages:
+
+{{=CODE("""
+auth.messages.access_denied = 'Insufficient privileges'
+auth.messages.logged_in = 'Logged in'
+auth.messages.email_sent = 'Email sent'
+auth.messages.unable_to_send_email = 'Unable to send email'
+auth.messages.email_verified = 'Email verified'
+auth.messages.logged_out = 'Logged out'
+auth.messages.registration_successful = 'Registration successful'
+auth.messages.invalid_email = 'Invalid email'
+auth.messages.invalid_login = 'Invalid login'
+auth.messages.invalid_user = 'Invalid user'
+auth.messages.mismatched_password = "Password fields don't match"
+auth.messages.verify_email = 
+  'Click on the link http://...verify_email/%(key)s to verify your email'
+auth.messages.verify_email_subject = 'Password verify'
+auth.messages.username_sent = 'Your username was emailed to you'
+auth.messages.new_password_sent = 'A new password was emailed to you'
+auth.messages.password_changed = 'Password changed'
+auth.messages.retrieve_username = 'Your username is: %(username)s'
+auth.messages.retrieve_username_subject = 'Username retrieve'
+auth.messages.retrieve_password = 'Your password is: %(password)s'
+auth.messages.retrieve_password_subject = 'Password retrieve'
+auth.messages.profile_updated = 'Profile updated'
+auth.messages.new_password = 'New password'
+auth.messages.old_password = 'Old password'
+  """.strip(),language='web2py',link=URL(r=request,c='global',f='vars'))}}  
+
+<p>Strings can be translated in the usual way even if there is not T operator</p>
+<p>Views are handled the usual web2py way.</p>
+
+<p>It also possible to use custom tables. For example a custom user table:</p>
+
+{{=CODE("""
+# instantiate auth
+auth=Auth(globals(),db)
+
+auth.settings.table_user = db.define_table('auth_user',    
+    Field('first_name', length=512,default=''),
+    Field('last_name', length=512,default=''),
+    Field('email', length=512,default='',
+          requires = [IS_EMAIL(),IS_NOT_IN_DB(db,'auth_user.email')]),
+    Field('password', 'password', readable=False,
+          label='Password',
+          requires=CRYPT(auth.settings.hmac_key)),
+    Field('registration_key', length=512,
+          writable=False, readable=False,default=''),
+    Field('reset_password_key', length=512,
+          writable=False, readable=False, default=''))
+
+# define any other requires table
+auth.define_tables()
+
+""".strip(),language='web2py',link=URL(r=request,c='global',f='vars'))}}
+
+<p>One can add any other field that is needed as long as the fields in the example are there.</p>
+
+
+<h2 id="authorization">Authorization</h2>
+
+<p>Once you have a user identified by <b>user.id</b>, you can create a group (for example "Manager")</p>
+
+{{=CODE("""
+group_id = auth.add_group(role = "Manager", description = "example of a group")
+""".strip(),language='web2py',link=URL(r=request,c='global',f='vars'),counter=None)}}
+
+<p>make the user a member:</p>
+
+{{=CODE("""
+auth.add_membership(group_id,user_id)
+""".strip(),language='web2py',link=URL(r=request,c='global',f='vars'),counter=None)}}
+
+<p>and assign permissions to all members of the group:</p>
+
+{{=CODE("""
+auth.add_permission(group_id,'create','tablename',record_id)
+""".strip(),language='web2py',link=URL(r=request,c='global',f='vars'),counter=None)}}
+
+<p>Now you can enforce permissions using the following decorators:</p>
+
+{{=CODE("""
+auth.settings.on_failed_authorization=URL(r=request,f='error')
+
+@auth.requires_login()
+def some_function1():
+    return dict()
+
+@auth.requires_membership('Manager')
+def some_function2():
+    return dict()
+
+@auth.requires_permission('create','tablename',1)
+def some_function3():
+    return dict()
+
+def error():
+    return dict(message = T("not authorized"))
+""".strip(),language='web2py',link=URL(r=request,c='global',f='vars'))}}
+
+<p>Group roles are conventional. Permission names are also conventional. If one group has a certain permission on record_id==0 (default), it means the user has the permission on any record.<p>
+
+<p>Some permission names ("tables", "select", "create", "update", "delete", "read") have a special meaning because they can be automatically enforced by the CRUD tool described below.</p>
+
+<h2 id="crud">Create/Read/Update/Delete and more</h2>
+
+<p>To use CRUD, in your model insert the following code:</p>
+
+{{=CODE("""
+from gluon.tools import Crud
+crud = Crud(globals(),db)
+""".strip(),language='web2py',link=URL(r=request,c='global',f='vars'))}}
+
+<p>and in a controller (for example in <b>default.py</b>) expose it via an action (for example <b>data</b>):</p>
+
+{{=CODE("""
+def data():
+    return dict(form = crud())
+
+def download():
+    return response.download(request, db)
+""".strip(),language='web2py',link=URL(r=request,c='global',f='vars'))}}
+
+<p>This will expose the following URLs:</p>
+
+<ul>
+<li>http://locahost:8000/application/default/data/tables</li>
+<li>http://locahost:8000/application/default/data/select/<i>tablename</i></li>
+<li>http://locahost:8000/application/default/data/create/<i>tablename</i></li>
+<li>http://locahost:8000/application/default/data/read/<i>tablename</i>/<i>record_id</i></li>
+<li>http://locahost:8000/application/default/data/update/<i>tablename</i>/<i>record_id</i></li>
+<li>http://locahost:8000/application/default/data/delete/<i>tablename</i>/<i>record_id</i></li>
+<li>http://locahost:8000/application/default/download/<i>filename</i></li>
+</ul>
+
+<p>"tables" list of current database tables.</p>
+
+<p>"download" only allows to download uploaded files (whether they are in the uploads folder or in the database).</p>
+
+
+<p>To enforce authorization on these CRUD URLs simply set</p>
+{{=CODE("""
+crud.settings.auth=auth
+""".strip(),language='web2py',link=URL(r=request,c='global',f='vars'))}}
+
+<p>and the logged in user will only be able to "create" a record in table "tablename" if the user is a member of a group that has "create" permission on table "tablename". The same mechanism works for tables, select, read, update, and delete URLs.</p>
+
+<h2 id="services">Services</h2>
+
+<p>Web2py provides an interface to expose any function as a service (CSV, XML, JSON, XMLRPC, JSONRPC, AMF)</p>
+
+This is achieved in three steps:
+<ul>
+<li>Create an instance of the Service object in a model or controller
+{{=CODE("""
+from gluon.tools import Service
+service = Service(globals())
+""".strip(),language='web2py')}}
+</li>
+<li>Expose the the object via an action called, for example, 'call'
+{{=CODE("""
+def call(): return service()
+""".strip(),language='web2py')}}
+</li>
+<li>Decorate all the functions that you want to expose, using one ore more of the following decorators
+{{=CODE("""
+@service.run
+@service.csv
+@service.xml
+@service.json
+@service.xmlrpc
+@service.jsonrpc
+@service.pyamf
+def myfunction(a,b): return a+b
+""".strip(),language='web2py')}}
+</li>
+</ul>
+<p>The function can now be called remotely using the syntax
+{{=CODE("""
+http://..../app/default/call/[method]/[function]/[arguments]
+""".strip(),language='web2py')}}
+or
+{{=CODE("""
+http://..../app/default/call/[method]/[function]?[arguments]
+""".strip(),language='web2py')}}
+for example
+
+{{=CODE("""
+http://..../app/default/call/run/myfunction/2/3
+http://..../app/default/call/json/myfunction/2/3
+""".strip(),language='web2py')}}
+or
+{{=CODE("""
+http://..../app/default/call/run/myfunction?a=2&b=3
+http://..../app/default/call/json/myfunction?a=2&b=3
+""".strip(),language='web2py')}}
+</p>
+<p><b>Caveats:</b>
+csv only works if the function returns a list of list. amfrpc only works if PyAMF is installed. In the case of xmlrpc, jsonrpc and amfrpc, the arguments (/myfunction/2/3) cannot be passed in the URI, they must be passed according to the respective protocol. For example for xmlrpc from another python program:
+{{=CODE("""
+>>> from xmlrpclib import ServerProxy
+>>> server = ServerProxy('http://..../app/default/call/xmlrpc')
+>>> print server.myfunction(2,3)
+""".strip(),language='web2py')}}
+</p>
+
+<h2 id="fetch">Fetch a URL</h2>
+
+<p>The Python module urllib does not work well on the Google App Engine. For this reason we created a portable function for fetching url that works everywhere, including GAE:</p>
+
+{{=CODE("""
+from gluon.tools import fetch
+html = fetch("http://www.web2py.com")
+""".strip(),language='web2py',link=URL(r=request,c='global',f='vars'))}}
+
+
+<h2 id="geocode">Geocoding</h2>
+
+<p>Another very common need of modern web applications is that of converting an address into latitude and longitude. We also provide a portable function to do it that uses the Google Geocoding API:</p>
+
+{{=CODE("""
+from gluon.tools import geocode
+(latitude, longitude) = geocode("243 S Wabash Ave, Chicago IL 60604, USA")
+""".strip(),language='web2py',link=URL(r=request,c='global',f='vars'))}}
+
+<p>It returns 0,0 on failure.</p>
+

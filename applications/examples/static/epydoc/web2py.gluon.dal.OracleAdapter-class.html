@@ -1,0 +1,988 @@
+<?xml version="1.0" encoding="ascii"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+          "DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>web2py.gluon.dal.OracleAdapter</title>
+  <link rel="stylesheet" href="epydoc.css" type="text/css" />
+  <script type="text/javascript" src="epydoc.js"></script>
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="#204080"
+      alink="#204080">
+<!-- ==================== NAVIGATION BAR ==================== -->
+<table class="navbar" border="0" width="100%" cellpadding="0"
+       bgcolor="#a0c0ff" cellspacing="0">
+  <tr valign="middle">
+  <!-- Home link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="web2py.gluon-module.html">Home</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Tree link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="module-tree.html">Trees</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Index link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="identifier-index.html">Indices</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Help link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Project homepage -->
+      <th class="navbar" align="right" width="100%">
+        <table border="0" cellpadding="0" cellspacing="0">
+          <tr><th class="navbar" align="center"
+            ><a class="navbar" target="_top" href="http://www.web2py.com">web2py Web Framework</a></th>
+          </tr></table></th>
+  </tr>
+</table>
+<table width="100%" cellpadding="0" cellspacing="0">
+  <tr valign="top">
+    <td width="100%">
+      <span class="breadcrumbs">
+        Package&nbsp;web2py ::
+        <a href="web2py.gluon-module.html">Package&nbsp;gluon</a> ::
+        <a href="web2py.gluon.dal-module.html">Module&nbsp;dal</a> ::
+        Class&nbsp;OracleAdapter
+      </span>
+    </td>
+    <td>
+      <table cellpadding="0" cellspacing="0">
+        <!-- hide/show private -->
+        <tr><td align="right"><span class="options">[<a href="javascript:void(0);" class="privatelink"
+    onclick="toggle_private();">hide&nbsp;private</a>]</span></td></tr>
+        <tr><td align="right"><span class="options"
+            >[<a href="frames.html" target="_top">frames</a
+            >]&nbsp;|&nbsp;<a href="web2py.gluon.dal.OracleAdapter-class.html"
+            target="_top">no&nbsp;frames</a>]</span></td></tr>
+      </table>
+    </td>
+  </tr>
+</table>
+<!-- ==================== CLASS DESCRIPTION ==================== -->
+<h1 class="epydoc">Class OracleAdapter</h1><span class="codelink"><a href="web2py.gluon.dal-pysrc.html#OracleAdapter">source&nbsp;code</a></span><br /><br />
+<pre class="base-tree">
+    object --+        
+             |        
+<a href="web2py.gluon.dal.ConnectionPool-class.html">ConnectionPool</a> --+    
+                 |    
+       <a href="web2py.gluon.dal.BaseAdapter-class.html">BaseAdapter</a> --+
+                     |
+                    <strong class="uidshort">OracleAdapter</strong>
+</pre>
+
+<hr />
+<!-- ==================== INSTANCE METHODS ==================== -->
+<a name="section-InstanceMethods"></a>
+<table class="summary" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td colspan="2" class="table-header">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><span class="table-header">Instance Methods</span></td>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-InstanceMethods"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="web2py.gluon.dal.OracleAdapter-class.html#sequence_name" class="summary-sig-name">sequence_name</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">table</span>)</span></td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="web2py.gluon.dal-pysrc.html#OracleAdapter.sequence_name">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="web2py.gluon.dal.OracleAdapter-class.html#trigger_name" class="summary-sig-name">trigger_name</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">table</span>)</span></td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="web2py.gluon.dal-pysrc.html#OracleAdapter.trigger_name">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="web2py.gluon.dal.OracleAdapter-class.html#LEFT_JOIN" class="summary-sig-name">LEFT_JOIN</a>(<span class="summary-sig-arg">self</span>)</span></td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="web2py.gluon.dal-pysrc.html#OracleAdapter.LEFT_JOIN">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="web2py.gluon.dal.OracleAdapter-class.html#RANDOM" class="summary-sig-name">RANDOM</a>(<span class="summary-sig-arg">self</span>)</span></td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="web2py.gluon.dal-pysrc.html#OracleAdapter.RANDOM">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="web2py.gluon.dal.OracleAdapter-class.html#NOT_NULL" class="summary-sig-name">NOT_NULL</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">default</span>,
+        <span class="summary-sig-arg">field_type</span>)</span></td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="web2py.gluon.dal-pysrc.html#OracleAdapter.NOT_NULL">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="web2py.gluon.dal.OracleAdapter-class.html#DROP" class="summary-sig-name">DROP</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">table</span>,
+        <span class="summary-sig-arg">mode</span>)</span></td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="web2py.gluon.dal-pysrc.html#OracleAdapter.DROP">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="web2py.gluon.dal.OracleAdapter-class.html#SELECT_LIMITBY" class="summary-sig-name">SELECT_LIMITBY</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">sql_s</span>,
+        <span class="summary-sig-arg">sql_f</span>,
+        <span class="summary-sig-arg">sql_t</span>,
+        <span class="summary-sig-arg">sql_w</span>,
+        <span class="summary-sig-arg">sql_o</span>,
+        <span class="summary-sig-arg">limitby</span>)</span></td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="web2py.gluon.dal-pysrc.html#OracleAdapter.SELECT_LIMITBY">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="web2py.gluon.dal.OracleAdapter-class.html#constraint_name" class="summary-sig-name">constraint_name</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">tablename</span>,
+        <span class="summary-sig-arg">fieldname</span>)</span></td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="web2py.gluon.dal-pysrc.html#OracleAdapter.constraint_name">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="web2py.gluon.dal.OracleAdapter-class.html#represent_exceptions" class="summary-sig-name">represent_exceptions</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">obj</span>,
+        <span class="summary-sig-arg">fieldtype</span>)</span></td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="web2py.gluon.dal-pysrc.html#OracleAdapter.represent_exceptions">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="web2py.gluon.dal.OracleAdapter-class.html#__init__" class="summary-sig-name">__init__</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">db</span>,
+        <span class="summary-sig-arg">uri</span>,
+        <span class="summary-sig-arg">pool_size</span>=<span class="summary-sig-default">0</span>,
+        <span class="summary-sig-arg">folder</span>=<span class="summary-sig-default">1</span>,
+        <span class="summary-sig-arg">db_codec</span>=<span class="summary-sig-default"><code class="variable-quote">'</code><code class="variable-string">UTF-8</code><code class="variable-quote">'</code></span>)</span><br />
+      x.__init__(...) initializes x; see x.__class__.__doc__ for 
+      signature</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="web2py.gluon.dal-pysrc.html#OracleAdapter.__init__">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="web2py.gluon.dal.OracleAdapter-class.html#execute" class="summary-sig-name">execute</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">command</span>)</span></td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="web2py.gluon.dal-pysrc.html#OracleAdapter.execute">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="web2py.gluon.dal.OracleAdapter-class.html#create_sequence_and_triggers" class="summary-sig-name">create_sequence_and_triggers</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">query</span>,
+        <span class="summary-sig-arg">table</span>,
+        <span class="summary-sig-arg">**args</span>)</span></td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="web2py.gluon.dal-pysrc.html#OracleAdapter.create_sequence_and_triggers">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="web2py.gluon.dal.OracleAdapter-class.html#commit_on_alter_table" class="summary-sig-name">commit_on_alter_table</a>(<span class="summary-sig-arg">self</span>)</span></td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="web2py.gluon.dal-pysrc.html#OracleAdapter.commit_on_alter_table">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="web2py.gluon.dal.OracleAdapter-class.html#lastrowid" class="summary-sig-name">lastrowid</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">table</span>)</span></td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="web2py.gluon.dal-pysrc.html#OracleAdapter.lastrowid">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+  <tr>
+    <td colspan="2" class="summary">
+    <p class="indent-wrapped-lines"><b>Inherited from <code><a href="web2py.gluon.dal.BaseAdapter-class.html">BaseAdapter</a></code></b>:
+      <code><a href="web2py.gluon.dal.BaseAdapter-class.html#ADD">ADD</a></code>,
+      <code><a href="web2py.gluon.dal.BaseAdapter-class.html#AGGREGATE">AGGREGATE</a></code>,
+      <code><a href="web2py.gluon.dal.BaseAdapter-class.html#AND">AND</a></code>,
+      <code><a href="web2py.gluon.dal.BaseAdapter-class.html#AS">AS</a></code>,
+      <code><a href="web2py.gluon.dal.BaseAdapter-class.html#BELONGS">BELONGS</a></code>,
+      <code><a href="web2py.gluon.dal.BaseAdapter-class.html#COMMA">COMMA</a></code>,
+      <code><a href="web2py.gluon.dal.BaseAdapter-class.html#COUNT">COUNT</a></code>,
+      <code><a href="web2py.gluon.dal.BaseAdapter-class.html#DELETE">DELETE</a></code>,
+      <code><a href="web2py.gluon.dal.BaseAdapter-class.html#DESC">DESC</a></code>,
+      <code><a href="web2py.gluon.dal.BaseAdapter-class.html#DIV">DIV</a></code>,
+      <code><a href="web2py.gluon.dal.BaseAdapter-class.html#EQ">EQ</a></code>,
+      <code><a href="web2py.gluon.dal.BaseAdapter-class.html#EXTRACT">EXTRACT</a></code>,
+      <code><a href="web2py.gluon.dal.BaseAdapter-class.html#GE">GE</a></code>,
+      <code><a href="web2py.gluon.dal.BaseAdapter-class.html#GT">GT</a></code>,
+      <code><a href="web2py.gluon.dal.BaseAdapter-class.html#INSERT">INSERT</a></code>,
+      <code><a href="web2py.gluon.dal.BaseAdapter-class.html#LE">LE</a></code>,
+      <code><a href="web2py.gluon.dal.BaseAdapter-class.html#LIKE">LIKE</a></code>,
+      <code><a href="web2py.gluon.dal.BaseAdapter-class.html#LOWER">LOWER</a></code>,
+      <code><a href="web2py.gluon.dal.BaseAdapter-class.html#LT">LT</a></code>,
+      <code><a href="web2py.gluon.dal.BaseAdapter-class.html#MUL">MUL</a></code>,
+      <code><a href="web2py.gluon.dal.BaseAdapter-class.html#NE">NE</a></code>,
+      <code><a href="web2py.gluon.dal.BaseAdapter-class.html#NOT">NOT</a></code>,
+      <code><a href="web2py.gluon.dal.BaseAdapter-class.html#ON">ON</a></code>,
+      <code><a href="web2py.gluon.dal.BaseAdapter-class.html#OR">OR</a></code>,
+      <code><a href="web2py.gluon.dal.BaseAdapter-class.html#PRIMARY_KEY">PRIMARY_KEY</a></code>,
+      <code><a href="web2py.gluon.dal.BaseAdapter-class.html#SELECT">SELECT</a></code>,
+      <code><a href="web2py.gluon.dal.BaseAdapter-class.html#SUB">SUB</a></code>,
+      <code><a href="web2py.gluon.dal.BaseAdapter-class.html#SUBSTRING">SUBSTRING</a></code>,
+      <code><a href="web2py.gluon.dal.BaseAdapter-class.html#TRUNCATE">TRUNCATE</a></code>,
+      <code><a href="web2py.gluon.dal.BaseAdapter-class.html#UPDATE">UPDATE</a></code>,
+      <code><a href="web2py.gluon.dal.BaseAdapter-class.html#UPPER">UPPER</a></code>,
+      <code><a href="web2py.gluon.dal.BaseAdapter-class.html#VERBATIM">VERBATIM</a></code>,
+      <code><a href="web2py.gluon.dal.BaseAdapter-class.html#alias">alias</a></code>,
+      <code><a href="web2py.gluon.dal.BaseAdapter-class.html#commit">commit</a></code>,
+      <code><a href="web2py.gluon.dal.BaseAdapter-class.html#commit_prepared">commit_prepared</a></code>,
+      <code><a href="web2py.gluon.dal.BaseAdapter-class.html#concat_add">concat_add</a></code>,
+      <code><a href="web2py.gluon.dal.BaseAdapter-class.html#count">count</a></code>,
+      <code><a href="web2py.gluon.dal.BaseAdapter-class.html#distributed_transaction_begin">distributed_transaction_begin</a></code>,
+      <code><a href="web2py.gluon.dal.BaseAdapter-class.html#expand">expand</a></code>,
+      <code><a href="web2py.gluon.dal.BaseAdapter-class.html#integrity_error_class">integrity_error_class</a></code>,
+      <code><a href="web2py.gluon.dal.BaseAdapter-class.html#log_execute">log_execute</a></code>,
+      <code><a href="web2py.gluon.dal.BaseAdapter-class.html#parse">parse</a></code>,
+      <code><a href="web2py.gluon.dal.BaseAdapter-class.html#prepare">prepare</a></code>,
+      <code><a href="web2py.gluon.dal.BaseAdapter-class.html#represent">represent</a></code>,
+      <code><a href="web2py.gluon.dal.BaseAdapter-class.html#rollback">rollback</a></code>,
+      <code><a href="web2py.gluon.dal.BaseAdapter-class.html#rollback_prepared">rollback_prepared</a></code>,
+      <code><a href="web2py.gluon.dal.BaseAdapter-class.html#rowslice">rowslice</a></code>,
+      <code><a href="web2py.gluon.dal.BaseAdapter-class.html#select">select</a></code>,
+      <code><a href="web2py.gluon.dal.BaseAdapter-class.html#support_distributed_transaction">support_distributed_transaction</a></code>,
+      <code><a href="web2py.gluon.dal.BaseAdapter-class.html#tables">tables</a></code>
+      </p>
+    <p class="indent-wrapped-lines"><b>Inherited from <code><a href="web2py.gluon.dal.ConnectionPool-class.html">ConnectionPool</a></code></b>:
+      <code><a href="web2py.gluon.dal.ConnectionPool-class.html#find_or_make_work_folder">find_or_make_work_folder</a></code>,
+      <code><a href="web2py.gluon.dal.ConnectionPool-class.html#pool_connection">pool_connection</a></code>
+      </p>
+    <p class="indent-wrapped-lines"><b>Inherited from <code>object</code></b>:
+      <code>__delattr__</code>,
+      <code>__getattribute__</code>,
+      <code>__hash__</code>,
+      <code>__new__</code>,
+      <code>__reduce__</code>,
+      <code>__reduce_ex__</code>,
+      <code>__repr__</code>,
+      <code>__setattr__</code>,
+      <code>__str__</code>
+      </p>
+    </td>
+  </tr>
+</table>
+<!-- ==================== STATIC METHODS ==================== -->
+<a name="section-StaticMethods"></a>
+<table class="summary" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td colspan="2" class="table-header">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><span class="table-header">Static Methods</span></td>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-StaticMethods"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+  <tr>
+    <td colspan="2" class="summary">
+    <p class="indent-wrapped-lines"><b>Inherited from <code><a href="web2py.gluon.dal.ConnectionPool-class.html">ConnectionPool</a></code></b>:
+      <code><a href="web2py.gluon.dal.ConnectionPool-class.html#close_all_instances">close_all_instances</a></code>,
+      <code><a href="web2py.gluon.dal.ConnectionPool-class.html#set_thread_folder">set_thread_folder</a></code>
+      </p>
+    </td>
+  </tr>
+</table>
+<!-- ==================== CLASS VARIABLES ==================== -->
+<a name="section-ClassVariables"></a>
+<table class="summary" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td colspan="2" class="table-header">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><span class="table-header">Class Variables</span></td>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-ClassVariables"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a href="web2py.gluon.dal.OracleAdapter-class.html#types" class="summary-name">types</a> = <code title="{'blob': 'CLOB',
+ 'boolean': 'CHAR(1)',
+ 'date': 'DATE',
+ 'datetime': 'DATE',
+ 'decimal': 'NUMERIC(%(precision)s,%(scale)s)',
+ 'double': 'FLOAT',
+ 'id': 'NUMBER PRIMARY KEY',
+ 'integer': 'INT',
+..."><code class="variable-group">{</code><code class="variable-quote">'</code><code class="variable-string">blob</code><code class="variable-quote">'</code><code class="variable-op">: </code><code class="variable-quote">'</code><code class="variable-string">CLOB</code><code class="variable-quote">'</code><code class="variable-op">, </code><code class="variable-quote">'</code><code class="variable-string">boolean</code><code class="variable-quote">'</code><code class="variable-op">: </code><code class="variable-quote">'</code><code class="variable-string">CHAR(1)</code><code class="variable-quote">'</code><code class="variable-op">, </code><code class="variable-quote">'</code><code class="variable-string">date</code><code class="variable-quote">'</code><code class="variable-op">: </code><code class="variable-quote">'</code><code class="variable-string">DATE</code><code class="variable-quote">'</code><code class="variable-op">,</code><code class="variable-ellipsis">...</code></code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a href="web2py.gluon.dal.OracleAdapter-class.html#oracle_fix" class="summary-name">oracle_fix</a> = <code title="re.compile(r'[^\']*(\'[^\']*\'[^\']*)*:(?P&lt;clob&gt;CLOB\(\'([^\']+|\'\')*\
+\'\))')">re.compile(r'<code class="re-group">[^</code>\'<code class="re-group">]</code><code class="re-op">*</code><code class="re-group">(</code>\'<code class="re-group">[^</code>\'<code class="re-group">]</code><code class="re-op">*</code>\'<code class="re-group">[^</code>\'<code class="re-group">]</code><code class="re-op">*</code><code class="re-group">)</code><code class="re-op">*</code>:<code class="re-group">(?P&lt;</code><code class="re-ref">clob</code><code class="re-group">&gt;</code>C<code class="variable-ellipsis">...</code></code>
+    </td>
+  </tr>
+  <tr>
+    <td colspan="2" class="summary">
+    <div class="private">    <p class="indent-wrapped-lines"><b>Inherited from <code><a href="web2py.gluon.dal.ConnectionPool-class.html">ConnectionPool</a></code></b> (private):
+      <code><a href="web2py.gluon.dal.ConnectionPool-class.html#_connection_pools">_connection_pools</a></code>,
+      <code><a href="web2py.gluon.dal.ConnectionPool-class.html#_folders">_folders</a></code>,
+      <code><a href="web2py.gluon.dal.ConnectionPool-class.html#_instances">_instances</a></code>
+      </p></div>
+    </td>
+  </tr>
+</table>
+<!-- ==================== PROPERTIES ==================== -->
+<a name="section-Properties"></a>
+<table class="summary" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td colspan="2" class="table-header">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><span class="table-header">Properties</span></td>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-Properties"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+  <tr>
+    <td colspan="2" class="summary">
+    <p class="indent-wrapped-lines"><b>Inherited from <code>object</code></b>:
+      <code>__class__</code>
+      </p>
+    </td>
+  </tr>
+</table>
+<!-- ==================== METHOD DETAILS ==================== -->
+<a name="section-MethodDetails"></a>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td colspan="2" class="table-header">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><span class="table-header">Method Details</span></td>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-MethodDetails"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+</table>
+<a name="sequence_name"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">sequence_name</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">table</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="web2py.gluon.dal-pysrc.html#OracleAdapter.sequence_name">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </table>
+  
+  
+  <dl class="fields">
+    <dt>Overrides:
+      <a href="web2py.gluon.dal.BaseAdapter-class.html#sequence_name">BaseAdapter.sequence_name</a>
+    </dt>
+  </dl>
+</td></tr></table>
+</div>
+<a name="trigger_name"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">trigger_name</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">table</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="web2py.gluon.dal-pysrc.html#OracleAdapter.trigger_name">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </table>
+  
+  
+  <dl class="fields">
+    <dt>Overrides:
+      <a href="web2py.gluon.dal.BaseAdapter-class.html#trigger_name">BaseAdapter.trigger_name</a>
+    </dt>
+  </dl>
+</td></tr></table>
+</div>
+<a name="LEFT_JOIN"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">LEFT_JOIN</span>(<span class="sig-arg">self</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="web2py.gluon.dal-pysrc.html#OracleAdapter.LEFT_JOIN">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </table>
+  
+  
+  <dl class="fields">
+    <dt>Overrides:
+      <a href="web2py.gluon.dal.BaseAdapter-class.html#LEFT_JOIN">BaseAdapter.LEFT_JOIN</a>
+    </dt>
+  </dl>
+</td></tr></table>
+</div>
+<a name="RANDOM"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">RANDOM</span>(<span class="sig-arg">self</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="web2py.gluon.dal-pysrc.html#OracleAdapter.RANDOM">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </table>
+  
+  
+  <dl class="fields">
+    <dt>Overrides:
+      <a href="web2py.gluon.dal.BaseAdapter-class.html#RANDOM">BaseAdapter.RANDOM</a>
+    </dt>
+  </dl>
+</td></tr></table>
+</div>
+<a name="NOT_NULL"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">NOT_NULL</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">default</span>,
+        <span class="sig-arg">field_type</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="web2py.gluon.dal-pysrc.html#OracleAdapter.NOT_NULL">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </table>
+  
+  
+  <dl class="fields">
+    <dt>Overrides:
+      <a href="web2py.gluon.dal.BaseAdapter-class.html#NOT_NULL">BaseAdapter.NOT_NULL</a>
+    </dt>
+  </dl>
+</td></tr></table>
+</div>
+<a name="DROP"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">DROP</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">table</span>,
+        <span class="sig-arg">mode</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="web2py.gluon.dal-pysrc.html#OracleAdapter.DROP">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </table>
+  
+  
+  <dl class="fields">
+    <dt>Overrides:
+      <a href="web2py.gluon.dal.BaseAdapter-class.html#DROP">BaseAdapter.DROP</a>
+    </dt>
+  </dl>
+</td></tr></table>
+</div>
+<a name="SELECT_LIMITBY"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">SELECT_LIMITBY</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">sql_s</span>,
+        <span class="sig-arg">sql_f</span>,
+        <span class="sig-arg">sql_t</span>,
+        <span class="sig-arg">sql_w</span>,
+        <span class="sig-arg">sql_o</span>,
+        <span class="sig-arg">limitby</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="web2py.gluon.dal-pysrc.html#OracleAdapter.SELECT_LIMITBY">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </table>
+  
+  
+  <dl class="fields">
+    <dt>Overrides:
+      <a href="web2py.gluon.dal.BaseAdapter-class.html#SELECT_LIMITBY">BaseAdapter.SELECT_LIMITBY</a>
+    </dt>
+  </dl>
+</td></tr></table>
+</div>
+<a name="constraint_name"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">constraint_name</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">tablename</span>,
+        <span class="sig-arg">fieldname</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="web2py.gluon.dal-pysrc.html#OracleAdapter.constraint_name">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </table>
+  
+  
+  <dl class="fields">
+    <dt>Overrides:
+      <a href="web2py.gluon.dal.BaseAdapter-class.html#constraint_name">BaseAdapter.constraint_name</a>
+    </dt>
+  </dl>
+</td></tr></table>
+</div>
+<a name="represent_exceptions"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">represent_exceptions</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">obj</span>,
+        <span class="sig-arg">fieldtype</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="web2py.gluon.dal-pysrc.html#OracleAdapter.represent_exceptions">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </table>
+  
+  
+  <dl class="fields">
+    <dt>Overrides:
+      <a href="web2py.gluon.dal.BaseAdapter-class.html#represent_exceptions">BaseAdapter.represent_exceptions</a>
+    </dt>
+  </dl>
+</td></tr></table>
+</div>
+<a name="__init__"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">__init__</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">db</span>,
+        <span class="sig-arg">uri</span>,
+        <span class="sig-arg">pool_size</span>=<span class="sig-default">0</span>,
+        <span class="sig-arg">folder</span>=<span class="sig-default">1</span>,
+        <span class="sig-arg">db_codec</span>=<span class="sig-default"><code class="variable-quote">'</code><code class="variable-string">UTF-8</code><code class="variable-quote">'</code></span>)</span>
+    <br /><em class="fname">(Constructor)</em>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="web2py.gluon.dal-pysrc.html#OracleAdapter.__init__">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </table>
+  
+  x.__init__(...) initializes x; see x.__class__.__doc__ for 
+  signature
+  <dl class="fields">
+    <dt>Overrides:
+      <a href="web2py.gluon.dal.BaseAdapter-class.html#__init__">BaseAdapter.__init__</a>
+    </dt>
+  </dl>
+</td></tr></table>
+</div>
+<a name="execute"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">execute</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">command</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="web2py.gluon.dal-pysrc.html#OracleAdapter.execute">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </table>
+  
+  
+  <dl class="fields">
+    <dt>Overrides:
+      <a href="web2py.gluon.dal.BaseAdapter-class.html#execute">BaseAdapter.execute</a>
+    </dt>
+  </dl>
+</td></tr></table>
+</div>
+<a name="create_sequence_and_triggers"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">create_sequence_and_triggers</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">query</span>,
+        <span class="sig-arg">table</span>,
+        <span class="sig-arg">**args</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="web2py.gluon.dal-pysrc.html#OracleAdapter.create_sequence_and_triggers">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </table>
+  
+  
+  <dl class="fields">
+    <dt>Overrides:
+      <a href="web2py.gluon.dal.BaseAdapter-class.html#create_sequence_and_triggers">BaseAdapter.create_sequence_and_triggers</a>
+    </dt>
+  </dl>
+</td></tr></table>
+</div>
+<a name="commit_on_alter_table"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">commit_on_alter_table</span>(<span class="sig-arg">self</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="web2py.gluon.dal-pysrc.html#OracleAdapter.commit_on_alter_table">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </table>
+  
+  
+  <dl class="fields">
+    <dt>Overrides:
+      <a href="web2py.gluon.dal.BaseAdapter-class.html#commit_on_alter_table">BaseAdapter.commit_on_alter_table</a>
+    </dt>
+  </dl>
+</td></tr></table>
+</div>
+<a name="lastrowid"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">lastrowid</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">table</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="web2py.gluon.dal-pysrc.html#OracleAdapter.lastrowid">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </table>
+  
+  
+  <dl class="fields">
+    <dt>Overrides:
+      <a href="web2py.gluon.dal.BaseAdapter-class.html#lastrowid">BaseAdapter.lastrowid</a>
+    </dt>
+  </dl>
+</td></tr></table>
+</div>
+<br />
+<!-- ==================== CLASS VARIABLE DETAILS ==================== -->
+<a name="section-ClassVariableDetails"></a>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td colspan="2" class="table-header">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><span class="table-header">Class Variable Details</span></td>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-ClassVariableDetails"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+</table>
+<a name="types"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <h3 class="epydoc">types</h3>
+  
+  <dl class="fields">
+  </dl>
+  <dl class="fields">
+    <dt>Value:</dt>
+      <dd><table><tr><td><pre class="variable">
+<code class="variable-group">{</code><code class="variable-quote">'</code><code class="variable-string">blob</code><code class="variable-quote">'</code><code class="variable-op">: </code><code class="variable-quote">'</code><code class="variable-string">CLOB</code><code class="variable-quote">'</code><code class="variable-op">,</code>
+ <code class="variable-quote">'</code><code class="variable-string">boolean</code><code class="variable-quote">'</code><code class="variable-op">: </code><code class="variable-quote">'</code><code class="variable-string">CHAR(1)</code><code class="variable-quote">'</code><code class="variable-op">,</code>
+ <code class="variable-quote">'</code><code class="variable-string">date</code><code class="variable-quote">'</code><code class="variable-op">: </code><code class="variable-quote">'</code><code class="variable-string">DATE</code><code class="variable-quote">'</code><code class="variable-op">,</code>
+ <code class="variable-quote">'</code><code class="variable-string">datetime</code><code class="variable-quote">'</code><code class="variable-op">: </code><code class="variable-quote">'</code><code class="variable-string">DATE</code><code class="variable-quote">'</code><code class="variable-op">,</code>
+ <code class="variable-quote">'</code><code class="variable-string">decimal</code><code class="variable-quote">'</code><code class="variable-op">: </code><code class="variable-quote">'</code><code class="variable-string">NUMERIC(%(precision)s,%(scale)s)</code><code class="variable-quote">'</code><code class="variable-op">,</code>
+ <code class="variable-quote">'</code><code class="variable-string">double</code><code class="variable-quote">'</code><code class="variable-op">: </code><code class="variable-quote">'</code><code class="variable-string">FLOAT</code><code class="variable-quote">'</code><code class="variable-op">,</code>
+ <code class="variable-quote">'</code><code class="variable-string">id</code><code class="variable-quote">'</code><code class="variable-op">: </code><code class="variable-quote">'</code><code class="variable-string">NUMBER PRIMARY KEY</code><code class="variable-quote">'</code><code class="variable-op">,</code>
+ <code class="variable-quote">'</code><code class="variable-string">integer</code><code class="variable-quote">'</code><code class="variable-op">: </code><code class="variable-quote">'</code><code class="variable-string">INT</code><code class="variable-quote">'</code><code class="variable-op">,</code>
+<code class="variable-ellipsis">...</code>
+</pre></td></tr></table>
+</dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="oracle_fix"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <h3 class="epydoc">oracle_fix</h3>
+  
+  <dl class="fields">
+  </dl>
+  <dl class="fields">
+    <dt>Value:</dt>
+      <dd><table><tr><td><pre class="variable">
+re.compile(r'<code class="re-group">[^</code>\'<code class="re-group">]</code><code class="re-op">*</code><code class="re-group">(</code>\'<code class="re-group">[^</code>\'<code class="re-group">]</code><code class="re-op">*</code>\'<code class="re-group">[^</code>\'<code class="re-group">]</code><code class="re-op">*</code><code class="re-group">)</code><code class="re-op">*</code>:<code class="re-group">(?P&lt;</code><code class="re-ref">clob</code><code class="re-group">&gt;</code>CLOB\(\'<code class="re-group">(</code><code class="re-group">[^</code>\'<code class="re-group">]</code><code class="re-op">+</code><code class="re-op">|</code>\'\'<code class="re-group">)</code><code class="re-op">*</code><span class="variable-linewrap"><img src="crarr.png" alt="\" /></span>
+\'\)<code class="re-group">)</code>')
+</pre></td></tr></table>
+</dd>
+  </dl>
+</td></tr></table>
+</div>
+<br />
+<!-- ==================== NAVIGATION BAR ==================== -->
+<table class="navbar" border="0" width="100%" cellpadding="0"
+       bgcolor="#a0c0ff" cellspacing="0">
+  <tr valign="middle">
+  <!-- Home link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="web2py.gluon-module.html">Home</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Tree link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="module-tree.html">Trees</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Index link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="identifier-index.html">Indices</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Help link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Project homepage -->
+      <th class="navbar" align="right" width="100%">
+        <table border="0" cellpadding="0" cellspacing="0">
+          <tr><th class="navbar" align="center"
+            ><a class="navbar" target="_top" href="http://www.web2py.com">web2py Web Framework</a></th>
+          </tr></table></th>
+  </tr>
+</table>
+<table border="0" cellpadding="0" cellspacing="0" width="100%%">
+  <tr>
+    <td align="left" class="footer">
+    Generated by Epydoc 3.0beta1 on Thu Jul 22 23:56:11 2010
+    </td>
+    <td align="right" class="footer">
+      <a href="http://epydoc.sourceforge.net">http://epydoc.sourceforge.net</a>
+    </td>
+  </tr>
+</table>
+
+<script type="text/javascript">
+  <!--
+  // Private objects are initially displayed (because if
+  // javascript is turned off then we want them to be
+  // visible); but by default, we want to hide them.  So hide
+  // them unless we have a cookie that says to show them.
+  checkCookie()
+  // -->
+</script>
+  
+</body>
+</html>

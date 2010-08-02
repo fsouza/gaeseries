@@ -1,0 +1,653 @@
+<?xml version="1.0" encoding="ascii"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+          "DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>web2py.gluon.compileapp</title>
+  <link rel="stylesheet" href="epydoc.css" type="text/css" />
+  <script type="text/javascript" src="epydoc.js"></script>
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="#204080"
+      alink="#204080">
+<!-- ==================== NAVIGATION BAR ==================== -->
+<table class="navbar" border="0" width="100%" cellpadding="0"
+       bgcolor="#a0c0ff" cellspacing="0">
+  <tr valign="middle">
+  <!-- Home link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="web2py.gluon-module.html">Home</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Tree link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="module-tree.html">Trees</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Index link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="identifier-index.html">Indices</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Help link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Project homepage -->
+      <th class="navbar" align="right" width="100%">
+        <table border="0" cellpadding="0" cellspacing="0">
+          <tr><th class="navbar" align="center"
+            ><a class="navbar" target="_top" href="http://www.web2py.com">web2py Web Framework</a></th>
+          </tr></table></th>
+  </tr>
+</table>
+<table width="100%" cellpadding="0" cellspacing="0">
+  <tr valign="top">
+    <td width="100%">
+      <span class="breadcrumbs">
+        Package&nbsp;web2py ::
+        <a href="web2py.gluon-module.html">Package&nbsp;gluon</a> ::
+        Module&nbsp;compileapp
+      </span>
+    </td>
+    <td>
+      <table cellpadding="0" cellspacing="0">
+        <!-- hide/show private -->
+        <tr><td align="right"><span class="options">[<a href="javascript:void(0);" class="privatelink"
+    onclick="toggle_private();">hide&nbsp;private</a>]</span></td></tr>
+        <tr><td align="right"><span class="options"
+            >[<a href="frames.html" target="_top">frames</a
+            >]&nbsp;|&nbsp;<a href="web2py.gluon.compileapp-module.html"
+            target="_top">no&nbsp;frames</a>]</span></td></tr>
+      </table>
+    </td>
+  </tr>
+</table>
+<!-- ==================== MODULE DESCRIPTION ==================== -->
+<h1 class="epydoc">Module compileapp</h1><span class="codelink"><a href="web2py.gluon.compileapp-pysrc.html">source&nbsp;code</a></span><br /><br />
+This file is part of web2py Web Framework (Copyrighted, 2007-2010). 
+  Developed by Massimo Di Pierro &lt;mdipierro@cs.depaul.edu&gt;. License: 
+  GPL v2
+  <h1 class="heading">Functions required to execute app components</h1>
+    FOR INTERNAL USE ONLY<br /><br />
+
+<!-- ==================== CLASSES ==================== -->
+<a name="section-Classes"></a>
+<table class="summary" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td colspan="2" class="table-header">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><span class="table-header">Classes</span></td>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-Classes"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a href="web2py.gluon.compileapp.LoadFactory-class.html" class="summary-name">LoadFactory</a><br />
+      Attention: this helper is new and experimental
+    </td>
+  </tr>
+</table>
+<!-- ==================== FUNCTIONS ==================== -->
+<a name="section-Functions"></a>
+<table class="summary" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td colspan="2" class="table-header">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><span class="table-header">Functions</span></td>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-Functions"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="web2py.gluon.compileapp-module.html#local_import_aux" class="summary-sig-name">local_import_aux</a>(<span class="summary-sig-arg">name</span>,
+        <span class="summary-sig-arg">force</span>=<span class="summary-sig-default">False</span>,
+        <span class="summary-sig-arg">app</span>=<span class="summary-sig-default"><code class="variable-quote">'</code><code class="variable-string">welcome</code><code class="variable-quote">'</code></span>)</span><br />
+      In apps, instead of importing a local module
+(in applications/app/modules) with::
+
+   import a.b.c as d
+
+you should do::
+
+   d = local_import('a.b.c')
+
+or (to force a reload):
+
+   d = local_import('a.b.c', reload=True)
+
+This prevents conflict between applications and un-necessary execs.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="web2py.gluon.compileapp-pysrc.html#local_import_aux">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="build_environment"></a><span class="summary-sig-name">build_environment</span>(<span class="summary-sig-arg">request</span>,
+        <span class="summary-sig-arg">response</span>,
+        <span class="summary-sig-arg">session</span>)</span><br />
+      Build the environment dictionary into which web2py files are 
+      executed.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="web2py.gluon.compileapp-pysrc.html#build_environment">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="save_pyc"></a><span class="summary-sig-name">save_pyc</span>(<span class="summary-sig-arg">filename</span>)</span><br />
+      Bytecode compiles the file `filename`</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="web2py.gluon.compileapp-pysrc.html#save_pyc">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="web2py.gluon.compileapp-module.html#read_pyc" class="summary-sig-name">read_pyc</a>(<span class="summary-sig-arg">filename</span>)</span><br />
+      Read the code inside a bytecode compiled file if the MAGIC number 
+      is compatible</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="web2py.gluon.compileapp-pysrc.html#read_pyc">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="compile_views"></a><span class="summary-sig-name">compile_views</span>(<span class="summary-sig-arg">folder</span>)</span><br />
+      Compiles all the views in the application specified by 
+      `folder`</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="web2py.gluon.compileapp-pysrc.html#compile_views">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="compile_models"></a><span class="summary-sig-name">compile_models</span>(<span class="summary-sig-arg">folder</span>)</span><br />
+      Compiles all the models in the application specified by 
+      `folder`</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="web2py.gluon.compileapp-pysrc.html#compile_models">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="compile_controllers"></a><span class="summary-sig-name">compile_controllers</span>(<span class="summary-sig-arg">folder</span>)</span><br />
+      Compiles all the controllers in the application specified by 
+      `folder`</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="web2py.gluon.compileapp-pysrc.html#compile_controllers">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="run_models_in"></a><span class="summary-sig-name">run_models_in</span>(<span class="summary-sig-arg">environment</span>)</span><br />
+      Runs all models (in the app specified by the current folder) It 
+      tries pre-compiled models first before compiling them.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="web2py.gluon.compileapp-pysrc.html#run_models_in">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="web2py.gluon.compileapp-module.html#run_controller_in" class="summary-sig-name">run_controller_in</a>(<span class="summary-sig-arg">controller</span>,
+        <span class="summary-sig-arg">function</span>,
+        <span class="summary-sig-arg">environment</span>)</span><br />
+      Runs the controller.function() (for the app specified by the 
+      current folder).</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="web2py.gluon.compileapp-pysrc.html#run_controller_in">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="web2py.gluon.compileapp-module.html#run_view_in" class="summary-sig-name">run_view_in</a>(<span class="summary-sig-arg">environment</span>)</span><br />
+      Executes the view for the requested action.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="web2py.gluon.compileapp-pysrc.html#run_view_in">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="remove_compiled_application"></a><span class="summary-sig-name">remove_compiled_application</span>(<span class="summary-sig-arg">folder</span>)</span><br />
+      Deletes the folder `compiled` containing the compiled 
+      application.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="web2py.gluon.compileapp-pysrc.html#remove_compiled_application">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="compile_application"></a><span class="summary-sig-name">compile_application</span>(<span class="summary-sig-arg">folder</span>)</span><br />
+      Compiles all models, views, controller for the application in 
+      `folder`.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="web2py.gluon.compileapp-pysrc.html#compile_application">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="web2py.gluon.compileapp-module.html#test" class="summary-sig-name">test</a>()</span><br />
+      Example:</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="web2py.gluon.compileapp-pysrc.html#test">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+</table>
+<!-- ==================== VARIABLES ==================== -->
+<a name="section-Variables"></a>
+<table class="summary" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td colspan="2" class="table-header">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><span class="table-header">Variables</span></td>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-Variables"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="is_gae"></a><span class="summary-name">is_gae</span> = <code title="1">1</code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a href="web2py.gluon.compileapp-module.html#TEST_CODE" class="summary-name">TEST_CODE</a> = <code title="'''
+def _TEST():
+    import doctest, sys, cStringIO, types, cgi, gluon.fileutils
+    if not gluon.fileutils.check_credentials(request):
+        raise HTTP(400, web2py_error=\'invalid credentials\')
+    stdout = sys.stdout
+    html = \'&lt;h2&gt;Testing controller &quot;%s.py&quot; ... done.&lt;/h2&gt;&lt;br/&gt;\\n\' \\
+\
+..."><code class="variable-quote">'</code><code class="variable-string">\ndef _TEST():\n    import doctest, sys, cStringI</code><code class="variable-ellipsis">...</code></code>
+    </td>
+  </tr>
+</table>
+<!-- ==================== FUNCTION DETAILS ==================== -->
+<a name="section-FunctionDetails"></a>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td colspan="2" class="table-header">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><span class="table-header">Function Details</span></td>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-FunctionDetails"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+</table>
+<a name="local_import_aux"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">local_import_aux</span>(<span class="sig-arg">name</span>,
+        <span class="sig-arg">force</span>=<span class="sig-default">False</span>,
+        <span class="sig-arg">app</span>=<span class="sig-default"><code class="variable-quote">'</code><code class="variable-string">welcome</code><code class="variable-quote">'</code></span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="web2py.gluon.compileapp-pysrc.html#local_import_aux">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </table>
+  
+  <pre class="literalblock">
+
+In apps, instead of importing a local module
+(in applications/app/modules) with::
+
+   import a.b.c as d
+
+you should do::
+
+   d = local_import('a.b.c')
+
+or (to force a reload):
+
+   d = local_import('a.b.c', reload=True)
+
+This prevents conflict between applications and un-necessary execs.
+It can be used to import any module, including regular Python modules.
+
+</pre>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="read_pyc"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">read_pyc</span>(<span class="sig-arg">filename</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="web2py.gluon.compileapp-pysrc.html#read_pyc">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </table>
+  
+  <p>Read the code inside a bytecode compiled file if the MAGIC number is 
+  compatible</p>
+  :returns: a code object
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="run_controller_in"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">run_controller_in</span>(<span class="sig-arg">controller</span>,
+        <span class="sig-arg">function</span>,
+        <span class="sig-arg">environment</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="web2py.gluon.compileapp-pysrc.html#run_controller_in">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </table>
+  
+  Runs the controller.function() (for the app specified by the current 
+  folder). It tries pre-compiled controller_function.pyc first before 
+  compiling it.
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="run_view_in"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">run_view_in</span>(<span class="sig-arg">environment</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="web2py.gluon.compileapp-pysrc.html#run_view_in">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </table>
+  
+  Executes the view for the requested action. The view is the one 
+  specified in `response.view` or determined by the url or 
+  `view/generic.extension` It tries the pre-compiled 
+  views_controller_function.pyc before compiling it.
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="test"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">test</span>()</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="web2py.gluon.compileapp-pysrc.html#test">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </table>
+  
+  Example:
+<pre class="literalblock">
+   &gt;&gt;&gt; import traceback, types
+   &gt;&gt;&gt; environment={'x':1}
+   &gt;&gt;&gt; open('a.py', 'w').write('print 1/x')
+   &gt;&gt;&gt; save_pyc('a.py')
+   &gt;&gt;&gt; os.unlink('a.py')
+   &gt;&gt;&gt; if type(read_pyc('a.pyc'))==types.CodeType: print 'code'
+   code
+   &gt;&gt;&gt; exec read_pyc('a.pyc') in environment
+   1
+</pre>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<br />
+<!-- ==================== VARIABLES DETAILS ==================== -->
+<a name="section-VariablesDetails"></a>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td colspan="2" class="table-header">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><span class="table-header">Variables Details</span></td>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-VariablesDetails"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+</table>
+<a name="TEST_CODE"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <h3 class="epydoc">TEST_CODE</h3>
+  
+  <dl class="fields">
+  </dl>
+  <dl class="fields">
+    <dt>Value:</dt>
+      <dd><table><tr><td><pre class="variable">
+<code class="variable-quote">'''</code><code class="variable-string"></code>
+<code class="variable-string">def _TEST():</code>
+<code class="variable-string">    import doctest, sys, cStringIO, types, cgi, gluon.fileutils</code>
+<code class="variable-string">    if not gluon.fileutils.check_credentials(request):</code>
+<code class="variable-string">        raise HTTP(400, web2py_error=\'invalid credentials\')</code>
+<code class="variable-string">    stdout = sys.stdout</code>
+<code class="variable-string">    html = \'&lt;h2&gt;Testing controller &quot;%s.py&quot; ... done.&lt;/h2&gt;&lt;br/&gt;\\n\' \</code><span class="variable-linewrap"><img src="crarr.png" alt="\" /></span>
+<code class="variable-string">\</code>
+<code class="variable-ellipsis">...</code>
+</pre></td></tr></table>
+</dd>
+  </dl>
+</td></tr></table>
+</div>
+<br />
+<!-- ==================== NAVIGATION BAR ==================== -->
+<table class="navbar" border="0" width="100%" cellpadding="0"
+       bgcolor="#a0c0ff" cellspacing="0">
+  <tr valign="middle">
+  <!-- Home link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="web2py.gluon-module.html">Home</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Tree link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="module-tree.html">Trees</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Index link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="identifier-index.html">Indices</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Help link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Project homepage -->
+      <th class="navbar" align="right" width="100%">
+        <table border="0" cellpadding="0" cellspacing="0">
+          <tr><th class="navbar" align="center"
+            ><a class="navbar" target="_top" href="http://www.web2py.com">web2py Web Framework</a></th>
+          </tr></table></th>
+  </tr>
+</table>
+<table border="0" cellpadding="0" cellspacing="0" width="100%%">
+  <tr>
+    <td align="left" class="footer">
+    Generated by Epydoc 3.0beta1 on Thu Jul 22 23:56:10 2010
+    </td>
+    <td align="right" class="footer">
+      <a href="http://epydoc.sourceforge.net">http://epydoc.sourceforge.net</a>
+    </td>
+  </tr>
+</table>
+
+<script type="text/javascript">
+  <!--
+  // Private objects are initially displayed (because if
+  // javascript is turned off then we want them to be
+  // visible); but by default, we want to hide them.  So hide
+  // them unless we have a cookie that says to show them.
+  checkCookie()
+  // -->
+</script>
+  
+</body>
+</html>

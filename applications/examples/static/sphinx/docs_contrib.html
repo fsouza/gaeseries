@@ -1,0 +1,268 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Introduction for documenting &mdash; Web2Py v1.64.4 documentation</title>
+    <link rel="stylesheet" href="_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '',
+        VERSION:     '1.64.4',
+        COLLAPSE_MODINDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="Web2Py v1.64.4 documentation" href="index.html" />
+    <link rel="next" title="Todo & Feature Proposals" href="web2py_todo.html" />
+    <link rel="prev" title="Welcome to Web2Py’s documentation!" href="index.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="modindex.html" title="Global Module Index"
+             accesskey="M">modules</a> |</li>
+        <li class="right" >
+          <a href="web2py_todo.html" title="Todo & Feature Proposals"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="index.html" title="Welcome to Web2Py’s documentation!"
+             accesskey="P">previous</a> |</li>
+        <li><a href="index.html">Web2Py v1.64.4 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="introduction-for-documenting">
+<h1>Introduction for documenting<a class="headerlink" href="#introduction-for-documenting" title="Permalink to this headline">¶</a></h1>
+<p class="rubric">Some hints on writing documentation with Sphinx for web2py</p>
+<div class="section" id="writing-documentation">
+<h2>Writing documentation<a class="headerlink" href="#writing-documentation" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="official-documentation">
+<h3>official documentation<a class="headerlink" href="#official-documentation" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><a class="reference external" href="http://sphinx.pocoo.org/contents.html">Sphinx</a></li>
+</ul>
+</div>
+<div class="section" id="docstrings">
+<h3>Docstrings<a class="headerlink" href="#docstrings" title="Permalink to this headline">¶</a></h3>
+<ul>
+<li><dl class="first docutils">
+<dt>official python standard</dt>
+<dd><ul class="first last simple">
+<li><a class="reference external" href="http://www.python.org/dev/peps/pep-0257">Docstring Conventions</a></li>
+<li><a class="reference external" href="http://docs.python.org/dev/documenting/index.html">Documenting Python</a></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>numpy standard</dt>
+<dd><ul class="first last">
+<li><p class="first"><a class="reference external" href="http://projects.scipy.org/scipy/numpy/wiki/CodingStyleGuidelines#docstring-standard">documentation standard</a></p>
+</li>
+<li><p class="first"><a class="reference external" href="http://projects.scipy.org/numpy/browser/trunk/doc/example.py">Example file</a></p>
+</li>
+<li><dl class="first docutils">
+<dt><a class="reference external" href="http://projects.scipy.org/numpy/browser/trunk/doc/EXAMPLE_DOCSTRING.txt">Docstring Template</a></dt>
+<dd><p class="first last">If you use <a class="reference external" href="http://pydev.sourceforge.net/">Eclipse / Pydev</a> you can define this piece as template.</p>
+</dd>
+</dl>
+</li>
+</ul>
+</dd>
+</dl>
+</li>
+</ul>
+</div>
+<div class="section" id="helpers">
+<h3>Helpers<a class="headerlink" href="#helpers" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="editors">
+<h4>Editors<a class="headerlink" href="#editors" title="Permalink to this headline">¶</a></h4>
+<ul class="simple">
+<li><a class="reference external" href="http://docutils.sourceforge.net/docs/user/emacs.html">Emacs: see docutils page</a></li>
+<li><a class="reference external" href="http://textmethod.com/wiki/ReStructuredTextToolsForGedit">Gedit (Linux)</a></li>
+<li><a class="reference external" href="http://code.google.com/p/ulipad">Ulipad (Win)</a></li>
+</ul>
+</div>
+<div class="section" id="others">
+<h4>Others<a class="headerlink" href="#others" title="Permalink to this headline">¶</a></h4>
+<ul>
+<li><p class="first">creating tables in ReST can be painful. Here is a module that can help:</p>
+<div class="highlight-python"><pre>easy_install prettytable
+import prettytable as pt
+mytable =pt.PrettyTable(["id", "category", "recipie"])
+print mytable # copy &amp; paste this into your ReST document!
+mytable_string = mytable.get_string() # or insert this string when
+generating automatic documents</pre>
+</div>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="section" id="building-documentation">
+<h2>Building documentation<a class="headerlink" href="#building-documentation" title="Permalink to this headline">¶</a></h2>
+<p>Follow these steps:</p>
+<ol class="arabic">
+<li><p class="first">easy_install -U sphinx</p>
+</li>
+<li><p class="first">built with custom make files for web2py =&gt; <strong>Note: we could create a
+cross-platform python script for this!</strong></p>
+<blockquote>
+<ol class="arabic simple">
+<li>unix-like: <tt class="docutils literal"><span class="pre">sh</span> <span class="pre">doc/make-doc_html.sh</span></tt></li>
+<li>windows: <tt class="docutils literal"><span class="pre">doc\make-doc_html.bat</span></tt></li>
+</ol>
+<p>Due to the special manner of the <em>web2py</em> import mechanism it requires that
+the doc is built from the <em>web2py</em> root directory.</p>
+</blockquote>
+</li>
+<li><p class="first">the result will written to: <tt class="docutils literal"><span class="pre">web2py/applications/examples/static/sphinx</span></tt>
+(the target directory will be automatically created)</p>
+</li>
+<li><dl class="first docutils">
+<dt>inspect any error</dt>
+<dd><ol class="first last arabic simple">
+<li>on the <a class="reference external" href="glossary.html#term-cli"><em class="xref">CLI</em></a>: see the errors and warnings floating on
+<tt class="docutils literal"><span class="pre">stderr</span></tt>/<tt class="docutils literal"><span class="pre">stdout</span></tt></li>
+<li>using the above mentioned make files a log file will be written to
+<tt class="docutils literal"><span class="pre">web2py/doc/sphinx-build.log</span></tt></li>
+</ol>
+</dd>
+</dl>
+</li>
+</ol>
+</div>
+<div class="section" id="contributing">
+<h2>Contributing<a class="headerlink" href="#contributing" title="Permalink to this headline">¶</a></h2>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p>Please ask on the
+<a class="reference external" href="http://groups.google.com/group/web2py">Mailinglist</a> before
+commiting or pushing to the repositories.</p>
+<p class="last">So far, it has not been agreed on a proper setup to mutually
+edit the documentation and especially how to correct the
+docstrings without getting to many <a class="reference external" href="glossary.html#term-dvcs"><em class="xref">DVCS</em></a> conflicts.</p>
+</div>
+<ol class="arabic">
+<li><p class="first">branch the web2py Sphinx code:</p>
+<div class="highlight-python"><pre>bzr branch lp:~web2py/web2py/web2py-sphinx
+cd web2py-sphinx</pre>
+</div>
+</li>
+<li><p class="first">pull the latest code from web2py Sphinx branch:</p>
+<div class="highlight-python"><pre>bzr pull</pre>
+</div>
+</li>
+<li><p class="first">pull latest web2py development version:</p>
+<div class="highlight-python"><pre>bzr pull http://bazaar.launchpad.net/~mdipierro/web2py/devel/</pre>
+</div>
+</li>
+<li><p class="first">change and edit the documents or docstrings with your edior</p>
+</li>
+<li><p class="first">push the changes to the web2py Sphinx branch:</p>
+<div class="highlight-python"><pre>bzr push lp:~web2py/web2py/web2py-sphinx</pre>
+</div>
+<p>This requires that you are a member of the <a class="reference external" href="https://launchpad.net/~web2py">web2py team at Launchpad</a> and registered at Launchpad <a class="reference external" href="https://help.launchpad.net/YourAccount/CreatingAnSSHKeyPair">with your SSA keys</a>. You can find more info on the <a class="reference external" href="https://help.launchpad.net/Code/UploadingABranch">Launchpad help page</a></p>
+</li>
+</ol>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="index.html">
+              <img class="logo" src="_static/logo_colored_small.png" alt="Logo"/>
+            </a></p>
+            <h3><a href="index.html">Table Of Contents</a></h3>
+            <ul>
+<li><a class="reference external" href="">Introduction for documenting</a><ul>
+<li><a class="reference external" href="#writing-documentation">Writing documentation</a><ul>
+<li><a class="reference external" href="#official-documentation">official documentation</a></li>
+<li><a class="reference external" href="#docstrings">Docstrings</a></li>
+<li><a class="reference external" href="#helpers">Helpers</a><ul>
+<li><a class="reference external" href="#editors">Editors</a></li>
+<li><a class="reference external" href="#others">Others</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a class="reference external" href="#building-documentation">Building documentation</a></li>
+<li><a class="reference external" href="#contributing">Contributing</a></li>
+</ul>
+</li>
+</ul>
+
+            <h4>Previous topic</h4>
+            <p class="topless"><a href="index.html"
+                                  title="previous chapter">Welcome to Web2Py&#8217;s documentation!</a></p>
+            <h4>Next topic</h4>
+            <p class="topless"><a href="web2py_todo.html"
+                                  title="next chapter">Todo &amp; Feature Proposals</a></p>
+            <h3>This Page</h3>
+            <ul class="this-page-menu">
+              <li><a href="_sources/docs_contrib.txt"
+                     rel="nofollow">Show Source</a></li>
+            </ul>
+          <div id="searchbox" style="display: none">
+            <h3>Quick search</h3>
+              <form class="search" action="search.html" method="get">
+                <input type="text" name="q" size="18" />
+                <input type="submit" value="Go" />
+                <input type="hidden" name="check_keywords" value="yes" />
+                <input type="hidden" name="area" value="default" />
+              </form>
+              <p class="searchtip" style="font-size: 90%">
+              Enter search terms or a module, class or function name.
+              </p>
+          </div>
+          <script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="modindex.html" title="Global Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="web2py_todo.html" title="Todo & Feature Proposals"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="index.html" title="Welcome to Web2Py’s documentation!"
+             >previous</a> |</li>
+        <li><a href="index.html">Web2Py v1.64.4 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+      &copy; Copyright 2009, The web2py developers.
+      Last updated on Jun 30, 2009.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 0.6.1.
+    </div>
+  </body>
+</html>

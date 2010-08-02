@@ -1,0 +1,7 @@
+#0-59/1	*	*	*	*	root python /path/to/python/script
+#*/1	*	*	*	*	root *applications/admin/cron/expire_sessions.py
+#*/1    *   *   *   *   root *applications/admin/cron/my magic script.py
+#*/1    *   *   *   *   root **applications/admin/cron/nodb.py
+#*/1    *   *   *   *   root /tmp/my\ script.py 1 2 3
+#*/1    *   *   *   *   root "/tmp/my script.py" 456
+#@reboot root *default/preload

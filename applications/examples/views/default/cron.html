@@ -1,0 +1,96 @@
+{{extend 'layout.html'}}
+
+<h1>web2py<sup style="font-size:0.5em;">TM</sup> cron</h1>
+
+The web2py cron provides the ability for applications to execute tasks at preset times, in a platform independent manner (tested on Windows XP, Linux and MacOS X, but should work on any python 2.5 supported platform). 
+
+Cron functionality is defined by a crontab file (in regular <A href="http://en.wikipedia.org/wiki/Cron#crontab_syntax">crontab syntax</A>) in your application's cron directory. This also means that every application can have a separate cron configuration and that cron config can be changed from within web2py without affecting the host OS itself.
+<BR>
+<BR>
+Example:
+{{=CODE(""" 0-59/1 *       *       *       *       root python /path/to/python/script.py
+*/30    *       *       *       *       root **applications/admin/cron/expire_sessions.py
+30      3       *       *       *       root *applications/admin/cron/db_vacuum.py
+@reboot root    *mycontroller/myfunction
+@hourly root    *applications/admin/cron/expire_sessions.py""")}}
+
+As you might have noticed, some of the lines use <A href="#extensions">extensions</A> to regular cron syntax to provide additional web2py functionality.
+
+<BR>
+<h2>Modes of use</h2>
+
+Depending on how you are invoking web2py, there are four modes of operation for web2py cron.
+
+<UL>
+<LI><A href="#soft">Soft cron</A>, available under all execution modes</LI>
+<LI><A href="#hard">Hard cron</A>, available if using the built-in web server (either directly or via Apache mod_proxy)</LI>
+<LI><A href="#external">External cron</A>, available if you have access to the systems own cron service</LI>
+<LI><A href="#no">No cron</A></LI>
+</UL>
+
+The default is hard cron if you are using the built-in web server, in all other cases the default is soft-cron.
+
+
+<h3 id="soft">Soft cron</h3>
+
+Soft cron is the default if you are using CGI, FASTCGI or WSGI. Your tasks will be executed in the first call (page load) to web2py after the time specified in crontab (but AFTER processing the page, so no delay to the user is visible). Obviously, there is some uncertainty exactly when the task will be executed depending on the traffic the site receives. Also, the cron task may get interrupted if the web server has a page load timeout set. If these limitations are not acceptable, see <A href="#external">external cron</A>. Soft cron is a reasonable last resort, but if your web server allows other cron methods, they should be preferred over soft cron.
+
+<h3 id="hard">Hard cron</h3>
+
+Hard cron is the default if you are using the built-in web server (either directly or via Apache mod_proxy). Hard cron is executed in a parallel thread, so unlike soft cron there are no limitations with regard to run time or execution time precision.
+
+<h3 id="external">External cron</h3>
+
+External cron is not default in any scenarios, but requires you to have access to the system cron facilities. It runs in a parallel process, so none of the limitations of soft cron apply. This is the recommended way of using cron under WSGI or FASTCGI. 
+<BR>
+<BR>
+
+Example of line to add to the system crontab, (usually /etc/crontab):
+{{=CODE("""0-59/1 * * * * web2py cd /var/www/web2py/ && python web2py.py -C -D 1 >> /tmp/cron.output 2>&1""")}}
+
+If you are running external cron, make sure you add the -N command line parameter to your web2py startup script or config so there is no collision of multiple types of cron.
+
+<h3 id="no">No cron</h3>
+
+In case you do not need any cron functionality <b>within a particular process</b>, you can use the -N command line parameter to disable it. Note that this might disable some maintenance tasks (like the automatic cleaning of session dirs). The most common use of this function:
+<UL>
+<LI>You already have set up external cron triggered from the system (most common with WSGI setups)</LI>
+<LI>If you want to debug your application without cron interfering either with actions or with output</LI>
+</UL>
+
+<BR>
+<h2 id="extensions">Cron extensions</h2>
+
+Web2py cron has a some extra syntax to support web2py application specifics.
+
+<h3>Calling scripts in the web2py environment</h3>
+
+If the task/script is prefixed with an asterisk and ends with ".py", it will be executed in the web2py environment. This means you will have all the controllers and models at your disposal. If you use TWO asterisks, the MODELs will not be initialized. This is the recommended way of calling as it has less overhead and avoids potential locking problems.
+
+<h4>CAVEATS</h4><BR>
+<UL><LI>Scripts/functions executed in the web2py environment REQUIRE a manual db.commit() at the end of the function or the transaction will be reverted.</LI>
+<LI>Web2py does NOT generate tickets or meaningful tracebacks in shell mode (in which cron is run). MAKE SURE your web2py code runs without errors before you set it up as a cron task, as you will likely not be able to see them when run from cron.</LI>
+<LI>Be careful how you use models. While the execution happens in a separate process, database locks have to be taken into account in order to avoid pages waiting for cron tasks that be blocking the database. Use the ** syntax if you don't need to use the database in your cron task.</LI></UL>
+
+<BR>
+<BR>
+Example:
+{{=CODE("""*/30    *       *       *       *       root **applications/admin/cron/expire_sessions.py
+30      3       *       *       *       root *applications/my_app/cron/db_vacuum.py""")}}
+
+<h3>Calling controller functions</h3>
+
+Same as above, but a function from a controller is executed instead of a separate script file. Note that unlike above, there is no need to specify a path. The controller and function will be that of the invoking application. Take special care about the caveats listed above.
+<BR>
+<BR>
+
+Example:
+{{=CODE("""*/30    *       *       *       *       root *mycontroller/myfunction""")}}
+
+<h3>Application initialization</h3>
+
+If you specify @reboot in the first field in the crontab file, the given task will be executed only ONCE, on web2py startup. You can use this feature if you want to precache, check or initialize data for an application on web2py startup. Note that cron tasks are executed in parallel with the application - if the application is not ready to serve requests until the cron task is finished, you should implement checks to reflect this.
+
+Example:
+{{=CODE("""@reboot      *       *       *       *       root *mycontroller/myfunction""")}}
+

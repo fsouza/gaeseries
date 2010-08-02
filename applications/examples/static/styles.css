@@ -1,0 +1,90 @@
+* { margin:0; padding:0; border: 0 }
+body { background: #F5F5F5; color: #383838; text-align: justify; line-height: 24px; font-family: Helvetica, Tahoma, Arial, Sans-Serif; font-size: 13px }
+
+a { color: #F29400; text-decoration: none }
+a:hover { color: #F29400; text-decoration: underline }
+
+h1, h2, h3, h4, h5, h6 { margin: 15px 0 10px 0; color: #4C4C4C }
+h1 { font-size: 200% }
+h2 { font-size: 160%; font-weight: normal }
+h3 { margin-top: 25px; font-size: 120% }
+h4 { font-size: 120% }
+h5 { font-size: 100% }
+
+.orange { color: #FF5C1F }
+.green { color: #185360 }
+
+.layout { width: 800px; margin: 0 auto }
+
+.header { padding: 10px 0; background: #F5F5F5 url('bg.png') repeat-x }
+.menu { height: 200px; background: url('web2py_logo.png') no-repeat left center; overflow: hidden }
+.menu ul {margin: 15px 0 0 400px; list-style:none }
+.menu ul li a { display: block; padding: 7px; color: #383838; line-height: 14px; font-size: 14px; font-weight: bold }
+.menu ul li a:hover { text-decoration: none }
+.menu ul li a span { float: right; font-size: 14px; font-weight: normal }
+.menu ul li a:hover { background-color: #F29400 }
+
+.content { float: left; width:620px; padding: 15px 0 }
+
+.sidebar { float: right; width: 150px; padding-top: 20px }
+.sidebar span { color: #515F6A }
+.sidebar p { margin-top: 5px }
+
+.footer { clear: both; padding: 0.5em 0; border-top: 5px solid #CEAE6C; color: #666666; text-align: center }
+
+/* paragraphs -------------------------------------------------------------------- */
+p { margin: 15px 0 }
+
+/* tables --------------------------------------------------------------------- */
+table { width: 100%; margin: 0; border-spacing: 0 }
+th { border: 0px solid #324455; text-align:center; font-weight:bold }
+
+/* lists --------------------------------------------------------------------- */
+ul, ol { display: block; margin: 15px 0 15px 40px }
+ul ul, ul ul ul, ol ol, ol ol ol { margin: 0 0 0 20px }
+ol { list-style-type: decimal }
+ol ol { list-style-type: upper-alpha }
+ol ol ol {list-style-type: lower-alpha }
+li { display: list-item }
+
+fieldset { margin: 15px 0; padding: 10px; border: 1px solid #CCCCCC }
+legend { margin-left: 10px; color: #000000; font-weight: bold }
+blockquote { margin: 15px 20px; font-style: italic }
+tr, td { vertical-align: top; text-align: left }
+hr { display: block; height: 1px; margin: 3px 0; background: #CCCCCC; color: #CCCCCC }
+textarea, input { padding: 2px; border: 1px solid #666666 }
+
+input:focus { background: #F3D4D4 }
+textarea:focus { background: #F3D4D4 }
+
+.left {text-align:left }
+.center {text-align:center }
+.right {text-align:right }
+.foto{ display: block }
+.flash { clear: both; margin: 10px auto 0 auto; padding: 1.0em 0; border-top: 5px; background: #FF5C1F; color: #FFFFFF; text-align: center; cursor: pointer }
+.error { padding: 3px; background: #FF0000; color: #FFFFFF }
+
+.download  li a {
+-moz-background-clip:border;
+-moz-background-inline-policy:continuous;
+-moz-background-origin:padding;
+-moz-border-radius-bottomleft:3px;
+-moz-border-radius-bottomright:3px;
+-moz-border-radius-topleft:3px;
+-moz-border-radius-topright:3px;
+background:#4F843C url(download.png) no-repeat scroll right center;
+border:1px solid #4F843C;
+color:#FFFFFF;
+display:block;
+font-size:93%;
+margin:0;
+padding:6% 40px 6% 6%;
+line-height: 16px;
+}
+.download li {
+list-style-image:none;
+list-style-position:outside;
+list-style-type:none;
+width: 200px;
+height: 50px;
+}

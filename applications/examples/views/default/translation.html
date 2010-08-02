@@ -1,0 +1,20 @@
+{{extend 'layout.html'}}
+
+<h1>web2py<sup style="font-size:0.5em;">TM</sup> Translation Examples</h1>
+
+Examples:
+<a href="#simple_examples">simple</a> |
+<a href="#internal_examples">internal</a> |
+<a href="#dynamic_examples">dynamic</a>
+
+<h2 id="simple_examples">Simple Examples</h2>
+
+<p><i>Here are some text...</i></p>
+
+<h3><b>Example code:</b></h3>
+{{=CODE("""
+def hello1():
+    return "Hello World"
+""".strip(), language='web2py', link=URL(r=request, c='global', f='vars'))}}
+
+<p>Álvaro Justen will create this documentation soon.</p>

@@ -1,0 +1,63 @@
+{{extend 'layout.html'}}
+{{import os}}
+
+<h1>web2py<sup style="font-size:0.5em;">TM</sup> Application Program Interface (API)</h1>
+
+<p>For more detailed information see also <a href="{{=URL(r=request,c='static',f='epydoc/index.html')}}">epydocs</a>.</p>
+
+<br/><h2>URL mapping overview</h2>
+
+<center><img src="/{{=request.application}}/static/gluon.png"/></center>
+
+<h2>Complete API</h2>
+
+<h3>Container Objects</h3>
+{{=CODE("request, response, session, cache", language="web2py",
+link='/examples/global/vars/', counter=None)}}
+
+Try them here: <a href="/{{=request.application}}/simple_examples/status">status</a>
+
+<h3>Navigation Functions and Objects</h3>
+{{=CODE("redirect, HTTP", language="web2py",
+link='/examples/global/vars/', counter=None)}}
+
+<h3>Thread safe app-level module import</h3>
+{{=CODE("local_import", language="web2py",
+link='/examples/global/vars/', counter=None)}}
+
+<h3>Internationalization</h3>
+{{=CODE("T", language="web2py",
+link='/examples/global/vars/', counter=None)}}
+
+<h3>Views Helpers</h3>
+{{=CODE("XML, URL, BEAUTIFY", language="web2py",
+link='/examples/global/vars/', counter=None)}}
+
+<h3>HTTP Building Objects</h3>
+{{=CODE("""A, B, BODY, BR, CENTER, CODE, DIV, EM, EMBED, FIELDSET, FORM, 
+H1, H3, H3, H4, H5, H6, HEAD, HR, HTML, IFRAME, IMG, INPUT, 
+LABEL, LI, LINK, OL, UL, MENU, META, OBJECT, ON, OPTION, P, PRE, 
+SCRIPT, SELECT, SPAN, STYLE,  TABLE,  TD, TAG, TBODY,
+TEXTAREA, TFOOT, TH, THEAD, TITLE, TR, TT""",
+language="web2py",link='/examples/global/vars/', counter=None)}}
+
+<h3>Validator Objects</h3>
+{{=CODE("""IS_ALPHANUMERIC, IS_DATE, IS_DATETIME, 
+IS_DATE_IN_RANGE, IS_DATETIME_IN_RANGE, IS_DECIMAL_IN_RANGE, IS_EMAIL,
+IS_EXPR, IS_FLOAT_IN_RANGE, IS_IMAGE, IS_INT_IN_RANGE, IS_IN_SET,
+IS_IPV4, IS_LENGTH, IS_LOWER, IS_MATCH, IS_EQUAL_TO, 
+IS_EMPTY_OR, IS_NOT_EMPTY, IS_TIME, IS_URL, 
+IS_UPLOAD_FILENAME, IS_LIST_OF, IS_UPPER, IS_SLUG, 
+IS_STRONG, CLEANUP, CRYPT, IS_IN_DB, IS_NOT_IN_DB""",
+language="web2py",link='/examples/global/vars/', counter=None)}}
+
+<h3>Database API</h3>
+{{=CODE("DAL, Field", language="web2py",
+link='/examples/global/vars/', counter=None)}}
+
+<h3>Database to HTML</h3>
+{{=CODE("SQLFORM, SQLTABLE", language="web2py",
+link='/examples/global/vars/', counter=None)}}
+
+
+

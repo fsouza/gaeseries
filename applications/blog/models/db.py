@@ -73,3 +73,14 @@ crud.settings.auth = None                      # =auth to enforce authorization 
 ## >>> rows=db(db.mytable.myfield=='value').select(db.mytable.ALL)
 ## >>> for row in rows: print row.id, row.myfield
 #########################################################################
+
+current_user_id = (auth.user and auth.user.id) or 0
+
+db.define_table('posts', db.Field('title'),
+                    db.Field('content', 'text'),
+                    db.Field('author', db.auth_user, default=current_user_id, writable=False),
+                    db.Field('date', 'datetime', default=request.now, writable=False)
+                )
+
+db.posts.title.requires = IS_NOT_EMPTY()
+db.posts.content.requires = IS_NOT_EMPTY()

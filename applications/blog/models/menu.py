@@ -13,8 +13,13 @@ response.subtitle = T('customize me!')
 ##########################################
 
 response.menu = [
-    (T('Index'), False, URL(request.application,'default','index'), [])
+    (T('Index'), False, URL(request.application,'default','index'), []),
+    (T('Posts'), False, URL(request.application,'posts','index'), []),
+    (T('New post'), False, URL(request.application,'posts','new'), []),
     ]
+
+response.menu += [
+]
 
 ##########################################
 ## this is here to provide shortcuts

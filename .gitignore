@@ -3,3 +3,7 @@
 *.log
 parameters_*
 *.w2p
+applications/blog/sessions
+applications/welcome/sessions
+applications/blog/errors
+applications/admin/sessions

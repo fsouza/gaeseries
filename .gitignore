@@ -1,6 +1,7 @@
 *.swp
 *.pyc
 *.log
+*.pid
 parameters_*
 *.w2p
 applications/blog/sessions

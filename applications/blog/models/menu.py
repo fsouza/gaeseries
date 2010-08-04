@@ -4,7 +4,7 @@
 ## Customize your APP title, subtitle and menus here
 #########################################################################
 
-response.title = request.application
+response.title = request.application.capitalize()
 response.subtitle = T('customize me!')
 
 ##########################################

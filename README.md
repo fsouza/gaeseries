@@ -8,7 +8,7 @@ Testing some Python frameworks on Google App Engine.
     - See the blog post in portuguese: <http://www.franciscosouza.com.br/2010/08/02/voando-com-o-django-no-google-app-engine/>
 
  2. [web2py](http://www.web2py.com "web2py") application, see the code at the "web2py" branch.
-    - See it live here: [soon]
+    - See it live here: <http://2.latest.gaeseries.appspot.com/>
     - See the blog post in english: [soon]
     - See the blog post in portuguese: [soon]
 

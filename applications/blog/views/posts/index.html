@@ -1,0 +1,8 @@
+{{extend 'layout.html'}}
+<h1 id="">Listing all posts</h1>
+<dl>
+    {{for post in posts:}}
+    <dt>{{=post.title}} (written by {{=post.author.first_name}})</dt>
+    <dd>{{=post.content}}</dd>
+    {{pass}}
+</dl>

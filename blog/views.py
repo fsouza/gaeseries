@@ -12,6 +12,10 @@ class PostForm(wtf.Form):
     title = wtf.TextField('Title', validators=[validators.Required()])
     content = wtf.TextAreaField('Content', validators=[validators.Required()])
 
+@app.route('/')
+def redirect_to_home():
+    return redirect(url_for('list_posts'))
+
 @app.route('/posts')
 def list_posts():
     posts = Post.all()

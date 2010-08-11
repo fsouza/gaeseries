@@ -5,6 +5,10 @@
     </head>
     <body id="">
 
+        <p>
+            <a href="{{ url_for('list_posts') }}">List posts</a> | <a href="{{ url_for('new_post') }}">New post</a>
+        </p>
+
         {% with messages = get_flashed_messages() %}
             {% if messages %}
                 <div class="flash">

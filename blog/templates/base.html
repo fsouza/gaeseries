@@ -4,6 +4,17 @@
         <title>{% block title %}Blog{% endblock %}</title>
     </head>
     <body id="">
+
+        {% with messages = get_flashed_messages() %}
+            {% if messages %}
+                <div class="flash">
+                     {% for message in messages %}
+                        <p>{{ message }}</p>
+                     {% endfor %}
+                </div>
+            {% endif %}
+        {% endwith %}
+
         {% block content %}
 
         {% endblock %}

@@ -13,6 +13,6 @@ Testing some Python frameworks on Google App Engine.
     - See the blog post in portuguese: <http://www.franciscosouza.com.br/2010/08/06/voando-com-o-web2py-no-google-app-engine/>
 
  3. [Flask](http://flask.pocoo.org "Flask") application, see the code at the "flask" branch.
-    - See it live here: [soon]
+    - See it live here: <http://3.latest.gaeseries.appspot.com>
     - See the blog post in english: [soon]
     - See the blog post in portuguese: [soon]

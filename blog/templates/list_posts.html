@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+
+{% block content %}
+<ul>
+    {% for post in posts %}
+    <li>
+        {{ post.title }} (written by {{ post.author.nickname() }})<br />
+        {{ post.content }}
+    </li>
+    {% endfor %}
+</ul>
+{% endblock %}

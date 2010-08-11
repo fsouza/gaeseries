@@ -17,7 +17,7 @@ def list_posts():
     posts = Post.all()
     return render_template('list_posts.html', posts=posts)
 
-@app.route('/posts/new')
+@app.route('/posts/new', methods = ['GET', 'POST'])
 @login_required
 def new_post():
     form = PostForm()

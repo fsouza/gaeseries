@@ -2,6 +2,7 @@
 
 {% block content %}
 <ul>
+    <h1 id="">Posts registered on the database</h1>
     {% for post in posts %}
     <li>
         {{ post.title }} (written by {{ post.author.nickname() }})<br />

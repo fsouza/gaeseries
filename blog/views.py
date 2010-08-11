@@ -23,7 +23,7 @@ def new_post():
     form = PostForm()
     if form.validate_on_submit():
         post = Post(title = form.title.data,
-                    content = form.title.content,
+                    content = form.content.data,
                     author = users.get_current_user())
         post.put()
         flash('Post saved on database.')

@@ -14,5 +14,5 @@ Testing some Python frameworks on Google App Engine.
 
  3. [Flask](http://flask.pocoo.org "Flask") application, see the code at the "flask" branch.
     - See it live here: <http://3.latest.gaeseries.appspot.com>
-    - See the blog post in english: [soon]
+    - See the blog post in english: <http://www.franciscosouza.net/2010/08/flying-with-flask-in-google-app-engine.html>
     - See the blog post in portuguese: [soon]

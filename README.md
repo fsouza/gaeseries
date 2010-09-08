@@ -15,4 +15,9 @@ Testing some Python frameworks on Google App Engine.
  3. [Flask](http://flask.pocoo.org "Flask") application, see the code at the "flask" branch.
     - See it live here: <http://3.latest.gaeseries.appspot.com>
     - See the blog post in english: <http://www.franciscosouza.net/2010/08/flying-with-flask-in-google-app-engine.html>
-    - See the blog post in portuguese: [soon]
+    - See the blog post in portuguese: <http://www.franciscosouza.com.br/2010/08/12/voando-com-o-flask-no-google-app-engine/>
+
+ 4. [tipfy](http://typfy.org "Tipfy") application, see the code at the "tipfy" branch.
+    - See it live here: [Soon]
+    - See the blog post in english: [Soon]
+    - See the blog post in portuguese: [Soon]

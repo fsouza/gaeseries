@@ -1,5 +1,5 @@
-application: my-app
-version: 1
+application: gaeseries
+version: 4
 runtime: python
 api_version: 1
 

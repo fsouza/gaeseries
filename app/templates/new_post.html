@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+
+{% block title %}
+    New post
+{% endblock %}
+
+{% block content %}
+    <form action="" method="post" accept-charset="utf-8">
+        <p>
+            <label for="title">{{ form.title.label }}</label>
+
+            {{ form.title|safe }}
+
+            {% if form.title.errors %}
+            <ul class="errors">
+                {% for error in form.title.errors %}
+                <li>{{ error }}</li>
+                {% endfor %}
+            </ul>
+            {% endif %}
+        </p>
+        <p>
+            <label for="content">{{ form.content.label }}</label>
+
+            {{ form.content|safe }}
+
+            {% if form.content.errors %}
+            <ul class="errors">
+                {% for error in form.content.errors %}
+                <li>{{ error }}</li>
+                {% endfor %}
+            </ul>
+            {% endif %}
+        </p>
+        <p><input type="submit" value="Save post"/></p>
+    </form>
+{% endblock %}

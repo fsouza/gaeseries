@@ -8,14 +8,14 @@
     :copyright: 2009 by tipfy.org.
     :license: BSD, see LICENSE for more details.
 """
-from tipfy import RequestHandler, Response
+from tipfy import RequestHandler, redirect
 from tipfy.ext.jinja2 import render_response
 
 
 class HelloWorldHandler(RequestHandler):
     def get(self):
         """Simply returns a Response object with an enigmatic salutation."""
-        return Response('Hello, World!')
+        return redirect('/posts')
 
 
 class PrettyHelloWorldHandler(RequestHandler):

@@ -28,8 +28,8 @@ class NewPostHandler(RequestHandler, AppEngineAuthMixin, AllSessionMixins):
         if self.form.validate():
             post = Post(
                 title = self.form.title.data,
-                content = self.form.title.content,
-                author = self.auth_session()
+                content = self.form.content.data,
+                author = self.auth_session
             )
             post.put()
             return redirect('/posts')

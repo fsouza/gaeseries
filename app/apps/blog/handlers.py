@@ -16,3 +16,10 @@ class PostForm(Form):
     title = fields.TextField('Title', validators=[validators.Required])
     content = fields.TextAreaField('Content', validators=[validators.Required])
 
+class NewPostHandler(RequestHandler, AppEngineAuthMixin, AllSessionMixins):
+    middleware = [SessionMiddleware]
+
+    @login_required
+    def get(self):
+        form = PostForm(self.request)
+        return render_response('new_post.html', form=form)

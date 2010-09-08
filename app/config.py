@@ -22,3 +22,7 @@ config['tipfy'] = {
         'apps.blog',
     ],
 }
+
+config['tipfy.ext.session'] = {
+    'secret_key' : 'just_dev_testH978DAGV9B9sha_W92S',
+}

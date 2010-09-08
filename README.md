@@ -18,6 +18,5 @@ Testing some Python frameworks on Google App Engine.
     - See the blog post in portuguese: <http://www.franciscosouza.com.br/2010/08/12/voando-com-o-flask-no-google-app-engine/>
 
  4. [tipfy](http://tipfy.org "Tipfy") application, see the code at the "tipfy" branch.
-    - See it live here: [Soon]
-    - See the blog post in english: [Soon]
-    - See the blog post in portuguese: [Soon]
+    - See it live here: <http://4.latest.gaeseries.appspot.com/>
+    - See the blog post in english: <http://www.franciscosouza.net/2010/09/flying-with-tipfy-in-google-app-engine.html>
